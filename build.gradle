@@ -1,9 +1,14 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group 'com.cechettodadone'
 version '1.0-SNAPSHOT'
+
+application {
+    mainClass = 'com.cecchettodadone.Main'
+}
 
 repositories {
     mavenCentral()

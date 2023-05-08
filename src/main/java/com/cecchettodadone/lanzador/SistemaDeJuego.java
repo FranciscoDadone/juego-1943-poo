@@ -1,5 +1,8 @@
 package com.cecchettodadone.lanzador;
 
+import com.cecchettodadone.juego1943.Juego1943;
+import com.cecchettodadone.lanzador.gui.RecuadroJuego;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -18,10 +21,18 @@ public class SistemaDeJuego extends JFrame {
         titulo.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
         panelTitulo.add(titulo);
 
-        JPanel juego = new JPanel();
-        this.add(juego, BorderLayout.CENTER);
+        JPanel juegos = new JPanel();
+        juegos.setLayout(new FlowLayout());
+        juegos.add(new RecuadroJuego(new Juego1943()));
+//        juegos.add(new RecuadroJuego());
+//        juegos.add(new RecuadroJuego());
+//        juegos.add(new RecuadroJuego());
+
+        this.add(juegos, BorderLayout.CENTER);
+
 
         this.add(panelTitulo, BorderLayout.NORTH);
+        this.pack();
     }
 
 }
