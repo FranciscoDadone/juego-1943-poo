@@ -10,7 +10,7 @@ public class SistemaDeJuego extends JFrame {
 
     public SistemaDeJuego() {
         this.setVisible(true);
-        this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+//        this.setSize(new Dimension(800,800)); // Toolkit.getDefaultToolkit().getScreenSize()
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setBackground(Color.DARK_GRAY);
 
@@ -33,6 +33,7 @@ public class SistemaDeJuego extends JFrame {
 
         this.add(panelTitulo, BorderLayout.NORTH);
         this.pack();
+        this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
     }
 
 }

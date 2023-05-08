@@ -28,16 +28,11 @@ public class RecuadroJuego extends JPanel {
         abajo.add(new JLabel("Versión: " + juego.getVersion()));
 
         JPanel foto = new JPanel();
-//        JButton btn = new JButton(juego.getImagenPortada());
-//        foto.add(btn);
+        JButton btn = new JButton(juego.getImagenPortada());
+        foto.add(btn);
 //        foto.setPreferredSize(new Dimension(100,100));
         this.add(tituloPanel, BorderLayout.PAGE_START);
 
-//        try {
-//            BufferedImage wPic = ImageIO.read(this.getClass().getResource("juego1943.png"));
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
         this.add(foto, BorderLayout.CENTER);
         this.add(abajo, BorderLayout.PAGE_END);
     }
