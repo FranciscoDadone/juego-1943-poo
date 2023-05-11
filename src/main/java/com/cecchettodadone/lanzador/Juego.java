@@ -47,6 +47,6 @@ public class Juego {
     private String nombre;
     private String desarrolladores;
     private String version;
-                                                                                                                    private String descripcion;
+    private String descripcion;
     private ImageIcon imagenPortada;
 }

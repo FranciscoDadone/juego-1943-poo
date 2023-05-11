@@ -1,14 +1,17 @@
 package com.cecchettodadone.lanzador;
 
+import com.cecchettodadone.MarioBross.MarioBross;
 import com.cecchettodadone.juego1943.Juego1943;
 import com.cecchettodadone.lanzador.gui.RecuadroJuego;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 
 public class SistemaDeJuego extends JFrame {
 
-    public SistemaDeJuego() {
+    public  SistemaDeJuego() {
         this.setVisible(true);
 //        this.setSize(new Dimension(800,800)); // Toolkit.getDefaultToolkit().getScreenSize()
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,6 +27,8 @@ public class SistemaDeJuego extends JFrame {
         JPanel juegos = new JPanel();
         juegos.setLayout(new FlowLayout());
         juegos.add(new RecuadroJuego(new Juego1943()));
+        juegos.add(new RecuadroJuego(new MarioBross()));
+
 //        juegos.add(new RecuadroJuego());
 //        juegos.add(new RecuadroJuego());
 //        juegos.add(new RecuadroJuego());
