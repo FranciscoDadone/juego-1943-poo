@@ -12,6 +12,9 @@ application {
 
 repositories {
     mavenCentral()
+    flatDir {
+        dirs 'lib'
+    }
 }
 
 dependencies {
@@ -19,6 +22,48 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     // https://mvnrepository.com/artifact/org.json/json
     implementation group: 'org.json', name: 'json', version: '20230227'
+    implementation name: 'bucleJuego'
+
+}
+
+/* copia archivo desde src/main/config a los diferentes destinos */
+tasks.register("copyConfig") {
+    doFirst {
+        copy {
+            from("src/main/config/jgame.properties")
+            into 'build/classes/java/main/'
+
+        }
+        copy {
+            from("src/main/config/jgame.properties")
+            into 'build/distributions/'
+
+        }
+
+    }
+}
+
+
+tasks.named("build") {
+    finalizedBy("copyConfig")
+
+}
+
+jar {
+    archiveVersion =  '0.0.1'
+    into 'resources', {
+        from 'resources'
+    }
+
+    into 'build/classes/java/main', {
+        from 'src/main/config/'
+    }
+
+    manifest {
+        attributes  'Main-Class': 'jgame23.App',
+            'Implementation-Title': 'POO Juego',
+            'Implementation-Version': archiveVersion.get()
+    }
 
 }
 
