@@ -55,12 +55,8 @@ jar {
         from 'resources'
     }
 
-    into 'build/classes/java/main', {
-        from 'src/main/config/'
-    }
-
     manifest {
-        attributes  'Main-Class': 'jgame23.App',
+        attributes  'Main-Class': 'com.cecchettodadone.Main',
             'Implementation-Title': 'POO Juego',
             'Implementation-Version': archiveVersion.get()
     }

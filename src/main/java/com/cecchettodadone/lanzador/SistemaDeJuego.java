@@ -36,16 +36,8 @@ public class SistemaDeJuego extends JGame {
 
     Personaje ovni=new Personaje();
 
-    public static void main(String[] args) {
-
-        SistemaDeJuego game = new SistemaDeJuego();
-        System.out.println("asd");
-        game.run(1.0 / 60.0);
-        System.exit(0);
-    }
-
     public SistemaDeJuego() {
-        super("App", 800, 600);
+        super("SistemaDeJuego", 800, 600);
         System.out.println(appProperties.stringPropertyNames());
     }
 
@@ -65,6 +57,7 @@ public class SistemaDeJuego extends JGame {
     }
 
     public void gameUpdate(double delta) {
+
         Keyboard keyboard = this.getKeyboard();
 
         // Procesar teclas de direccion
@@ -106,7 +99,6 @@ public class SistemaDeJuego extends JGame {
     }
 
     public void gameDraw(Graphics2D g) {
-
         dAhora= new Date( );
         long dateDiff = dAhora.getTime() - dInit.getTime();
         long diffSeconds = dateDiff / 1000 % 60;
