@@ -4,7 +4,7 @@ import com.cecchettodadone.lanzador.Juego;
 
 import javax.swing.*;
 
-public class MarioBross extends Juego{
+public class MarioBross extends Juego {
 
     public MarioBross() {
         setNombre("Mario Bross");
@@ -14,4 +14,8 @@ public class MarioBross extends Juego{
         setImagenPortada(new ImageIcon(this.getClass().getResource("/MarioBross.png")));
     }
 
+    @Override
+    public void run() {
+
+    }
 }

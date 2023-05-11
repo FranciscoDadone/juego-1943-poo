@@ -2,8 +2,7 @@ package com.cecchettodadone.lanzador;
 
 import javax.swing.*;
 
-public class Juego {
-
+public abstract class Juego {
     public String getNombre() {
         return nombre;
     }
@@ -44,9 +43,12 @@ public class Juego {
         this.imagenPortada = imagenPortada;
     }
 
+    public abstract void run ();
+
     private String nombre;
     private String desarrolladores;
     private String version;
     private String descripcion;
     private ImageIcon imagenPortada;
+
 }

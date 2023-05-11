@@ -5,12 +5,15 @@ import com.cecchettodadone.lanzador.Juego;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class RecuadroJuego extends JPanel {
+public class RecuadroJuego extends JPanel implements ActionListener {
 
     public RecuadroJuego (Juego juego) {
+        this.juego = juego;
         this.setBorder(BorderFactory.createLineBorder(Color.GRAY, 5, true));
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(400, 450));
@@ -28,13 +31,22 @@ public class RecuadroJuego extends JPanel {
         abajo.add(new JLabel("Versión: " + juego.getVersion()));
 
         JPanel foto = new JPanel();
-        JButton btn = new JButton(juego.getImagenPortada());
+        btn = new JButton(juego.getImagenPortada());
+        btn.addActionListener(this);
         foto.add(btn);
-//        foto.setPreferredSize(new Dimension(100,100));
         this.add(tituloPanel, BorderLayout.PAGE_START);
 
         this.add(foto, BorderLayout.CENTER);
         this.add(abajo, BorderLayout.PAGE_END);
+
     }
 
+    private JButton btn;
+    private Juego juego;
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (!e.getSource().equals(btn)) return;
+        juego.run();
+    }
 }
