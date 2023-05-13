@@ -1,6 +1,7 @@
 package com.cecchettodadone.lanzador.gui;
 
 import com.cecchettodadone.lanzador.Juego;
+import com.cecchettodadone.lanzador.SistemaDeJuego;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,8 +13,9 @@ import java.io.IOException;
 
 public class RecuadroJuego extends JPanel implements ActionListener {
 
-    public RecuadroJuego (Juego juego) {
+    public RecuadroJuego (Juego juego, SistemaDeJuego sistemaDeJuego) {
         this.juego = juego;
+        this.sistemaDeJuego = sistemaDeJuego;
         this.setBorder(BorderFactory.createLineBorder(Color.GRAY, 5, true));
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(400, 450));
@@ -44,9 +46,14 @@ public class RecuadroJuego extends JPanel implements ActionListener {
     private JButton btn;
     private Juego juego;
 
+    private SistemaDeJuego sistemaDeJuego;
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (!e.getSource().equals(btn)) return;
         juego.run();
+        if (juego.getNombre().equals("1943"))
+            sistemaDeJuego.setVisible(false);
     }
 }

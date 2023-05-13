@@ -46,8 +46,10 @@ public class SistemaDeJuego extends JFrame {
         juegos.setLayout(new FlowLayout());
 
         // Juegos
-        juegos.add(new RecuadroJuego(new Juego1943()));
-        juegos.add(new RecuadroJuego(new MarioBross()));
+        juegos.add(new RecuadroJuego(new Juego1943(),this));
+        juegos.add(new RecuadroJuego(new MarioBross(),this));
+
+
 
         this.add(juegos, BorderLayout.CENTER);
 
