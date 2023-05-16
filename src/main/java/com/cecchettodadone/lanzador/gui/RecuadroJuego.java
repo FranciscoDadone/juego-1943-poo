@@ -51,9 +51,9 @@ public class RecuadroJuego extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!e.getSource().equals(btn)) return;
-        juego.run();
-        if (juego.getNombre().equals("1943"))
+        if (juego.isImplementado())
             sistemaDeJuego.setVisible(false);
+        if (!e.getSource().equals(btn)) return;
+            juego.run(1.0/60.0);
     }
 }

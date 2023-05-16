@@ -43,12 +43,22 @@ public abstract class Juego {
         this.imagenPortada = imagenPortada;
     }
 
-    public abstract void run ();
+    public abstract void run (double fps);
 
     private String nombre;
     private String desarrolladores;
     private String version;
     private String descripcion;
     private ImageIcon imagenPortada;
+
+    public boolean isImplementado() {
+        return implementado;
+    }
+
+    public void setImplementado(boolean implementado) {
+        this.implementado = implementado;
+    }
+
+    private boolean implementado;
 
 }

@@ -13,12 +13,12 @@ public class MarioBross extends Juego {
         setDescripcion("Juego de un Fontanero");
         setDesarrolladores("Ramiro Cecchetto y Francisco Dadone");
         setImagenPortada(new ImageIcon(this.getClass().getResource("/imagenes/MarioBross.png")));
+        setImplementado(false);
     }
 
-    @Override
-    public void run() {
-        JOptionPane.showMessageDialog(null,
-                this.getNombre()+" no esta disponible pero podes jugar un 1943", "Error ", JOptionPane.ERROR_MESSAGE);
 
+    @Override
+    public void run(double fps) {
+        JOptionPane.showMessageDialog(null, "Mario Bross no esta disponible. \n pero podes jugar un 1943 ", "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
