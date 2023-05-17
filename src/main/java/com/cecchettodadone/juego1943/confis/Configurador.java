@@ -42,6 +42,7 @@ public class Configurador extends JFrame {
         sonidoPanel.setLayout(new BoxLayout(sonidoPanel, BoxLayout.X_AXIS));
         JLabel txtSonido = new JLabel("Sonido:  ");
         JCheckBox checkSonido = new JCheckBox("Activado");
+        checkSonido.setSelected(true);
         checkSonido.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -95,37 +96,123 @@ public class Configurador extends JFrame {
         JPanel panelT1 = new JPanel();
         panelT1.setLayout(new BoxLayout(panelT1,BoxLayout.X_AXIS));
 
-        JLabel txtT1 = new JLabel("Activar/Desactivar efectos de sonido:");
-        txtT1.setHorizontalAlignment(SwingConstants.RIGHT);
-
-        JTextArea tecla1 = new JTextArea("");
-        tecla1.setBackground(Color.WHITE);
-        tecla1.setForeground(Color.BLACK);
-        tecla1.setBorder(new LineBorder(Color.BLACK));
+        JLabel txtT1 = new JLabel("Ventana/Pantalla Completa:");
+        JTextField tecla1 = new JTextField("");
 
         panelT1.add(txtT1);
         panelT1.add(tecla1);
         panelTeclas.add(panelT1);
 
-        //tecla 1
+        //tecla 2
         JPanel panelT2 = new JPanel();
         panelT2.setLayout(new BoxLayout(panelT2,BoxLayout.X_AXIS));
 
-        JLabel txtT2 = new JLabel("Iquierda:");
-        txtT2.setHorizontalAlignment(SwingConstants.RIGHT);
-
-        JTextArea tecla2 = new JTextArea("");
-        tecla2.setBackground(Color.WHITE);
-        tecla2.setForeground(Color.BLACK);
-        tecla2.setBorder(new LineBorder(Color.BLACK));
+        JLabel txtT2 = new JLabel("Activar/Desactivar Sonido:");
+        JTextField tecla2 = new JTextField("");
 
         panelT2.add(txtT2);
         panelT2.add(tecla2);
         panelTeclas.add(panelT2);
 
+        //tecla 3
+        JPanel panelT3 = new JPanel();
+        panelT3.setLayout(new BoxLayout(panelT3,BoxLayout.X_AXIS));
 
+        JLabel txtT3 = new JLabel("Pausar/Reanudar Juego:");
+        JTextField tecla3 = new JTextField("");
+
+        panelT3.add(txtT3);
+        panelT3.add(tecla3);
+        panelTeclas.add(panelT3);
+
+        //tecla 4
+        JPanel panelT4 = new JPanel();
+        panelT4.setLayout(new BoxLayout(panelT4,BoxLayout.X_AXIS));
+
+        JLabel txtT4 = new JLabel("                         Izquierda:");
+        JTextField tecla4 = new JTextField("");
+
+        panelT4.add(txtT4);
+        panelT4.add(tecla4);
+        panelTeclas.add(panelT4);
+
+        //tecla 5
+        JPanel panelT5 = new JPanel();
+        panelT5.setLayout(new BoxLayout(panelT5,BoxLayout.X_AXIS));
+
+        JLabel txtT5 = new JLabel("                           Derecha:");
+        JTextField tecla5 = new JTextField("");
+
+        panelT5.add(txtT5);
+        panelT5.add(tecla5);
+        panelTeclas.add(panelT5);
+
+        //tecla 6
+        JPanel panelT6 = new JPanel();
+        panelT6.setLayout(new BoxLayout(panelT6,BoxLayout.X_AXIS));
+
+        JLabel txtT6 = new JLabel("                              Arriba:");
+        JTextField tecla6 = new JTextField("");
+
+        panelT6.add(txtT6);
+        panelT6.add(tecla6);
+        panelTeclas.add(panelT6);
+
+        //tecla 7
+        JPanel panelT7 = new JPanel();
+        panelT7.setLayout(new BoxLayout(panelT7,BoxLayout.X_AXIS));
+
+        JLabel txtT7 = new JLabel("                              abajo:");
+        JTextField tecla7 = new JTextField("");
+
+        panelT7.add(txtT7);
+        panelT7.add(tecla7);
+        panelTeclas.add(panelT7);
+
+        //tecla 8
+        JPanel panelT8 = new JPanel();
+        panelT8.setLayout(new BoxLayout(panelT8,BoxLayout.X_AXIS));
+
+        JLabel txtT8 = new JLabel("                              abajo:");
+        JTextField tecla8 = new JTextField("");
+
+        panelT8.add(txtT8);
+        panelT8.add(tecla8);
+        panelTeclas.add(panelT8);
+
+        //tecla 9
+        JPanel panelT9 = new JPanel();
+        panelT9.setLayout(new BoxLayout(panelT9,BoxLayout.X_AXIS));
+
+        JLabel txtT9 = new JLabel("                              Disparar:");
+        JTextField tecla9 = new JTextField("");
+
+        panelT9.add(txtT9);
+        panelT9.add(tecla9);
+        panelTeclas.add(panelT9);
+
+        //tecla 10
+        JPanel panelT10 = new JPanel();
+        panelT10.setLayout(new BoxLayout(panelT10,BoxLayout.X_AXIS));
+
+        JLabel txtT10 = new JLabel("                   Ataque Especial:");
+        JTextField tecla10 = new JTextField("");
+
+        panelT10.add(txtT10);
+        panelT10.add(tecla10);
+        panelTeclas.add(panelT10);
+
+
+        //botones de guardar y por defecto
+        JPanel botones = new JPanel();
+        botones.setLayout(new BorderLayout());
+        JButton guardar = new JButton("Guardar");
+        JButton defecto = new JButton("Confis por defecto");
+        botones.add(guardar,BorderLayout.WEST);
+        botones.add(defecto,BorderLayout.EAST);
 
         panelPrincipal.add(panelTeclas);
+        panelPrincipal.add(botones);
         this.add(panelPrincipal);
         this.pack();
     }

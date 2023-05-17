@@ -1,6 +1,7 @@
 package com.cecchettodadone.lanzador;
 
 import javax.swing.*;
+import java.awt.event.KeyListener;
 
 public abstract class Juego {
     public String getNombre() {
