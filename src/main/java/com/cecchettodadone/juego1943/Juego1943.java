@@ -1,21 +1,12 @@
 package com.cecchettodadone.juego1943;
 
-
-import com.cecchettodadone.juego1943.ObjetoGrafico;
 import com.cecchettodadone.lanzador.Juego;
 import com.entropyinteractive.*;
 import javax.imageio.ImageIO;
-import javax.imageio.plugins.jpeg.JPEGImageReadParam;
-import javax.print.attribute.standard.MediaSize;
 import javax.swing.*;
 import java.awt.*;
-//import java.awt.event.KeyEvent;
-//import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.security.Key;
-import java.util.LinkedList;
 
 public class Juego1943 extends Juego    {
 
@@ -23,7 +14,6 @@ public class Juego1943 extends Juego    {
     BufferedImage img_fondo = null;
     final double NAVE_DESPLAZAMIENTO = 150;
 
-    double fps;
     public Juego1943 () {
         setNombre("1943");
         setDesarrolladores("Ramiro Cecchetto y Francisco Dadone");
@@ -88,13 +78,7 @@ public class Juego1943 extends Juego    {
             }
         };
 
-
-
-        new Thread() {
-            public void run() {
-                jgame.run(1.0 / 60.0);
-            }
-        }.start();
+        new Thread(() -> jgame.run(1.0 / 60.0)).start();
 
     }
 }
