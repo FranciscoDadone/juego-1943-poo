@@ -21,7 +21,7 @@ public class Juego1943 extends Juego    {
 
     Avion player = new Avion();
     BufferedImage img_fondo = null;
-    final double NAVE_DESPLAZAMIENTO = 150.0;
+    final double NAVE_DESPLAZAMIENTO = 150;
 
     double fps;
     public Juego1943 () {
@@ -54,26 +54,24 @@ public class Juego1943 extends Juego    {
             public void gameUpdate(double v) {
 
                 Keyboard tecla = this.getKeyboard();
-//                Keyboard tecla = new Keyboard();
-                System.out.println(tecla);
-
-                if (tecla.isKeyPressed(KeyEvent.VK_UP)) {
-                    player.setPosicionY(player.getY() - NAVE_DESPLAZAMIENTO * fps);
-                }
 
                 if (tecla.isKeyPressed(KeyEvent.VK_DOWN)) {
-                    player.setPosicionY(player.getY() + NAVE_DESPLAZAMIENTO * fps);
+                    player.setPosicionY(player.getY() + NAVE_DESPLAZAMIENTO * v);
+                }
+
+                if (tecla.isKeyPressed(KeyEvent.VK_UP)) {
+                    player.setPosicionY(player.getY() - NAVE_DESPLAZAMIENTO * v);
                 }
 
                 if (tecla.isKeyPressed(KeyEvent.VK_LEFT)) {
-                    player.setPosicionX(player.getX() - NAVE_DESPLAZAMIENTO * fps);
+                    player.setPosicionX(player.getX() - NAVE_DESPLAZAMIENTO * v);
                 }
 
                 if (tecla.isKeyPressed(KeyEvent.VK_RIGHT)) {
-                    player.setPosicionX(player.getX() + NAVE_DESPLAZAMIENTO * fps);
+                    player.setPosicionX(player.getX() + NAVE_DESPLAZAMIENTO * v);
                 }
 
-                player.update(fps);
+                player.update(v);
 
             }
 
@@ -89,7 +87,14 @@ public class Juego1943 extends Juego    {
                 Log.info(getClass().getSimpleName(), "Shutting down game");
             }
         };
-        jgame.run(fps);
+
+
+
+        new Thread() {
+            public void run() {
+                jgame.run(1.0 / 60.0);
+            }
+        }.start();
 
     }
 }

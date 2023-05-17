@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.event.KeyListener;
 
 public abstract class Juego {
+
     public String getNombre() {
         return nombre;
     }
@@ -52,6 +53,8 @@ public abstract class Juego {
     private String descripcion;
     private ImageIcon imagenPortada;
 
+    private boolean implementado;
+
     public boolean isImplementado() {
         return implementado;
     }
@@ -59,7 +62,5 @@ public abstract class Juego {
     public void setImplementado(boolean implementado) {
         this.implementado = implementado;
     }
-
-    private boolean implementado;
 
 }

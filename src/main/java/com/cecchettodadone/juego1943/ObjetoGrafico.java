@@ -18,7 +18,7 @@ public abstract class ObjetoGrafico {
 
 
     public void setPosicionX(double x) {
-        this.posicion.y = x;
+        this.posicion.x = x;
     }
     public void setPosicionY(double y) {
         this.posicion.y = y;
