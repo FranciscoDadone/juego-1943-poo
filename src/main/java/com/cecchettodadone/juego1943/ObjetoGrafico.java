@@ -36,4 +36,14 @@ public abstract class ObjetoGrafico {
         g.drawImage(imagen,(int)posicion.getX(),(int)posicion.getY(),null);
     }
 
+    public void setSize(double width, double height) {
+        // Actualiza el tamaño de la imagen si es necesario
+        BufferedImage resizedImage = new BufferedImage((int) width, (int) height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = resizedImage.createGraphics();
+        g2d.drawImage(imagen, 0, 0, (int) width, (int) height, null);
+        g2d.dispose();
+        imagen = resizedImage;
+    }
 }
+
+
