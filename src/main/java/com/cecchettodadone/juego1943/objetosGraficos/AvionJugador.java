@@ -28,18 +28,41 @@ public class AvionJugador extends ObjetoGrafico {
     }
 
     @Override
-    public void update(double delta, Keyboard teclado) {
+    public void update(double delta, Keyboard teclado) {    //Esto lo cambie para que la velocidad sea la misma a los lados y en diagonal
+
+        double velocidad = desplazamiento * delta; // Velocidad lineal
+
+        double desplazamientoX = 0;
+        double desplazamientoY = 0;
 
         if (teclado.isKeyPressed(KeyEvent.VK_DOWN)) {
-            this.setPosicionY(this.getY() + desplazamiento * delta);
+            desplazamientoY += velocidad;
         }
 
         if (teclado.isKeyPressed(KeyEvent.VK_UP)) {
-            this.setPosicionY(this.getY() - desplazamiento * delta);
+            desplazamientoY -= velocidad;
         }
 
         if (teclado.isKeyPressed(KeyEvent.VK_LEFT)) {
-            this.setPosicionX(this.getX() - desplazamiento * delta);
+            desplazamientoX -= velocidad;
+        }
+
+        if (teclado.isKeyPressed(KeyEvent.VK_RIGHT)) {
+            desplazamientoX += velocidad;
+        }
+
+        if (desplazamientoX != 0 && desplazamientoY != 0) {
+            // Movimiento en diagonal
+            double distanciaDiagonal = Math.sqrt(desplazamientoX * desplazamientoX + desplazamientoY * desplazamientoY);
+            double factorNormalizacion = velocidad / distanciaDiagonal;
+            desplazamientoX *= factorNormalizacion;
+            desplazamientoY *= factorNormalizacion;
+        }
+
+        this.setPosicionX(this.getX() + desplazamientoX);
+        this.setPosicionY(this.getY() + desplazamientoY);
+
+        if (teclado.isKeyPressed(KeyEvent.VK_LEFT)) {
             this.setImagen(avionDoblandoIzquierda1);
             doblandoTmr++;
             if (desplazamiento < 600) desplazamiento += 10;
@@ -49,7 +72,6 @@ public class AvionJugador extends ObjetoGrafico {
         }
 
         if (teclado.isKeyPressed(KeyEvent.VK_RIGHT)) {
-            this.setPosicionX(this.getX() + desplazamiento * delta);
             this.setImagen(avionDoblandoDerecha1);
             doblandoTmr++;
             if (desplazamiento < 600) desplazamiento += 10;
@@ -62,7 +84,6 @@ public class AvionJugador extends ObjetoGrafico {
             desplazamiento = NAVE_DESPLAZAMIENTO_NORMAL;
         }
 
-
         // Colisión contra las paredes del frame
         if (this.getX() + this.getDimensiones().getWidth() > Juego1943.getFrame().getWidth()) {
             this.setPosicionX(Juego1943.getFrame().getWidth() - this.getDimensiones().getWidth());
@@ -71,4 +92,6 @@ public class AvionJugador extends ObjetoGrafico {
             this.setPosicionX(0);
         }
     }
+
+
 }
