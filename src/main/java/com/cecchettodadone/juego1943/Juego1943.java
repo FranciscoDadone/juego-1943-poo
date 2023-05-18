@@ -29,7 +29,8 @@ public class Juego1943 extends Juego {
 
     @Override
     public void run(double fps) {
-        this.frame = new JGame("1943", 800,600) {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.frame = new JGame("1943", screenSize.width,screenSize.height) {
 
             @Override
             public void gameStartup() {
@@ -60,6 +61,7 @@ public class Juego1943 extends Juego {
             }
         };
 
+        frame.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         new Thread(() -> frame.run(1.0 / Util.FRAME_RATE)).start();
     }
 
