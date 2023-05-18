@@ -19,7 +19,7 @@ public class Juego1943 extends Juego    {
         setDesarrolladores("Ramiro Cecchetto y Francisco Dadone");
         setVersion("1.0");
         setDescripcion("Juego de batalla");
-        setImagenPortada(new ImageIcon(this.getClass().getResource("/imagenes/juego1943.png")));
+        setImagenPortada(new ImageIcon(this.getClass().getResource("/imagenes/juegos/juego1943/juego1943.png")));
         setImplementado(true);
     }
 

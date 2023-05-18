@@ -31,7 +31,6 @@ public class SistemaDeJuego extends JFrame {
 
     public  SistemaDeJuego() {
         this.setVisible(true);
-//        this.setSize(new Dimension(800,800)); // Toolkit.getDefaultToolkit().getScreenSize()
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setBackground(Color.DARK_GRAY);
 
