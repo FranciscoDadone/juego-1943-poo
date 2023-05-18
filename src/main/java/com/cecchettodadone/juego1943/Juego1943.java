@@ -22,6 +22,10 @@ public class Juego1943 extends Juego {
         setImplementado(true);
     }
 
+    public static void main(String args[]) {
+        new Juego1943().run(60);
+    }
+
     @Override
     public void run(double fps) {
         JGame jgame = new JGame("1943", 800,600) {
