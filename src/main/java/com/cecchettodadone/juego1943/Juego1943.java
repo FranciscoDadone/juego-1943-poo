@@ -1,5 +1,6 @@
 package com.cecchettodadone.juego1943;
 
+import com.cecchettodadone.juego1943.objetosGraficos.AvionJugador;
 import com.cecchettodadone.lanzador.Juego;
 import com.entropyinteractive.*;
 import javax.imageio.ImageIO;
@@ -8,13 +9,12 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
-public class Juego1943 extends Juego    {
+public class Juego1943 extends Juego {
 
-    Avion player = new Avion();
+    AvionJugador avionJugador;
     BufferedImage img_fondo = null;
-    final double NAVE_DESPLAZAMIENTO = 150;
 
-    public Juego1943 () {
+    public Juego1943() {
         setNombre("1943");
         setDesarrolladores("Ramiro Cecchetto y Francisco Dadone");
         setVersion("1.0");
@@ -30,45 +30,24 @@ public class Juego1943 extends Juego    {
             @Override
             public void gameStartup() {
                 try {
-                    img_fondo = ImageIO.read(getClass().getClassLoader().getResourceAsStream("imagenes/fondo.jpg"));
-                    player.setImagen(ImageIO.read(getClass().getClassLoader().getResourceAsStream("imagenes/PrimerAvion.png")));
-                    player.setPosicion(getWidth()/2,getHeight()/2);
-
+                    img_fondo = ImageIO.read(getClass().getClassLoader().getResourceAsStream("imagenes/juegos/juego1943/fondo/fondo1.png"));
                 } catch (Exception e) {
                     System.out.println(e);
                 }
-
+                avionJugador = new AvionJugador(this.getWidth(), this.getHeight());
             }
 
             @Override
             public void gameUpdate(double v) {
+                Keyboard teclado = this.getKeyboard();
 
-                Keyboard tecla = this.getKeyboard();
-
-                if (tecla.isKeyPressed(KeyEvent.VK_DOWN)) {
-                    player.setPosicionY(player.getY() + NAVE_DESPLAZAMIENTO * v);
-                }
-
-                if (tecla.isKeyPressed(KeyEvent.VK_UP)) {
-                    player.setPosicionY(player.getY() - NAVE_DESPLAZAMIENTO * v);
-                }
-
-                if (tecla.isKeyPressed(KeyEvent.VK_LEFT)) {
-                    player.setPosicionX(player.getX() - NAVE_DESPLAZAMIENTO * v);
-                }
-
-                if (tecla.isKeyPressed(KeyEvent.VK_RIGHT)) {
-                    player.setPosicionX(player.getX() + NAVE_DESPLAZAMIENTO * v);
-                }
-
-                player.update(v);
-
+                avionJugador.update(v, teclado);
             }
 
             @Override
             public void gameDraw(Graphics2D g) {
-                g.drawImage(img_fondo,0,0,null);
-                player.draw(g);
+                g.drawImage(img_fondo, 0, 0, 800, 600, null);
+                avionJugador.draw(g);
 
             }
 
@@ -78,9 +57,7 @@ public class Juego1943 extends Juego    {
             }
         };
 
-        new Thread(() -> jgame.run(1.0 / 60.0)).start();
+        new Thread(() -> jgame.run(1.0 / Util.FRAME_RATE)).start();
 
     }
 }
-
-class Avion extends ObjetoGrafico{ }
