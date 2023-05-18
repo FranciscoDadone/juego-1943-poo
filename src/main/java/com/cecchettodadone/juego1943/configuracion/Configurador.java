@@ -1,14 +1,9 @@
-package com.cecchettodadone.juego1943.confis;
+package com.cecchettodadone.juego1943.configuracion;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
-import javax.swing.border.LineBorder;
-import javax.swing.text.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 public class Configurador extends JFrame {
 
