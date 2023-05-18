@@ -9,9 +9,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Juego1943 extends Juego {
+    private AvionJugador avionJugador;
+    private BufferedImage img_fondo = null;
+    private static JGame frame;
 
-    AvionJugador avionJugador;
-    BufferedImage img_fondo = null;
 
     public Juego1943() {
         setNombre("1943");
@@ -28,7 +29,7 @@ public class Juego1943 extends Juego {
 
     @Override
     public void run(double fps) {
-        JGame jgame = new JGame("1943", 800,600) {
+        this.frame = new JGame("1943", 800,600) {
 
             @Override
             public void gameStartup() {
@@ -43,7 +44,6 @@ public class Juego1943 extends Juego {
             @Override
             public void gameUpdate(double v) {
                 Keyboard teclado = this.getKeyboard();
-
                 avionJugador.update(v, teclado);
             }
 
@@ -60,7 +60,10 @@ public class Juego1943 extends Juego {
             }
         };
 
-        new Thread(() -> jgame.run(1.0 / Util.FRAME_RATE)).start();
+        new Thread(() -> frame.run(1.0 / Util.FRAME_RATE)).start();
+    }
 
+    public static JGame getFrame () {
+        return frame;
     }
 }

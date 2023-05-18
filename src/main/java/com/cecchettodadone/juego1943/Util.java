@@ -1,6 +1,7 @@
 package com.cecchettodadone.juego1943;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 

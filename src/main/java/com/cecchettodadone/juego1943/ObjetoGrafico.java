@@ -33,6 +33,10 @@ public abstract class ObjetoGrafico {
         this.dimensiones = d;
     }
 
+    public Dimension getDimensiones () {
+        return this.dimensiones;
+    }
+
     public void setDimensiones(int x, int y) {
         this.dimensiones = new Dimension(x, y);
     }
@@ -49,5 +53,4 @@ public abstract class ObjetoGrafico {
         if (this.dimensiones != null) g.drawImage(imagen, (int) posicion.getX(), (int) posicion.getY(), this.dimensiones.width, this.dimensiones.height, null);
         else g.drawImage(imagen,(int)posicion.getX(),(int)posicion.getY(),null);
     }
-
 }
