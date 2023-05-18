@@ -6,7 +6,6 @@ import com.entropyinteractive.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 public class Juego1943 extends Juego {
@@ -25,7 +24,7 @@ public class Juego1943 extends Juego {
 
     @Override
     public void run(double fps) {
-        JGame jgame = new JGame("1943", 842/2,1683/2) {
+        JGame jgame = new JGame("1943", 800,600) {
 
             @Override
             public void gameStartup() {

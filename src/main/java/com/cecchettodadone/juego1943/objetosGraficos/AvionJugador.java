@@ -3,12 +3,9 @@ package com.cecchettodadone.juego1943.objetosGraficos;
 import com.cecchettodadone.juego1943.ObjetoGrafico;
 import com.cecchettodadone.juego1943.Util;
 import com.entropyinteractive.Keyboard;
-
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 public class AvionJugador extends ObjetoGrafico {
     private final double NAVE_DESPLAZAMIENTO = 300;
