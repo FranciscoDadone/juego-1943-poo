@@ -70,16 +70,20 @@ public class AvionJugador extends ObjetoGrafico {
             desplazamiento = NAVE_DESPLAZAMIENTO_NORMAL;
         }
 
+        this.setPosicionX(this.getX() + desplazamientoX);
+        this.setPosicionY(this.getY() + desplazamientoY);
+
         // Colisión contra las paredes del frame
         if (this.getX() + this.getDimensiones().getWidth() > Juego1943.getFrame().getWidth()) {
             this.setPosicionX(Juego1943.getFrame().getWidth() - this.getDimensiones().getWidth());
         }
-        if (this.getX() <= 0) {
-            this.setPosicionX(0);
+        if (this.getY() + this.getDimensiones().getHeight() * 2 > Juego1943.getFrame().getHeight()) {
+            this.setPosicionY(Juego1943.getFrame().getHeight() - this.getDimensiones().getHeight() * 2);
         }
+        System.out.println(this.getY());
+        if (this.getX() <= 0) this.setPosicionX(0);
+        if (this.getY() <= this.getDimensiones().getHeight()) this.setPosicionY(this.getDimensiones().getHeight());
 
-        this.setPosicionX(this.getX() + desplazamientoX);
-        this.setPosicionY(this.getY() + desplazamientoY);
     }
 
 
