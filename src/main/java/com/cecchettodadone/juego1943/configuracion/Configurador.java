@@ -4,8 +4,26 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+
+import org.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONTokener;
 
 public class Configurador extends JFrame {
+
+    public static void main(String[] args) {
+        new Configurador();
+    }
+
+    JComboBox<String> boxVentana;
+    JComboBox<String> boxMusica;
+    JCheckBox checkSonido;
+    JComboBox boxAvion;
+    JTextField tecla3;
+    JTextField tecla4;
+    JTextField tecla5;
+    JComboBox direccion;
 
     public Configurador() {
         this.setVisible(true);
@@ -25,7 +43,7 @@ public class Configurador extends JFrame {
         JPanel panelventana = new JPanel();
         panelventana.setLayout(new BorderLayout());
         JLabel txtVentana = new JLabel("Seleccionar vista:  ");
-        JComboBox<String> boxVentana = new JComboBox<>();
+        boxVentana = new JComboBox<>();
         boxVentana.addItem("Ventana");
         boxVentana.addItem("Pantalla Completa");
         panelventana.add(txtVentana, BorderLayout.WEST);
@@ -36,7 +54,7 @@ public class Configurador extends JFrame {
         JPanel sonidoPanel = new JPanel();
         sonidoPanel.setLayout(new BoxLayout(sonidoPanel, BoxLayout.X_AXIS));
         JLabel txtSonido = new JLabel("Sonido:  ");
-        JCheckBox checkSonido = new JCheckBox("Activado");
+        checkSonido = new JCheckBox("Activado");
         checkSonido.setSelected(true);
         checkSonido.addActionListener(new ActionListener() {
             @Override
@@ -56,7 +74,7 @@ public class Configurador extends JFrame {
         JPanel panelAvion = new JPanel();
         panelAvion.setLayout(new BorderLayout());
         JLabel txtAvion = new JLabel("Selecionar Avion:         ");
-        JComboBox boxAvion = new JComboBox();
+        boxAvion = new JComboBox();
         boxAvion.addItem("Avion Original");
         boxAvion.addItem("Eurofigther");
         boxAvion.addItem("F-22 Raptor");
@@ -67,7 +85,7 @@ public class Configurador extends JFrame {
         //Musica
         JPanel panelMusica = new JPanel(new BorderLayout());
         JLabel txtMusica = new JLabel("Selecionar musica:           ");
-        JComboBox boxMusica = new JComboBox();
+        boxMusica = new JComboBox();
         boxMusica.addItem("Tema Original");
         boxMusica.addItem("Dua Lipa");
         panelMusica.add(txtMusica,BorderLayout.WEST);
@@ -87,45 +105,38 @@ public class Configurador extends JFrame {
         JPanel panelTeclas = new JPanel();
         panelTeclas.setLayout(new BoxLayout(panelTeclas,BoxLayout.Y_AXIS));
 
-        //tecla 1
-        JPanel panelT1 = new JPanel();
-        panelT1.setLayout(new BoxLayout(panelT1,BoxLayout.X_AXIS));
-
-        JLabel txtT1 = new JLabel("Ventana/Pantalla Completa:");
-        JTextField tecla1 = new JTextField("");
-
-        panelT1.add(txtT1);
-        panelT1.add(tecla1);
-        panelTeclas.add(panelT1);
-
-        //tecla 2
-        JPanel panelT2 = new JPanel();
-        panelT2.setLayout(new BoxLayout(panelT2,BoxLayout.X_AXIS));
-
-        JLabel txtT2 = new JLabel("Activar/Desactivar Sonido:");
-        JTextField tecla2 = new JTextField("");
-
-        panelT2.add(txtT2);
-        panelT2.add(tecla2);
-        panelTeclas.add(panelT2);
 
         //tecla 3
         JPanel panelT3 = new JPanel();
         panelT3.setLayout(new BoxLayout(panelT3,BoxLayout.X_AXIS));
 
         JLabel txtT3 = new JLabel("Pausar/Reanudar Juego:");
-        JTextField tecla3 = new JTextField("");
+        tecla3 = new JTextField("");
 
         panelT3.add(txtT3);
         panelT3.add(tecla3);
         panelTeclas.add(panelT3);
 
+        //teclas direccion
+        JPanel panelDireccion = new JPanel();
+        panelDireccion.setLayout(new BoxLayout(panelDireccion,BoxLayout.X_AXIS));
+
+        JLabel txtDireccion = new JLabel("Selecione las teclas de direccion:");
+
+        direccion = new JComboBox();
+        direccion.addItem("Flechas");
+        direccion.addItem("A/W/S/D");
+
+        panelDireccion.add(txtDireccion);
+        panelDireccion.add(direccion);
+        panelTeclas.add(panelDireccion);
+
         //tecla 4
         JPanel panelT4 = new JPanel();
         panelT4.setLayout(new BoxLayout(panelT4,BoxLayout.X_AXIS));
 
-        JLabel txtT4 = new JLabel("                         Izquierda:");
-        JTextField tecla4 = new JTextField("");
+        JLabel txtT4 = new JLabel("                              Disparar:");
+        tecla4 = new JTextField("");
 
         panelT4.add(txtT4);
         panelT4.add(tecla4);
@@ -135,81 +146,63 @@ public class Configurador extends JFrame {
         JPanel panelT5 = new JPanel();
         panelT5.setLayout(new BoxLayout(panelT5,BoxLayout.X_AXIS));
 
-        JLabel txtT5 = new JLabel("                           Derecha:");
+        JLabel txtT5 = new JLabel("                   Ataque Especial:");
         JTextField tecla5 = new JTextField("");
 
         panelT5.add(txtT5);
         panelT5.add(tecla5);
         panelTeclas.add(panelT5);
 
-        //tecla 6
-        JPanel panelT6 = new JPanel();
-        panelT6.setLayout(new BoxLayout(panelT6,BoxLayout.X_AXIS));
-
-        JLabel txtT6 = new JLabel("                              Arriba:");
-        JTextField tecla6 = new JTextField("");
-
-        panelT6.add(txtT6);
-        panelT6.add(tecla6);
-        panelTeclas.add(panelT6);
-
-        //tecla 7
-        JPanel panelT7 = new JPanel();
-        panelT7.setLayout(new BoxLayout(panelT7,BoxLayout.X_AXIS));
-
-        JLabel txtT7 = new JLabel("                              abajo:");
-        JTextField tecla7 = new JTextField("");
-
-        panelT7.add(txtT7);
-        panelT7.add(tecla7);
-        panelTeclas.add(panelT7);
-
-        //tecla 8
-        JPanel panelT8 = new JPanel();
-        panelT8.setLayout(new BoxLayout(panelT8,BoxLayout.X_AXIS));
-
-        JLabel txtT8 = new JLabel("                              abajo:");
-        JTextField tecla8 = new JTextField("");
-
-        panelT8.add(txtT8);
-        panelT8.add(tecla8);
-        panelTeclas.add(panelT8);
-
-        //tecla 9
-        JPanel panelT9 = new JPanel();
-        panelT9.setLayout(new BoxLayout(panelT9,BoxLayout.X_AXIS));
-
-        JLabel txtT9 = new JLabel("                              Disparar:");
-        JTextField tecla9 = new JTextField("");
-
-        panelT9.add(txtT9);
-        panelT9.add(tecla9);
-        panelTeclas.add(panelT9);
-
-        //tecla 10
-        JPanel panelT10 = new JPanel();
-        panelT10.setLayout(new BoxLayout(panelT10,BoxLayout.X_AXIS));
-
-        JLabel txtT10 = new JLabel("                   Ataque Especial:");
-        JTextField tecla10 = new JTextField("");
-
-        panelT10.add(txtT10);
-        panelT10.add(tecla10);
-        panelTeclas.add(panelT10);
-
 
         //botones de guardar y por defecto
         JPanel botones = new JPanel();
         botones.setLayout(new BorderLayout());
+
         JButton guardar = new JButton("Guardar");
         JButton defecto = new JButton("Confis por defecto");
-        botones.add(guardar,BorderLayout.WEST);
-        botones.add(defecto,BorderLayout.EAST);
+
+        botones.add(guardar,BorderLayout.EAST);
+        botones.add(defecto,BorderLayout.WEST);
+
+        JPanel botonCargar = new JPanel(new BorderLayout());
+        JButton cargaConfis = new JButton("Cargar configuracion");
+        botonCargar.add(cargaConfis,BorderLayout.WEST);
+
+        cargaConfis.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //new SelectorConfiguraciones();
+                System.out.println(getConfis());
+            }
+        });
+
+        defecto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boxVentana.setSelectedItem("Ventana");
+                checkSonido.setSelected(true);
+                boxMusica.setSelectedItem("Tema Original");
+                boxAvion.setSelectedItem("Avion Original");
+                tecla3.setText("Barra espaciadora");
+                direccion.setSelectedItem("flechas");
+                tecla4.setText("x");
+                tecla5.setText("z");
+            }
+        });
 
         panelPrincipal.add(panelTeclas);
         panelPrincipal.add(botones);
+        panelPrincipal.add(botonCargar);
         this.add(panelPrincipal);
         this.pack();
+    }
+
+    private JSONObject getConfis() {
+
+    }
+
+    private void setConfiguracion(JSONObject json) {
+
     }
 
 }

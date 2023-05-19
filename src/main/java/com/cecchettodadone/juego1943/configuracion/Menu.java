@@ -14,6 +14,8 @@ public class Menu extends JFrame {
 
     PanelImagen panelImagen = new PanelImagen();
 
+    Configurador confi;
+
     public Menu(Juego1943 juego) {
         this.setVisible(true);
         this.setTitle("1943");
@@ -108,6 +110,14 @@ public class Menu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 juego.run(1/60);
+
+            }
+        });
+
+        confis.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                confi = new Configurador();
             }
         });
 
