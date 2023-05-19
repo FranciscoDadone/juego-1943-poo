@@ -20,4 +20,9 @@ public class MarioBross extends Juego {
     public void run(double fps) {
         JOptionPane.showMessageDialog(null, "Mario Bross no esta disponible. \n pero podes jugar un 1943 ", "Error", JOptionPane.ERROR_MESSAGE);
     }
+
+    @Override
+    public void run() {
+
+    }
 }

@@ -1,6 +1,7 @@
 package com.cecchettodadone.juego1943;
 
 import com.cecchettodadone.juego1943.configuracion.Configurador;
+import com.cecchettodadone.juego1943.configuracion.Menu;
 import com.cecchettodadone.juego1943.objetosGraficos.AvionJugador;
 import com.cecchettodadone.juego1943.objetosGraficos.FondoJuego;
 import com.cecchettodadone.lanzador.Juego;
@@ -29,9 +30,12 @@ public class Juego1943 extends Juego {
         new Juego1943().run(60);
     }
 
+    public void run(){
+        new Menu(this);
+    }
+
     @Override
     public void run(double fps) {
-        new Configurador();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.frame = new JGame("1943", screenSize.width,screenSize.height) {
 
@@ -58,7 +62,6 @@ public class Juego1943 extends Juego {
                 Log.info(getClass().getSimpleName(), "Shutting down game");
             }
         };
-
         frame.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         new Thread(() -> frame.run(1.0 / Util.FRAME_RATE)).start();
     }

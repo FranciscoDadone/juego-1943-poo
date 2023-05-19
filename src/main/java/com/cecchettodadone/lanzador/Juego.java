@@ -46,6 +46,7 @@ public abstract class Juego {
     }
 
     public abstract void run (double fps);
+    public abstract void run ();
 
     private String nombre;
     private String desarrolladores;
