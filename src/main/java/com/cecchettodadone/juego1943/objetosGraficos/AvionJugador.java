@@ -15,7 +15,7 @@ public class AvionJugador extends ObjetoGrafico {
     private int doblandoTmr = 0;
     private BufferedImage avion, avionDoblandoDerecha1, avionDoblandoIzquierda1, avionDoblandoDerecha2, avionDoblandoIzquierda2;
 
-    public AvionJugador (int x, int y) {
+    public AvionJugador (int posX, int posY) {
         avion = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion.png");
         avionDoblandoDerecha1 = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion_doblando_derecha1.png");
         avionDoblandoDerecha2 = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion_doblando_derecha2.png");
@@ -23,12 +23,13 @@ public class AvionJugador extends ObjetoGrafico {
         avionDoblandoIzquierda2 = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion_doblando_izquierda2.png");
 
         this.setImagen(avion);
-        this.setPosicion(x / 2, y / 2);
+        this.setPosicion(posX, posY);
         this.setDimensiones(new Dimension(75, 48));
     }
 
     @Override
-    public void update(double delta, Keyboard teclado) {
+    public void update(double delta) {
+        Keyboard teclado = Juego1943.getFrame().getKeyboard();
 
         if (teclado.isKeyPressed(KeyEvent.VK_DOWN)) {
             this.setPosicionY(this.getY() + desplazamiento * delta);

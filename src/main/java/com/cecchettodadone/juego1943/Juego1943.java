@@ -1,6 +1,7 @@
 package com.cecchettodadone.juego1943;
 
 import com.cecchettodadone.juego1943.objetosGraficos.AvionJugador;
+import com.cecchettodadone.juego1943.objetosGraficos.FondoJuego;
 import com.cecchettodadone.lanzador.Juego;
 import com.entropyinteractive.*;
 import javax.imageio.ImageIO;
@@ -10,7 +11,7 @@ import java.awt.image.BufferedImage;
 
 public class Juego1943 extends Juego {
     private AvionJugador avionJugador;
-    private BufferedImage img_fondo = null;
+    private FondoJuego fondoJuego;
     private static JGame frame;
 
 
@@ -34,25 +35,20 @@ public class Juego1943 extends Juego {
 
             @Override
             public void gameStartup() {
-                try {
-                    img_fondo = ImageIO.read(getClass().getClassLoader().getResourceAsStream("imagenes/juegos/juego1943/fondo/fondo1.png"));
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
-                avionJugador = new AvionJugador(this.getWidth(), this.getHeight());
+                fondoJuego = new FondoJuego();
+                avionJugador = new AvionJugador(this.getWidth() / 2, this.getHeight() / 2);
             }
 
             @Override
             public void gameUpdate(double v) {
-                Keyboard teclado = this.getKeyboard();
-                avionJugador.update(v, teclado);
+                avionJugador.update(v);
+                fondoJuego.update(v);
             }
 
             @Override
             public void gameDraw(Graphics2D g) {
-                g.drawImage(img_fondo, 0, 0, 800, 600, null);
+                fondoJuego.draw(g);
                 avionJugador.draw(g);
-
             }
 
             @Override

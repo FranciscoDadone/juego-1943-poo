@@ -12,7 +12,7 @@ public abstract class ObjetoGrafico {
     private Point2D.Double posicion  = new Point2D.Double();
     private Dimension dimensiones;
 
-    public abstract void update (double delta, Keyboard teclado);
+    public abstract void update (double delta);
 
     public void setImagen(BufferedImage imagen) {
         this.imagen = imagen;
