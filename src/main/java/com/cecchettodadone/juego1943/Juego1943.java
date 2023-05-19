@@ -1,5 +1,6 @@
 package com.cecchettodadone.juego1943;
 
+import com.cecchettodadone.juego1943.configuracion.Configurador;
 import com.cecchettodadone.juego1943.objetosGraficos.AvionJugador;
 import com.cecchettodadone.juego1943.objetosGraficos.FondoJuego;
 import com.cecchettodadone.lanzador.Juego;
@@ -30,6 +31,7 @@ public class Juego1943 extends Juego {
 
     @Override
     public void run(double fps) {
+        new Configurador();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.frame = new JGame("1943", screenSize.width,screenSize.height) {
 
