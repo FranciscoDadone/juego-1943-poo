@@ -30,31 +30,38 @@ public class AvionJugador extends ObjetoGrafico {
     @Override
     public void update(double delta) {
         Keyboard teclado = Juego1943.getFrame().getKeyboard();
+        double velocidad = desplazamiento * delta; // Velocidad lineal
 
-        if (teclado.isKeyPressed(KeyEvent.VK_DOWN)) {
-            this.setPosicionY(this.getY() + desplazamiento * delta);
-        }
+        double desplazamientoX = 0;
+        double desplazamientoY = 0;
 
-        if (teclado.isKeyPressed(KeyEvent.VK_UP)) {
-            this.setPosicionY(this.getY() - desplazamiento * delta);
-        }
+        if (teclado.isKeyPressed(KeyEvent.VK_DOWN)) desplazamientoY += velocidad;
+        if (teclado.isKeyPressed(KeyEvent.VK_UP)) desplazamientoY -= velocidad;
 
         if (teclado.isKeyPressed(KeyEvent.VK_LEFT)) {
-            this.setPosicionX(this.getX() - desplazamiento * delta);
+            desplazamientoX -= velocidad;
             this.setImagen(avionDoblandoIzquierda1);
             doblandoTmr++;
-            if (desplazamiento < 600) desplazamiento += 10;
+            if (desplazamiento < 1000) desplazamiento += 10;
             if (doblandoTmr >= SEGUNDA_IMG_DOBLANDO_TMR) {
                 this.setImagen(avionDoblandoIzquierda2);
             }
         }
 
         if (teclado.isKeyPressed(KeyEvent.VK_RIGHT)) {
-            this.setPosicionX(this.getX() + desplazamiento * delta);
+            desplazamientoX += velocidad;
             this.setImagen(avionDoblandoDerecha1);
             doblandoTmr++;
-            if (desplazamiento < 600) desplazamiento += 10;
+            if (desplazamiento < 1000) desplazamiento += 10;
             if (doblandoTmr >= SEGUNDA_IMG_DOBLANDO_TMR) this.setImagen(avionDoblandoDerecha2);
+        }
+
+        if (desplazamientoX != 0 && desplazamientoY != 0) {
+            // Movimiento en diagonal
+            double distanciaDiagonal = Math.sqrt(desplazamientoX * desplazamientoX + desplazamientoY * desplazamientoY);
+            double factorNormalizacion = velocidad / distanciaDiagonal;
+            desplazamientoX *= factorNormalizacion;
+            desplazamientoY *= factorNormalizacion;
         }
 
         if (!teclado.isKeyPressed(KeyEvent.VK_RIGHT) && !teclado.isKeyPressed(KeyEvent.VK_LEFT)) {
@@ -63,7 +70,6 @@ public class AvionJugador extends ObjetoGrafico {
             desplazamiento = NAVE_DESPLAZAMIENTO_NORMAL;
         }
 
-
         // Colisión contra las paredes del frame
         if (this.getX() + this.getDimensiones().getWidth() > Juego1943.getFrame().getWidth()) {
             this.setPosicionX(Juego1943.getFrame().getWidth() - this.getDimensiones().getWidth());
@@ -71,5 +77,10 @@ public class AvionJugador extends ObjetoGrafico {
         if (this.getX() <= 0) {
             this.setPosicionX(0);
         }
+
+        this.setPosicionX(this.getX() + desplazamientoX);
+        this.setPosicionY(this.getY() + desplazamientoY);
     }
+
+
 }
