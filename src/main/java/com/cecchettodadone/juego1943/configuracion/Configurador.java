@@ -12,10 +12,6 @@ import org.json.JSONTokener;
 
 public class Configurador extends JFrame {
 
-    public static void main(String[] args) {
-        new Configurador();
-    }
-
     JComboBox<String> boxVentana;
     JComboBox<String> boxMusica;
     JCheckBox checkSonido;
@@ -24,13 +20,16 @@ public class Configurador extends JFrame {
     JTextField tecla4;
     JTextField tecla5;
     JComboBox direccion;
+//    JSONObject json = null;
 
     public Configurador() {
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+
         JPanel panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new BoxLayout(panelPrincipal,BoxLayout.Y_AXIS));
-        this.setResizable(false);
 
         //titulo configuracion general
         JPanel panelTitulo = new JPanel();
@@ -199,10 +198,27 @@ public class Configurador extends JFrame {
 
     private JSONObject getConfis() {
 
+        JSONObject json = new JSONObject();
+
+        json.put("ventana",boxVentana.getSelectedItem());
+        json.put("musica",boxMusica.getSelectedItem());
+        json.put("sonido",checkSonido.isSelected());
+        json.put("avion",boxAvion.getSelectedItem());
+        json.put("pausar/reanudar",tecla3.getText());
+        json.put("disparar",tecla4.getText());
+        json.put("ataqueEspecial",tecla5.getText());
+        json.put("direccion",direccion.getSelectedItem());
+
+        return json;
+    }
+
+    public static void main(String[] args) {
+        new Configurador();
     }
 
     private void setConfiguracion(JSONObject json) {
 
+        boxVentana.setSelectedItem(json.getString(""));
     }
 
 }

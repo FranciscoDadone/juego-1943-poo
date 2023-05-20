@@ -23,6 +23,7 @@ public class Menu extends JFrame {
         this.setSize(new Dimension(496, 680));
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(false);
+        this.setLocationRelativeTo(null);
 
         Border marco = BorderFactory.createLineBorder(Color.BLACK,2);
 
