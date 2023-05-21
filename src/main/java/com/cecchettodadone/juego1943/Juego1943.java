@@ -30,7 +30,7 @@ public class Juego1943 extends Juego {
         new Juego1943().run(60);
     }
 
-    public void run(){
+    public void run() {
         new Menu(this);
     }
 
