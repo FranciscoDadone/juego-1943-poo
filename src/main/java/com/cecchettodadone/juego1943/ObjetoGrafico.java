@@ -4,6 +4,7 @@ import com.entropyinteractive.Keyboard;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public abstract class ObjetoGrafico {
@@ -35,6 +36,9 @@ public abstract class ObjetoGrafico {
 
     public Dimension getDimensiones () {
         return this.dimensiones;
+    }
+    public Rectangle getRectagle () {
+        return new Rectangle((int)this.getX(), (int)this.getY(), this.getDimensiones().width, this.getDimensiones().height);
     }
 
     public void setDimensiones(int x, int y) {

@@ -27,6 +27,11 @@ public class AvionJugador extends Avion {
         this.setDimensiones(new Dimension(75, 48));
     }
 
+    public void disparar () {
+        Juego1943.municiones.add(new Bala((int)this.getX() + 10, (int)this.getY() - 20));
+        Juego1943.municiones.add(new Bala((int)this.getX() + this.getDimensiones().width - 10, (int)this.getY() - 20));
+    }
+
     @Override
     public void update(double delta) {
         Keyboard teclado = Juego1943.getFrame().getKeyboard();
@@ -87,8 +92,7 @@ public class AvionJugador extends Avion {
         if (teclado.isKeyPressed(KeyEvent.VK_SPACE)) {
             int c = (int)(contador * delta);
             if (c != 0) {
-                Juego1943.objetosGraficos.add(new Bala((int)this.getX() + 10, (int)this.getY() - 20));
-                Juego1943.objetosGraficos.add(new Bala((int)this.getX() + this.getDimensiones().width - 10, (int)this.getY() - 20));
+                disparar();
                 contador = 0;
             }
             else contador += 10;
