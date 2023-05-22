@@ -10,7 +10,6 @@ public class AvionEnemigo extends Avion {
     private BufferedImage avion;
 
     public AvionEnemigo(int posX, int posY) {
-        super(posX, posY);
         avion = Util.getImage("imagenes/juegos/juego1943/avion_enemigo1/enemigo.png");
 
         this.setImagen(avion);
@@ -20,6 +19,6 @@ public class AvionEnemigo extends Avion {
 
     @Override
     public void update(double delta) {
-        super.update(delta);
+
     }
 }

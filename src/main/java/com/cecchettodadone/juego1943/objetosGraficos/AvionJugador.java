@@ -14,7 +14,6 @@ public class AvionJugador extends Avion {
     private BufferedImage avion, avionDoblandoDerecha1, avionDoblandoIzquierda1, avionDoblandoDerecha2, avionDoblandoIzquierda2;
 
     public AvionJugador (int posX, int posY) {
-        super(posX, posY);
         setDesplazamiento(300);
         avion = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion.png");
         avionDoblandoDerecha1 = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion_doblando_derecha1.png");
@@ -30,7 +29,7 @@ public class AvionJugador extends Avion {
     @Override
     public void update(double delta) {
         Keyboard teclado = Juego1943.getFrame().getKeyboard();
-        double velocidad = desplazamiento * delta; // Velocidad lineal
+        double velocidad = velDesplazamiento * delta; // Velocidad lineal
 
         double desplazamientoX = 0;
         double desplazamientoY = 0;
@@ -42,7 +41,7 @@ public class AvionJugador extends Avion {
             desplazamientoX -= velocidad;
             this.setImagen(avionDoblandoIzquierda1);
             doblandoTmr++;
-            if (desplazamiento < 1000) desplazamiento += 10;
+            if (velDesplazamiento < 1000) velDesplazamiento += 10;
             if (doblandoTmr >= SEGUNDA_IMG_DOBLANDO_TMR) {
                 this.setImagen(avionDoblandoIzquierda2);
             }
@@ -52,7 +51,7 @@ public class AvionJugador extends Avion {
             desplazamientoX += velocidad;
             this.setImagen(avionDoblandoDerecha1);
             doblandoTmr++;
-            if (desplazamiento < 1000) desplazamiento += 10;
+            if (velDesplazamiento < 1000) velDesplazamiento += 10;
             if (doblandoTmr >= SEGUNDA_IMG_DOBLANDO_TMR) this.setImagen(avionDoblandoDerecha2);
         }
 
@@ -67,7 +66,7 @@ public class AvionJugador extends Avion {
         if (!teclado.isKeyPressed(KeyEvent.VK_RIGHT) && !teclado.isKeyPressed(KeyEvent.VK_LEFT)) {
             this.setImagen(avion);
             doblandoTmr = 0;
-            desplazamiento = NAVE_DESPLAZAMIENTO_NORMAL;
+            velDesplazamiento = NAVE_DESPLAZAMIENTO_NORMAL;
         }
 
         this.setPosicionX(this.getX() + desplazamientoX);
@@ -80,7 +79,7 @@ public class AvionJugador extends Avion {
         if (this.getY() + this.getDimensiones().getHeight() * 2 > Juego1943.getFrame().getHeight()) {
             this.setPosicionY(Juego1943.getFrame().getHeight() - this.getDimensiones().getHeight() * 2);
         }
-        
+
         if (this.getX() <= 0) this.setPosicionX(0);
         if (this.getY() <= this.getDimensiones().getHeight()) this.setPosicionY(this.getDimensiones().getHeight());
 
