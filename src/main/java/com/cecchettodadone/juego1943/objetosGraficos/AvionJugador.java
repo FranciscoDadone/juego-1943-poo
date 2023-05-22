@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 public class AvionJugador extends Avion {
     private final int SEGUNDA_IMG_DOBLANDO_TMR = (int)Util.FRAME_RATE / 2;
     private int doblandoTmr = 0;
+    private int contador = 0;
     private BufferedImage avion, avionDoblandoDerecha1, avionDoblandoIzquierda1, avionDoblandoDerecha2, avionDoblandoIzquierda2;
 
     public AvionJugador (int posX, int posY) {
@@ -83,7 +84,15 @@ public class AvionJugador extends Avion {
         if (this.getX() <= 0) this.setPosicionX(0);
         if (this.getY() <= this.getDimensiones().getHeight()) this.setPosicionY(this.getDimensiones().getHeight());
 
+        if (teclado.isKeyPressed(KeyEvent.VK_SPACE)) {
+            int c = (int)(contador * delta);
+            if (c != 0) {
+                Juego1943.objetosGraficos.add(new Bala((int)this.getX() + 10, (int)this.getY() - 20));
+                Juego1943.objetosGraficos.add(new Bala((int)this.getX() + this.getDimensiones().width - 10, (int)this.getY() - 20));
+                contador = 0;
+            }
+            else contador += 10;
+        }
+
     }
-
-
 }

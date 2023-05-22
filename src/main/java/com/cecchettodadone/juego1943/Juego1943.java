@@ -13,12 +13,14 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Juego1943 extends Juego {
     private AvionJugador avionJugador;
     private AvionEnemigo enemigo;
     private FondoJuego fondoJuego;
     private static JGame frame;
+    public static ArrayList<ObjetoGrafico> objetosGraficos = new ArrayList<>();
 
 
     public Juego1943() {
@@ -44,19 +46,28 @@ public class Juego1943 extends Juego {
                 fondoJuego = new FondoJuego();
                 avionJugador = new AvionJugador(this.getWidth() / 2, this.getHeight() / 2);
                 enemigo = new AvionEnemigo(this.getWidth() / 2, this.getHeight() / 2);
+
+                objetosGraficos.add(fondoJuego);
+                objetosGraficos.add(avionJugador);
+                objetosGraficos.add(enemigo);
             }
 
             @Override
             public void gameUpdate(double v) {
-                avionJugador.update(v);
-                fondoJuego.update(v);
+                for (int i = 0; i < objetosGraficos.size(); i++) {
+                    objetosGraficos.get(i).update(v);
+                    if (objetosGraficos.get(i).getY() < -500) objetosGraficos.remove(i);
+                }
             }
 
             @Override
             public void gameDraw(Graphics2D g) {
-                fondoJuego.draw(g);
-                avionJugador.draw(g);
-                enemigo.draw(g);
+//                fondoJuego.draw(g);
+//                avionJugador.draw(g);
+//                enemigo.draw(g);
+                objetosGraficos.forEach((obj) -> {
+                    obj.draw(g);
+                });
             }
 
             @Override
