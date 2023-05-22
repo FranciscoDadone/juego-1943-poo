@@ -30,10 +30,6 @@ public class Juego1943 extends Juego {
         setImplementado(true);
     }
 
-    public static void main(String args[]) {
-        new Juego1943().run(60);
-    }
-
     public void run() {
         new Menu(this);
     }
