@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
-public class AvionJugador extends ObjetoGrafico {
+public class AvionJugador extends Avion {
     private final int NAVE_DESPLAZAMIENTO_NORMAL = 300;
     private int desplazamiento = NAVE_DESPLAZAMIENTO_NORMAL;
     private final int SEGUNDA_IMG_DOBLANDO_TMR = (int)Util.FRAME_RATE / 2;
@@ -16,6 +16,8 @@ public class AvionJugador extends ObjetoGrafico {
     private BufferedImage avion, avionDoblandoDerecha1, avionDoblandoIzquierda1, avionDoblandoDerecha2, avionDoblandoIzquierda2;
 
     public AvionJugador (int posX, int posY) {
+        super(posX, posY);
+        setDesplazamiento(300);
         avion = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion.png");
         avionDoblandoDerecha1 = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion_doblando_derecha1.png");
         avionDoblandoDerecha2 = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion_doblando_derecha2.png");
