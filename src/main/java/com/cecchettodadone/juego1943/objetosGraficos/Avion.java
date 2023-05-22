@@ -15,5 +15,4 @@ public abstract class Avion extends ObjetoGrafico {
 
     @Override
     public void update(double delta) {}
-
 }

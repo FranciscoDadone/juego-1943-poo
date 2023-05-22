@@ -2,10 +2,13 @@ package com.cecchettodadone.juego1943;
 
 import com.cecchettodadone.juego1943.configuracion.Configurador;
 import com.cecchettodadone.juego1943.configuracion.Menu;
+import com.cecchettodadone.juego1943.objetosGraficos.AvionEnemigo;
 import com.cecchettodadone.juego1943.objetosGraficos.AvionJugador;
 import com.cecchettodadone.juego1943.objetosGraficos.FondoJuego;
 import com.cecchettodadone.lanzador.Juego;
 import com.entropyinteractive.*;
+import com.sun.jdi.event.MethodEntryEvent;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +16,7 @@ import java.awt.image.BufferedImage;
 
 public class Juego1943 extends Juego {
     private AvionJugador avionJugador;
+    private AvionEnemigo enemigo;
     private FondoJuego fondoJuego;
     private static JGame frame;
 
@@ -43,6 +47,7 @@ public class Juego1943 extends Juego {
             public void gameStartup() {
                 fondoJuego = new FondoJuego();
                 avionJugador = new AvionJugador(this.getWidth() / 2, this.getHeight() / 2);
+                enemigo = new AvionEnemigo(this.getWidth() / 2, this.getHeight() / 2);
             }
 
             @Override
@@ -55,6 +60,7 @@ public class Juego1943 extends Juego {
             public void gameDraw(Graphics2D g) {
                 fondoJuego.draw(g);
                 avionJugador.draw(g);
+                enemigo.draw(g);
             }
 
             @Override
