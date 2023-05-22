@@ -9,8 +9,6 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 public class AvionJugador extends Avion {
-    private final int NAVE_DESPLAZAMIENTO_NORMAL = 300;
-    private int desplazamiento = NAVE_DESPLAZAMIENTO_NORMAL;
     private final int SEGUNDA_IMG_DOBLANDO_TMR = (int)Util.FRAME_RATE / 2;
     private int doblandoTmr = 0;
     private BufferedImage avion, avionDoblandoDerecha1, avionDoblandoIzquierda1, avionDoblandoDerecha2, avionDoblandoIzquierda2;
