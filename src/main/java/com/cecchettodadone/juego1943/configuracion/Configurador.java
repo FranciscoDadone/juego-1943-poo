@@ -2,12 +2,21 @@ package com.cecchettodadone.juego1943.configuracion;
 
 import javax.sql.rowset.serial.SerialJavaObject;
 import javax.swing.*;
+import javax.xml.stream.XMLOutputFactory;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import org.json.JSONObject;
 
 public class Configurador extends JFrame {
+
+    public static void main(String[] args) {
+        new Configurador();
+    }
 
     JComboBox<String> boxVentana;
     JComboBox<String> boxAvion;
@@ -18,26 +27,21 @@ public class Configurador extends JFrame {
     JTextField tecla10;
 
 
-
-
-
-
-    public static void main(String[] args) {
-        new Configurador();
-    }
-
     public Configurador() {
 
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel panelPrincipal = new JPanel();
-        panelPrincipal.setLayout(new BoxLayout(panelPrincipal,BoxLayout.Y_AXIS));
         this.setResizable(false);
         this.setLocationRelativeTo(null);
 
-        JPanel panelTitulo = new JPanel();
+        JPanel panelPrincipal = new JPanel();
+        panelPrincipal.setLayout(new BoxLayout(panelPrincipal,BoxLayout.Y_AXIS));
+
         //titulo configuracion general
+        JPanel panelTitulo = new JPanel();
         panelTitulo.add(new JLabel("<html><u>Configuracion General</u></html>"),BorderLayout.CENTER);
+
+        panelPrincipal.add(panelTitulo);
 
         //ventana o pantalla completa
         JPanel panelventana = new JPanel();
@@ -149,35 +153,69 @@ public class Configurador extends JFrame {
         panelTeclas.add(panelT10);
 
 
-        //botones de guardar y por defecto
+        //botones de cargar, guardar y por defecto
         JPanel botones = new JPanel();
         botones.setLayout(new BorderLayout());
 
-        JButton guardar = new JButton("Guardar");
-        JButton defecto = new JButton("Confis por defecto");
+        JButton btnGuardar = new JButton("Guardar");
+        JButton bvtnDefecto = new JButton("Confis por defecto");
 
-        botones.add(guardar,BorderLayout.WEST);
-        botones.add(defecto,BorderLayout.EAST);
+        botones.add(btnGuardar,BorderLayout.EAST);
+        botones.add(bvtnDefecto,BorderLayout.WEST);
 
         panelPrincipal.add(panelTeclas);
         panelPrincipal.add(botones);
 
-        guardar.addActionListener(new ActionListener() {
+        JLabel errorConfis = new JLabel("<html>Configuracion existente<br>intente de nuevo<br>    </html>");
+        errorConfis.setVisible(false);
+        errorConfis.setForeground(Color.RED);
+
+        btnGuardar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(getConfis());
+
+                File file = new File("src/main/resources/configuraciones");
+
+                String[] arreglo = file.list();
+
+                String nombre = JOptionPane.showInputDialog(null, "Ingrese su nombre:", "Nombre", JOptionPane.PLAIN_MESSAGE);
+
+                for (String elemento : arreglo) {
+                    if (elemento.equals(nombre))
+                        JOptionPane.showMessageDialog(null, "Esta configuracion ya existe", "Error", JOptionPane.ERROR_MESSAGE);
+                    else
+                        guardarConfi(nombre, getConfis());
+
+                }
             }
         });
 
-        defecto.addActionListener(new ActionListener() {
+        bvtnDefecto.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setConfisDefecto();
             }
         });
 
+
+        JPanel botonAux = new JPanel(new BorderLayout());
+        JButton btnCargar = new JButton("Cargar Confi");
+
+        btnCargar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        botonAux.add(btnCargar,BorderLayout.WEST);
+        botonAux.add(errorConfis,BorderLayout.EAST);
+        panelPrincipal.add(botonAux);
+
+
         this.add(panelPrincipal);
         this.pack();
+        this.setSize(new Dimension(getWidth(),getHeight()+10));
     }
 
     public JSONObject getConfis() {
@@ -205,6 +243,22 @@ public class Configurador extends JFrame {
     }
 
     public void setCongis(JSONObject json) {
+
+    }
+
+    private void guardarConfi(String nombre, JSONObject json) {
+
+        File file = new File("src/main/resources/configuraciones");
+        File archivo = new File(file,nombre + ".txt");
+
+        try {
+            FileWriter fileWriter = new FileWriter(archivo);
+            fileWriter.write(json.toString());
+            fileWriter.close();
+
+        } catch (Exception a) {
+            System.out.println(a);
+        }
 
     }
 

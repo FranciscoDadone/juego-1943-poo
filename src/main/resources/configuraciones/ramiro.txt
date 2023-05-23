@@ -1,0 +1,1 @@
+{"ventana":"Ventana","ataque_especial":"","direccion":"Flechas","disparo":"","musica":"Tema Original","pausa":"","avion":"Avion Original"}
