@@ -1,14 +1,12 @@
 package com.cecchettodadone.juego1943.configuracion;
 
-import javax.sql.rowset.serial.SerialJavaObject;
 import javax.swing.*;
-import javax.xml.stream.XMLOutputFactory;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,9 +22,9 @@ public class Configurador extends JFrame {
     JComboBox<String> boxAvion;
     JComboBox<String> boxMusica;
     JComboBox<String> boxDirecicon;
-    JTextField tecla3;
-    JTextField tecla9;
-    JTextField tecla10;
+    JTextField pausar;
+    JTextField disparar;
+    JTextField ataqueEspecial;
 
 
     public Configurador() {
@@ -117,9 +115,9 @@ public class Configurador extends JFrame {
         panelT3.setLayout(new BoxLayout(panelT3,BoxLayout.X_AXIS));
         panelT3.add(new JLabel("Pausar/Reanudar Juego:   "));
 
-        tecla3 = new JTextField("");
+        pausar = new JTextField("");
 
-        panelT3.add(tecla3);
+        panelT3.add(pausar);
         panelTeclas.add(panelT3);
 
         //teclas de Direccion
@@ -139,9 +137,9 @@ public class Configurador extends JFrame {
         panelT9.setLayout(new BoxLayout(panelT9,BoxLayout.X_AXIS));
         panelT9.add(new JLabel("Disparar:                           "));
 
-        tecla9 = new JTextField("");
+        disparar = new JTextField("");
 
-        panelT9.add(tecla9);
+        panelT9.add(disparar);
         panelTeclas.add(panelT9);
 
         //tecla 10
@@ -149,9 +147,9 @@ public class Configurador extends JFrame {
         panelT10.setLayout(new BoxLayout(panelT10,BoxLayout.X_AXIS));
         panelT10.add(new JLabel("Ataque Especial:               "));
 
-        tecla10 = new JTextField("");
+        ataqueEspecial = new JTextField("");
 
-        panelT10.add(tecla10);
+        panelT10.add(ataqueEspecial);
         panelTeclas.add(panelT10);
 
 
@@ -175,18 +173,7 @@ public class Configurador extends JFrame {
         btnGuardar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                File file = new File("src/main/resources/configuraciones");
-
-                List<String> archivos = Arrays.asList(file.list()) ;
-
-                String nombre = JOptionPane.showInputDialog(null, "Ingrese su nombre:", "Nombre", JOptionPane.PLAIN_MESSAGE);
-
-                if (!archivos.contains(nombre+".txt"))
-                    guardarConfi(nombre,getConfis());
-                else
-                    JOptionPane.showMessageDialog(null, "Esta configuracion ya existe", "Error", JOptionPane.ERROR_MESSAGE);
-
+                guardarConfi();
             }
         });
 
@@ -207,8 +194,13 @@ public class Configurador extends JFrame {
                 File file = new File("src/main/resources/configuraciones");
                 String[] archivos = file.list();
 
+                for (int i=0 ; i<archivos.length; i++ ) {
+                    archivos[i] = archivos[i].substring(0,archivos[i].lastIndexOf("."));
+                }
+
                 int eleccion = JOptionPane.showOptionDialog(null, "Selecciona una configuracion", "Opciones", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, archivos, archivos[0]);
 
+//                System.out.println(archivos[eleccion]+".txt");
             }
         });
 
@@ -229,9 +221,9 @@ public class Configurador extends JFrame {
         json.put("musica",boxMusica.getSelectedItem());
         json.put("avion",boxAvion.getSelectedItem());
         json.put("direccion",boxDirecicon.getSelectedItem());
-        json.put("pausa",tecla3.getText());
-        json.put("disparo",tecla9.getText());
-        json.put("ataque_especial",tecla10.getText());
+        json.put("pausa", pausar.getText());
+        json.put("disparo", disparar.getText());
+        json.put("ataque_especial", ataqueEspecial.getText());
 
         return json;
     }
@@ -241,32 +233,45 @@ public class Configurador extends JFrame {
         boxMusica.setSelectedItem("Tema Original");
         boxAvion.setSelectedItem("Avion Original");
         boxDirecicon.setSelectedItem("Flechas");
-        tecla3.setText("Barra Espaciadora");
-        tecla9.setText("x");
-        tecla10.setText("z");
+        pausar.setText("Barra Espaciadora");
+        disparar.setText("x");
+        ataqueEspecial.setText("z");
     }
 
     public void setCongis(JSONObject json) {
-
+        boxVentana.setSelectedItem(json.getString("ventana"));
     }
 
-    private void guardarConfi(String nombre, JSONObject json) {
+    private void guardarConfi() {
+        File directorio = new File("src/main/resources/configuraciones");
+        String nombre = JOptionPane.showInputDialog(null, "Ingrese su nombre:", "Nombre", JOptionPane.PLAIN_MESSAGE);
 
-        File file = new File("src/main/resources/configuraciones");
-        File archivo = new File(file,nombre + ".txt");
+        List<String> archivos = Arrays.asList(directorio.list());
 
-        try {
-            FileWriter fileWriter = new FileWriter(archivo);
-            fileWriter.write(json.toString());
-            fileWriter.close();
+        FileWriter escritor = null;
 
-        } catch (Exception a) {
-            System.out.println(a);
+        if (!archivos.contains(nombre + ".txt")) {
+            try {
+                File archivo = new File(directorio, nombre + ".txt");
+                escritor = new FileWriter(archivo);
+                escritor.write(getConfis().toString());
+                System.out.println(getConfis().toString());
+            } catch (Exception a) {
+                System.out.println(a);
+            } finally {
+                try {
+                    if (escritor != null) {
+                        escritor.close();
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Esta configuracion ya existe", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-
-
     }
 
 
 }
+
