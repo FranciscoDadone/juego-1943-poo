@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import org.json.JSONObject;
 
@@ -176,17 +178,15 @@ public class Configurador extends JFrame {
 
                 File file = new File("src/main/resources/configuraciones");
 
-                String[] arreglo = file.list();
+                List<String> archivos = Arrays.asList(file.list()) ;
 
                 String nombre = JOptionPane.showInputDialog(null, "Ingrese su nombre:", "Nombre", JOptionPane.PLAIN_MESSAGE);
 
-                for (String elemento : arreglo) {
-                    if (elemento.equals(nombre))
-                        JOptionPane.showMessageDialog(null, "Esta configuracion ya existe", "Error", JOptionPane.ERROR_MESSAGE);
-                    else
-                        guardarConfi(nombre, getConfis());
+                if (!archivos.contains(nombre+".txt"))
+                    guardarConfi(nombre,getConfis());
+                else
+                    JOptionPane.showMessageDialog(null, "Esta configuracion ya existe", "Error", JOptionPane.ERROR_MESSAGE);
 
-                }
             }
         });
 
@@ -204,6 +204,10 @@ public class Configurador extends JFrame {
         btnCargar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                File file = new File("src/main/resources/configuraciones");
+                String[] archivos = file.list();
+
+                int eleccion = JOptionPane.showOptionDialog(null, "Selecciona una configuracion", "Opciones", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, archivos, archivos[0]);
 
             }
         });
@@ -259,6 +263,8 @@ public class Configurador extends JFrame {
         } catch (Exception a) {
             System.out.println(a);
         }
+
+
 
     }
 
