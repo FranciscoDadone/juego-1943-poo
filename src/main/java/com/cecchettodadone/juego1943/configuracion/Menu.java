@@ -1,12 +1,13 @@
 package com.cecchettodadone.juego1943.configuracion;
-
 import com.cecchettodadone.juego1943.Juego1943;
-import org.json.JSONObject;
 
+import com.cecchettodadone.juego1943.audio.Sonido;
+import org.json.JSONObject;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
+
 import com.cecchettodadone.juego1943.configuracion.Configurador;
 
 public class Menu extends JFrame {
@@ -14,6 +15,7 @@ public class Menu extends JFrame {
     PanelImagen panelImagen = new PanelImagen();
     JSONObject configuracion;
     boolean bandera = false;
+    Sonido sonido;
 
     public Menu(Juego1943 juego) {
         this.setVisible(true);
@@ -21,6 +23,10 @@ public class Menu extends JFrame {
         this.setSize(new Dimension(496, 680));
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(false);
+        sonido = new Sonido();
+        sonido.iniciar("musicaConfiguracion");
+        sonido.loop();
+
 
         Border marco = BorderFactory.createLineBorder(Color.BLACK,2);
 
@@ -72,6 +78,7 @@ public class Menu extends JFrame {
         confis.setForeground(Color.BLACK);
         confis.setBorder(marco);
 
+
         confis.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -110,10 +117,11 @@ public class Menu extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (bandera) {
                     juego.run(1 / 60, Configurador.getConfis());
+                    sonido.parar();
                 }
                 else {
                     juego.run(1/60,Configurador.getConfiguracionDefecto());
-//                    System.out.println("defecto" + Configurador.getConfiguracionDefecto());
+                    sonido.parar();
                 }
             }
         });
@@ -125,8 +133,6 @@ public class Menu extends JFrame {
                 new Configurador();
             }
         });
-
     }
-
 }
 
