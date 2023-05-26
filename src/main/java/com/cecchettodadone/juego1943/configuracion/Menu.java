@@ -1,23 +1,23 @@
 package com.cecchettodadone.juego1943.configuracion;
 
 import com.cecchettodadone.juego1943.Juego1943;
-import com.cecchettodadone.lanzador.Juego;
+import org.json.JSONObject;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
 import java.awt.*;
 import java.awt.event.*;
+import com.cecchettodadone.juego1943.configuracion.Configurador;
 
 public class Menu extends JFrame {
 
     PanelImagen panelImagen = new PanelImagen();
+    JSONObject configuracion;
+    boolean bandera = false;
 
     public Menu(Juego1943 juego) {
         this.setVisible(true);
         this.setTitle("1943");
-        this.setLocationRelativeTo(null);
         this.setSize(new Dimension(496, 680));
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(false);
@@ -102,12 +102,27 @@ public class Menu extends JFrame {
         this.add(jugar);
         this.add(confis);
         this.add(panelImagen);
+        this.setLocationRelativeTo(null);
 
 
         jugar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                juego.run(1/60);
+                if (bandera) {
+                    juego.run(1 / 60, Configurador.getConfis());
+                }
+                else {
+                    juego.run(1/60,Configurador.getConfiguracionDefecto());
+//                    System.out.println("defecto" + Configurador.getConfiguracionDefecto());
+                }
+            }
+        });
+
+        confis.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                bandera = true;
+                new Configurador();
             }
         });
 

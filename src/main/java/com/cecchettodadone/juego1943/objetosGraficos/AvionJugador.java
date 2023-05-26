@@ -4,17 +4,23 @@ import com.cecchettodadone.juego1943.Juego1943;
 import com.cecchettodadone.juego1943.ObjetoGrafico;
 import com.cecchettodadone.juego1943.Util;
 import com.entropyinteractive.Keyboard;
+import org.json.JSONObject;
+
+import javax.management.DescriptorRead;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.security.Key;
 
 public class AvionJugador extends Avion {
     private final int SEGUNDA_IMG_DOBLANDO_TMR = (int)Util.FRAME_RATE / 2;
     private int doblandoTmr = 0;
     private int contador = 0;
     private BufferedImage avion, avionDoblandoDerecha1, avionDoblandoIzquierda1, avionDoblandoDerecha2, avionDoblandoIzquierda2;
+    private int arriba, abajo, izquierda, derecha, disparo, ataqueEspecial;
 
-    public AvionJugador (int posX, int posY) {
+    public AvionJugador (int posX, int posY, JSONObject configuraciones) {
+        setConfis(configuraciones);
         setDesplazamiento(300);
         avion = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion.png");
         avionDoblandoDerecha1 = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion_doblando_derecha1.png");
@@ -25,6 +31,7 @@ public class AvionJugador extends Avion {
         this.setImagen(avion);
         this.setPosicion(posX, posY);
         this.setDimensiones(new Dimension(75, 48));
+
     }
 
     public void disparar () {
@@ -40,10 +47,10 @@ public class AvionJugador extends Avion {
         double desplazamientoX = 0;
         double desplazamientoY = 0;
 
-        if (teclado.isKeyPressed(KeyEvent.VK_DOWN)) desplazamientoY += velocidad;
-        if (teclado.isKeyPressed(KeyEvent.VK_UP)) desplazamientoY -= velocidad;
+        if (teclado.isKeyPressed(abajo)) desplazamientoY += velocidad;
+        if (teclado.isKeyPressed(arriba)) desplazamientoY -= velocidad;
 
-        if (teclado.isKeyPressed(KeyEvent.VK_LEFT)) {
+        if (teclado.isKeyPressed(izquierda)) {
             desplazamientoX -= velocidad;
             this.setImagen(avionDoblandoIzquierda1);
             doblandoTmr++;
@@ -53,7 +60,7 @@ public class AvionJugador extends Avion {
             }
         }
 
-        if (teclado.isKeyPressed(KeyEvent.VK_RIGHT)) {
+        if (teclado.isKeyPressed(derecha)) {
             desplazamientoX += velocidad;
             this.setImagen(avionDoblandoDerecha1);
             doblandoTmr++;
@@ -69,7 +76,7 @@ public class AvionJugador extends Avion {
             desplazamientoY *= factorNormalizacion;
         }
 
-        if (!teclado.isKeyPressed(KeyEvent.VK_RIGHT) && !teclado.isKeyPressed(KeyEvent.VK_LEFT)) {
+        if (!teclado.isKeyPressed(derecha) && !teclado.isKeyPressed(izquierda)) {
             this.setImagen(avion);
             doblandoTmr = 0;
             velDesplazamiento = NAVE_DESPLAZAMIENTO_NORMAL;
@@ -89,7 +96,7 @@ public class AvionJugador extends Avion {
         if (this.getX() <= 0) this.setPosicionX(0);
         if (this.getY() <= this.getDimensiones().getHeight()) this.setPosicionY(this.getDimensiones().getHeight());
 
-        if (teclado.isKeyPressed(KeyEvent.VK_SPACE)) {
+        if (teclado.isKeyPressed(disparo)) {
             int c = (int)(contador * delta);
             if (c != 0) {
                 disparar();
@@ -97,6 +104,26 @@ public class AvionJugador extends Avion {
             }
             else contador += 10;
         }
+    }
+
+    private void setConfis(JSONObject json) {       //arriba, abajo, izquierda, derecha, disparo, ataqueEspecial;
+        if ( json.getString("direccion").equals("flechas")) {
+            arriba = KeyEvent.VK_UP;
+            abajo = KeyEvent.VK_DOWN;
+            izquierda = KeyEvent.VK_LEFT;
+            derecha = KeyEvent.VK_RIGHT;
+        }
+        else {
+            arriba = KeyEvent.VK_W;
+            abajo = KeyEvent.VK_S;
+            izquierda = KeyEvent.VK_A;
+            derecha = KeyEvent.VK_D;
+        }
+
+        if ( json.getString("disparo").equals("barra espaciadora"))
+            disparo = KeyEvent.VK_SPACE;
+        else
+            disparo = KeyEvent.getExtendedKeyCodeForChar(json.getString("disparo").charAt(0));
 
     }
 }

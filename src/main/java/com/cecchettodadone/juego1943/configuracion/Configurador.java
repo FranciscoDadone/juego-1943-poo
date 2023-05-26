@@ -4,35 +4,28 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileWriter;
+import java.io.*;
+import java.security.interfaces.EdECKey;
 import java.util.Arrays;
 import java.util.List;
-
+import com.sun.source.tree.BreakTree;
 import org.json.JSONObject;
 
 public class Configurador extends JFrame {
-
-    public static void main(String[] args) {
-        new Configurador();
-    }
-
-    JComboBox<String> boxVentana;
-    JComboBox<String> boxAvion;
-    JComboBox<String> boxMusica;
-    JComboBox<String> boxDirecicon;
-    JTextField pausar;
-    JTextField disparar;
-    JTextField ataqueEspecial;
+    static JComboBox<String> boxVentana;
+    static JComboBox<String> boxAvion;
+    static JComboBox<String> boxMusica;
+    static JComboBox<String> boxDirecicon;
+    static JTextField pausar;
+    static JTextField disparar;
+    static JTextField ataqueEspecial;
 
 
     public Configurador() {
 
         this.setVisible(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setResizable(false);
-        this.setLocationRelativeTo(null);
 
         JPanel panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new BoxLayout(panelPrincipal,BoxLayout.Y_AXIS));
@@ -62,14 +55,11 @@ public class Configurador extends JFrame {
 
         JCheckBox checkSonido = new JCheckBox("Activado");
         checkSonido.setSelected(true);
-        checkSonido.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (checkSonido.isSelected())
-                    checkSonido.setText("Activado");
-                else
-                    checkSonido.setText("Desactivado");
-            }
+        checkSonido.addActionListener(e -> {
+            if (checkSonido.isSelected())
+                checkSonido.setText("Activado");
+            else
+                checkSonido.setText("Desactivado");
         });
 
         paanelSonido.add(Box.createHorizontalGlue()); // Espacio flexible
@@ -80,7 +70,7 @@ public class Configurador extends JFrame {
         JPanel panelAvion = new JPanel();
         panelAvion.setLayout(new BorderLayout());
         JLabel txtAvion = new JLabel("Selecionar Avion:         ");
-        boxAvion = new JComboBox();
+        boxAvion = new JComboBox<>();
         boxAvion.addItem("Avion Original");
         boxAvion.addItem("Eurofigther");
         boxAvion.addItem("F-22 Raptor");
@@ -92,7 +82,7 @@ public class Configurador extends JFrame {
         JPanel panelMusica = new JPanel(new BorderLayout());
         panelMusica.add(new JLabel("Selecionar musica:           "),BorderLayout.WEST);
 
-        boxMusica = new JComboBox();
+        boxMusica = new JComboBox<>();
         boxMusica.addItem("Tema Original");
         boxMusica.addItem("Dua Lipa");
 
@@ -115,7 +105,7 @@ public class Configurador extends JFrame {
         panelT3.setLayout(new BoxLayout(panelT3,BoxLayout.X_AXIS));
         panelT3.add(new JLabel("Pausar/Reanudar Juego:   "));
 
-        pausar = new JTextField("");
+        pausar = new JTextField("esc");
 
         panelT3.add(pausar);
         panelTeclas.add(panelT3);
@@ -137,7 +127,7 @@ public class Configurador extends JFrame {
         panelT9.setLayout(new BoxLayout(panelT9,BoxLayout.X_AXIS));
         panelT9.add(new JLabel("Disparar:                           "));
 
-        disparar = new JTextField("");
+        disparar = new JTextField("barra espaciadora");
 
         panelT9.add(disparar);
         panelTeclas.add(panelT9);
@@ -147,7 +137,7 @@ public class Configurador extends JFrame {
         panelT10.setLayout(new BoxLayout(panelT10,BoxLayout.X_AXIS));
         panelT10.add(new JLabel("Ataque Especial:               "));
 
-        ataqueEspecial = new JTextField("");
+        ataqueEspecial = new JTextField("z");
 
         panelT10.add(ataqueEspecial);
         panelTeclas.add(panelT10);
@@ -158,63 +148,24 @@ public class Configurador extends JFrame {
         botones.setLayout(new BorderLayout());
 
         JButton btnGuardar = new JButton("Guardar");
-        JButton bvtnDefecto = new JButton("Confis por defecto");
+        JButton btnCargar = new JButton("Cargar Confi");
 
         botones.add(btnGuardar,BorderLayout.EAST);
-        botones.add(bvtnDefecto,BorderLayout.WEST);
+        botones.add(btnCargar,BorderLayout.WEST);
+
+        btnGuardar.addActionListener(e -> guardarConfi());
+        btnCargar.addActionListener(e -> cargarConfis());
 
         panelPrincipal.add(panelTeclas);
         panelPrincipal.add(botones);
 
-        JLabel errorConfis = new JLabel("<html>Configuracion existente<br>intente de nuevo<br>    </html>");
-        errorConfis.setVisible(false);
-        errorConfis.setForeground(Color.RED);
-
-        btnGuardar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                guardarConfi();
-            }
-        });
-
-        bvtnDefecto.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setConfisDefecto();
-            }
-        });
-
-
-        JPanel botonAux = new JPanel(new BorderLayout());
-        JButton btnCargar = new JButton("Cargar Confi");
-
-        btnCargar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                File file = new File("src/main/resources/configuraciones");
-                String[] archivos = file.list();
-
-                for (int i=0 ; i<archivos.length; i++ ) {
-                    archivos[i] = archivos[i].substring(0,archivos[i].lastIndexOf("."));
-                }
-
-                int eleccion = JOptionPane.showOptionDialog(null, "Selecciona una configuracion", "Opciones", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, archivos, archivos[0]);
-
-//                System.out.println(archivos[eleccion]+".txt");
-            }
-        });
-
-        botonAux.add(btnCargar,BorderLayout.WEST);
-        botonAux.add(errorConfis,BorderLayout.EAST);
-        panelPrincipal.add(botonAux);
-
-
         this.add(panelPrincipal);
         this.pack();
-        this.setSize(new Dimension(getWidth(),getHeight()+10));
+        this.setLocationRelativeTo(null);
     }
 
-    public JSONObject getConfis() {
+     public static JSONObject getConfis() {
+
         JSONObject json = new JSONObject();
 
         json.put("ventana",boxVentana.getSelectedItem());
@@ -225,10 +176,26 @@ public class Configurador extends JFrame {
         json.put("disparo", disparar.getText());
         json.put("ataque_especial", ataqueEspecial.getText());
 
+         System.out.println(json);
+
         return json;
     }
 
-    public void setConfisDefecto() {
+    public static JSONObject getConfiguracionDefecto() {
+        JSONObject json = new JSONObject();
+
+        json.put("ventana/completa","ventana");
+        json.put("ataqueEspecial","z");
+        json.put("disparo","barra espaciadora");
+        json.put("musica","Tema original");
+        json.put("pausa","esq");
+        json.put("avion","Avion original");
+        json.put("direccion","flechas");
+
+        return json;
+    }
+
+    public static void setConfisDefecto() {
         boxVentana.setSelectedItem("Ventana");
         boxMusica.setSelectedItem("Tema Original");
         boxAvion.setSelectedItem("Avion Original");
@@ -238,8 +205,34 @@ public class Configurador extends JFrame {
         ataqueEspecial.setText("z");
     }
 
-    public void setCongis(JSONObject json) {
-        boxVentana.setSelectedItem(json.getString("ventana"));
+    private void cargarConfis() {
+        File file = new File("src/main/resources/configuraciones");
+        String[] archivos = file.list();
+        int eleccion = 0;
+
+        if (archivos.length!=0){
+            for (int i = 0; i < archivos.length; i++) {
+                archivos[i] = archivos[i].substring(0, archivos[i].lastIndexOf("."));
+            }
+            eleccion = JOptionPane.showOptionDialog(null, "Selecciona una configuracion", "Opciones", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, archivos, archivos[0]);
+            JOptionPane.showMessageDialog(null, "Configuracion cargada", "", JOptionPane.PLAIN_MESSAGE);
+            this.setVisible(false);
+
+            try (BufferedReader lector = new BufferedReader(new FileReader("src/main/resources/configuraciones/" + archivos[eleccion] + ".txt"))) {
+                StringBuilder contenido = new StringBuilder();
+                String line;
+                while ((line = lector.readLine()) != null) {
+                    contenido.append(line);
+                }
+                System.out.println(contenido);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "No hay configuraciones guardadas", "", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     private void guardarConfi() {
@@ -255,7 +248,6 @@ public class Configurador extends JFrame {
                 File archivo = new File(directorio, nombre + ".txt");
                 escritor = new FileWriter(archivo);
                 escritor.write(getConfis().toString());
-                System.out.println(getConfis().toString());
             } catch (Exception a) {
                 System.out.println(a);
             } finally {
@@ -267,10 +259,16 @@ public class Configurador extends JFrame {
                     System.out.println(e);
                 }
             }
+            JOptionPane.showMessageDialog(null, "La configuracion se guardo con exito", "", JOptionPane.INFORMATION_MESSAGE);
+            this.setVisible(false);
+
         } else {
             JOptionPane.showMessageDialog(null, "Esta configuracion ya existe", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
     }
+
+
 
 
 }

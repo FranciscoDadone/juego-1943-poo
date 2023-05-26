@@ -1,6 +1,7 @@
 package com.cecchettodadone.MarioBross;
 
 import com.cecchettodadone.lanzador.Juego;
+import org.json.JSONObject;
 
 import javax.swing.*;
 
@@ -17,7 +18,7 @@ public class MarioBross extends Juego {
 
 
     @Override
-    public void run(double fps) {}
+    public void run(double fps, JSONObject confis) {}
 
     @Override
     public void run() {

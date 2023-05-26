@@ -1,5 +1,7 @@
 package com.cecchettodadone.lanzador;
 
+import org.json.JSONObject;
+
 import javax.swing.*;
 import java.awt.event.KeyListener;
 
@@ -45,7 +47,7 @@ public abstract class Juego {
         this.imagenPortada = imagenPortada;
     }
 
-    public abstract void run (double fps);
+    public abstract void run (double fps, JSONObject confis);
     public abstract void run ();
 
     private String nombre;

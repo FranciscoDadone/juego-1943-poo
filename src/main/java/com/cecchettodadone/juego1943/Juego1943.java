@@ -9,10 +9,12 @@ import com.cecchettodadone.juego1943.objetosGraficos.Municion;
 import com.cecchettodadone.lanzador.Juego;
 import com.entropyinteractive.*;
 import com.sun.jdi.event.MethodEntryEvent;
+import org.json.JSONObject;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -20,7 +22,6 @@ import java.util.ArrayList;
 public class Juego1943 extends Juego {
     private static JGame frame;
     public static ArrayList<ObjetoGrafico> objetosGraficos = new ArrayList<>();
-
     public static ArrayList<Municion> municiones = new ArrayList<>();
     public static ArrayList<Municion> municionesEnemigo = new ArrayList<>();
     public static ArrayList<AvionEnemigo> enemigos = new ArrayList<>();
@@ -39,14 +40,14 @@ public class Juego1943 extends Juego {
     }
 
     @Override
-    public void run(double fps) {
+    public void run(double fps, JSONObject confis) {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.frame = new JGame("1943", screenSize.width,screenSize.height) {
 
             @Override
             public void gameStartup() {
                 objetosGraficos.add(new FondoJuego());
-                objetosGraficos.add(new AvionJugador(this.getWidth() / 2, this.getHeight() / 2));
+                objetosGraficos.add(new AvionJugador(this.getWidth() / 2, this.getHeight() / 2,confis));
                 enemigos.add(new AvionEnemigo(this.getWidth() / 2, this.getHeight() / 2));
             }
 
