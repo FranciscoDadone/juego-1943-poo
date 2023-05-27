@@ -17,7 +17,7 @@ public class AvionJugador extends Avion {
     private final int SEGUNDA_IMG_DOBLANDO_TMR = (int)Util.FRAME_RATE / 2;
     private int doblandoTmr = 0;
     private int contador = 0;
-    private BufferedImage avion, avionDoblandoDerecha1, avionDoblandoIzquierda1, avionDoblandoDerecha2, avionDoblandoIzquierda2;
+    private BufferedImage avion, avionDoblandoDerecha1, avionDoblandoIzquierda1, avionDoblandoDerecha2, avionDoblandoIzquierda2, avionDisparandoIzquierda1, avionDisparandoIzquierda2, avionDisparando, avionDisparandoDerecha1, avionDisparandoDerecha2;
     private int arriba, abajo, izquierda, derecha, disparo, ataqueEspecial;
 
     public AvionJugador (int posX, int posY) {
@@ -27,6 +27,13 @@ public class AvionJugador extends Avion {
         avionDoblandoDerecha2 = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion_doblando_derecha2.png");
         avionDoblandoIzquierda1 = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion_doblando_izquierda1.png");
         avionDoblandoIzquierda2 = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion_doblando_izquierda2.png");
+
+        avionDisparando = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion_disparando.png");
+        avionDisparandoIzquierda1 = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion_disparando_izq1.png");
+        avionDisparandoIzquierda2 = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion_disparando_derecha2.png");
+        avionDisparandoDerecha1 = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion_disparando_derecha2.png");
+        avionDisparandoDerecha2 = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion_disparando_derecha2.png");
+
 
         this.setImagen(avion);
         this.setPosicion(posX, posY);
@@ -55,6 +62,7 @@ public class AvionJugador extends Avion {
         Juego1943.municiones.add(new Bala((int)this.getX() + this.getDimensiones().width - 10, (int)this.getY() - 20));
     }
 
+    boolean isDisparando = false;
     @Override
     public void update(double delta) {
         Keyboard teclado = Juego1943.getFrame().getKeyboard();
@@ -68,20 +76,20 @@ public class AvionJugador extends Avion {
 
         if (teclado.isKeyPressed(izquierda)) {
             desplazamientoX -= velocidad;
-            this.setImagen(avionDoblandoIzquierda1);
+            this.setImagen((!isDisparando) ? avionDoblandoIzquierda1 : avionDisparandoIzquierda1);
             doblandoTmr++;
             if (velDesplazamiento < 1000) velDesplazamiento += 10;
             if (doblandoTmr >= SEGUNDA_IMG_DOBLANDO_TMR) {
-                this.setImagen(avionDoblandoIzquierda2);
+                this.setImagen((!isDisparando) ? avionDoblandoIzquierda2 : avionDisparandoIzquierda2);
             }
         }
 
         if (teclado.isKeyPressed(derecha)) {
             desplazamientoX += velocidad;
-            this.setImagen(avionDoblandoDerecha1);
+            this.setImagen((!isDisparando) ? avionDoblandoDerecha1 : avionDisparandoDerecha1);
             doblandoTmr++;
             if (velDesplazamiento < 1000) velDesplazamiento += 10;
-            if (doblandoTmr >= SEGUNDA_IMG_DOBLANDO_TMR) this.setImagen(avionDoblandoDerecha2);
+            if (doblandoTmr >= SEGUNDA_IMG_DOBLANDO_TMR) this.setImagen((!isDisparando) ? avionDoblandoDerecha2: avionDisparandoDerecha2);
         }
 
         if (desplazamientoX != 0 && desplazamientoY != 0) {
@@ -93,7 +101,7 @@ public class AvionJugador extends Avion {
         }
 
         if (!teclado.isKeyPressed(derecha) && !teclado.isKeyPressed(izquierda)) {
-            this.setImagen(avion);
+            this.setImagen((!isDisparando) ? avion : avionDisparando);
             doblandoTmr = 0;
             velDesplazamiento = NAVE_DESPLAZAMIENTO_NORMAL;
         }
@@ -116,9 +124,12 @@ public class AvionJugador extends Avion {
             int c = (int)(contador * delta);
             if (c != 0) {
                 disparar();
+                isDisparando = true;
                 contador = 0;
+            } else {
+                contador += 10;
+                isDisparando = false;
             }
-            else contador += 10;
         }
     }
 }
