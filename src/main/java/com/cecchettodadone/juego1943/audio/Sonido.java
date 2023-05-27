@@ -1,5 +1,7 @@
 package com.cecchettodadone.juego1943.audio;
 
+import com.cecchettodadone.juego1943.Util;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -12,7 +14,7 @@ public class Sonido {
     public void iniciar(String nombre) {
 
         try {
-            File file = new File("src/main/resources/musica/" + nombre + ".wav");
+            File file = Util.getFile("musica/" + nombre + ".wav");
             clip = AudioSystem.getClip();
             AudioInputStream audioInput = AudioSystem.getAudioInputStream(file);
             clip.open(audioInput);

@@ -116,11 +116,11 @@ public class Menu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (bandera) {
-                    juego.run(1 / 60, Configurador.getConfis());
+                    juego.run(1 / 60);
                     sonido.parar();
                 }
                 else {
-                    juego.run(1/60,Configurador.getConfiguracionDefecto());
+                    juego.run(1/60);
                     sonido.parar();
                 }
             }

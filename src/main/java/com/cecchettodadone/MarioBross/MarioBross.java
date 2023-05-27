@@ -18,7 +18,7 @@ public class MarioBross extends Juego {
 
 
     @Override
-    public void run(double fps, JSONObject confis) {}
+    public void run(double fps) {}
 
     @Override
     public void run() {

@@ -40,14 +40,14 @@ public class Juego1943 extends Juego {
     }
 
     @Override
-    public void run(double fps, JSONObject confis) {
+    public void run(double fps) {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.frame = new JGame("1943", screenSize.width,screenSize.height) {
 
             @Override
             public void gameStartup() {
                 objetosGraficos.add(new FondoJuego());
-                objetosGraficos.add(new AvionJugador(this.getWidth() / 2, this.getHeight() / 2,confis));
+                objetosGraficos.add(new AvionJugador(this.getWidth() / 2, this.getHeight() / 2));
                 enemigos.add(new AvionEnemigo(this.getWidth() / 2, this.getHeight() / 2));
             }
 

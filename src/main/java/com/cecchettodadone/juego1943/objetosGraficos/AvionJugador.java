@@ -3,6 +3,7 @@ package com.cecchettodadone.juego1943.objetosGraficos;
 import com.cecchettodadone.juego1943.Juego1943;
 import com.cecchettodadone.juego1943.ObjetoGrafico;
 import com.cecchettodadone.juego1943.Util;
+import com.cecchettodadone.juego1943.configuracion.Configurador;
 import com.entropyinteractive.Keyboard;
 import org.json.JSONObject;
 
@@ -19,8 +20,7 @@ public class AvionJugador extends Avion {
     private BufferedImage avion, avionDoblandoDerecha1, avionDoblandoIzquierda1, avionDoblandoDerecha2, avionDoblandoIzquierda2;
     private int arriba, abajo, izquierda, derecha, disparo, ataqueEspecial;
 
-    public AvionJugador (int posX, int posY, JSONObject configuraciones) {
-        setConfis(configuraciones);
+    public AvionJugador (int posX, int posY) {
         setDesplazamiento(300);
         avion = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion.png");
         avionDoblandoDerecha1 = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion_doblando_derecha1.png");
@@ -31,6 +31,22 @@ public class AvionJugador extends Avion {
         this.setImagen(avion);
         this.setPosicion(posX, posY);
         this.setDimensiones(new Dimension(75, 48));
+
+        if (Configurador.getDireccion().equals("flechas")) {
+            arriba = KeyEvent.VK_UP;
+            abajo = KeyEvent.VK_DOWN;
+            izquierda = KeyEvent.VK_LEFT;
+            derecha = KeyEvent.VK_RIGHT;
+        }
+        else {
+            arriba = KeyEvent.VK_W;
+            abajo = KeyEvent.VK_S;
+            izquierda = KeyEvent.VK_A;
+            derecha = KeyEvent.VK_D;
+        }
+
+        if (Configurador.getDisparo().equals("barra espaciadora"))  disparo = KeyEvent.VK_SPACE;
+        else disparo = KeyEvent.getExtendedKeyCodeForChar(Configurador.getDisparo().charAt(0));
 
     }
 
@@ -104,26 +120,5 @@ public class AvionJugador extends Avion {
             }
             else contador += 10;
         }
-    }
-
-    private void setConfis(JSONObject json) {       //arriba, abajo, izquierda, derecha, disparo, ataqueEspecial;
-        if ( json.getString("direccion").equals("flechas")) {
-            arriba = KeyEvent.VK_UP;
-            abajo = KeyEvent.VK_DOWN;
-            izquierda = KeyEvent.VK_LEFT;
-            derecha = KeyEvent.VK_RIGHT;
-        }
-        else {
-            arriba = KeyEvent.VK_W;
-            abajo = KeyEvent.VK_S;
-            izquierda = KeyEvent.VK_A;
-            derecha = KeyEvent.VK_D;
-        }
-
-        if ( json.getString("disparo").equals("barra espaciadora"))
-            disparo = KeyEvent.VK_SPACE;
-        else
-            disparo = KeyEvent.getExtendedKeyCodeForChar(json.getString("disparo").charAt(0));
-
     }
 }

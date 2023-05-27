@@ -2,23 +2,20 @@ package com.cecchettodadone.juego1943.configuracion;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.*;
-import java.security.interfaces.EdECKey;
 import java.util.Arrays;
 import java.util.List;
-import com.sun.source.tree.BreakTree;
+
 import org.json.JSONObject;
 
 public class Configurador extends JFrame {
-    static JComboBox<String> boxVentana;
-    static JComboBox<String> boxAvion;
-    static JComboBox<String> boxMusica;
-    static JComboBox<String> boxDirecicon;
-    static JTextField pausar;
-    static JTextField disparar;
-    static JTextField ataqueEspecial;
+    static JComboBox<String> boxVentana = new JComboBox<>();
+    static JComboBox<String> boxAvion = new JComboBox<>();
+    static JComboBox<String> boxMusica = new JComboBox<>();
+    static JComboBox<String> boxDireccion = new JComboBox<>();
+    static JTextField pausar = new JTextField("esc");
+    static JTextField disparar = new JTextField("barra espaciadora");
+    static JTextField ataqueEspecial = new JTextField("z");
 
 
     public Configurador() {
@@ -41,7 +38,6 @@ public class Configurador extends JFrame {
         panelventana.setLayout(new BorderLayout());
         panelventana.add(new JLabel("Selecione el formato: "), BorderLayout.WEST);
 
-        boxVentana = new JComboBox<>();
         boxVentana.addItem("Ventana");
         boxVentana.addItem("Pantalla Completa");
 
@@ -70,7 +66,7 @@ public class Configurador extends JFrame {
         JPanel panelAvion = new JPanel();
         panelAvion.setLayout(new BorderLayout());
         JLabel txtAvion = new JLabel("Selecionar Avion:         ");
-        boxAvion = new JComboBox<>();
+
         boxAvion.addItem("Avion Original");
         boxAvion.addItem("Eurofigther");
         boxAvion.addItem("F-22 Raptor");
@@ -82,7 +78,6 @@ public class Configurador extends JFrame {
         JPanel panelMusica = new JPanel(new BorderLayout());
         panelMusica.add(new JLabel("Selecionar musica:           "),BorderLayout.WEST);
 
-        boxMusica = new JComboBox<>();
         boxMusica.addItem("Tema Original");
         boxMusica.addItem("Dua Lipa");
 
@@ -105,8 +100,6 @@ public class Configurador extends JFrame {
         panelT3.setLayout(new BoxLayout(panelT3,BoxLayout.X_AXIS));
         panelT3.add(new JLabel("Pausar/Reanudar Juego:   "));
 
-        pausar = new JTextField("esc");
-
         panelT3.add(pausar);
         panelTeclas.add(panelT3);
 
@@ -115,19 +108,16 @@ public class Configurador extends JFrame {
         panelDireccion.setLayout(new BoxLayout(panelDireccion,BoxLayout.X_AXIS));
         panelDireccion.add(new JLabel("Telcas de Direccion:         "));
 
-        boxDirecicon = new JComboBox<>();
-        boxDirecicon.addItem("Flechas");
-        boxDirecicon.addItem("A - W - S - D");
+        boxDireccion.addItem("Flechas");
+        boxDireccion.addItem("A - W - S - D");
 
-        panelDireccion.add(boxDirecicon);
+        panelDireccion.add(boxDireccion);
         panelTeclas.add(panelDireccion);
 
         //tecla 9
         JPanel panelT9 = new JPanel();
         panelT9.setLayout(new BoxLayout(panelT9,BoxLayout.X_AXIS));
         panelT9.add(new JLabel("Disparar:                           "));
-
-        disparar = new JTextField("barra espaciadora");
 
         panelT9.add(disparar);
         panelTeclas.add(panelT9);
@@ -136,8 +126,6 @@ public class Configurador extends JFrame {
         JPanel panelT10 = new JPanel();
         panelT10.setLayout(new BoxLayout(panelT10,BoxLayout.X_AXIS));
         panelT10.add(new JLabel("Ataque Especial:               "));
-
-        ataqueEspecial = new JTextField("z");
 
         panelT10.add(ataqueEspecial);
         panelTeclas.add(panelT10);
@@ -164,14 +152,14 @@ public class Configurador extends JFrame {
         this.setLocationRelativeTo(null);
     }
 
-     public static JSONObject getConfis() {
+     public JSONObject getConfis() {
 
         JSONObject json = new JSONObject();
 
         json.put("ventana",boxVentana.getSelectedItem());
         json.put("musica",boxMusica.getSelectedItem());
         json.put("avion",boxAvion.getSelectedItem());
-        json.put("direccion",boxDirecicon.getSelectedItem());
+        json.put("direccion",boxDireccion.getSelectedItem());
         json.put("pausa", pausar.getText());
         json.put("disparo", disparar.getText());
         json.put("ataque_especial", ataqueEspecial.getText());
@@ -181,25 +169,46 @@ public class Configurador extends JFrame {
         return json;
     }
 
-    public static JSONObject getConfiguracionDefecto() {
-        JSONObject json = new JSONObject();
+    public static String getMusica() {
+        Object c = boxMusica.getSelectedItem();
+        return c != null ? c.toString() : "Tema original";
+    }
 
-        json.put("ventana/completa","ventana");
-        json.put("ataqueEspecial","z");
-        json.put("disparo","barra espaciadora");
-        json.put("musica","Tema original");
-        json.put("pausa","esq");
-        json.put("avion","Avion original");
-        json.put("direccion","flechas");
+    public static String getDisparo() {
+        String c = disparar.getText();
+        return c != null ? c : "barra espaciadora";
+    }
 
-        return json;
+    public static String getPausa() {
+        String c = pausar.getText();
+        return c != null ? c : "esq";
+    }
+
+    public static String getAvion() {
+        Object c = boxAvion.getSelectedItem();
+        return c != null ? c.toString() : "Avion original";
+    }
+
+    public static String getKeyAtaqueEspecial() {
+        String c = ataqueEspecial.getText();
+        return c != null ? c : "z";
+    }
+
+    public static String getModoPantalla() {
+        Object c = boxVentana.getSelectedItem();
+        return c != null ? c.toString() : "ventana";
+    }
+
+    public static String getDireccion() {
+        Object c = boxDireccion.getSelectedItem();
+        return c != null ? c.toString() : "flechas";
     }
 
     public static void setConfisDefecto() {
         boxVentana.setSelectedItem("Ventana");
         boxMusica.setSelectedItem("Tema Original");
         boxAvion.setSelectedItem("Avion Original");
-        boxDirecicon.setSelectedItem("Flechas");
+        boxDireccion.setSelectedItem("Flechas");
         pausar.setText("Barra Espaciadora");
         disparar.setText("x");
         ataqueEspecial.setText("z");
