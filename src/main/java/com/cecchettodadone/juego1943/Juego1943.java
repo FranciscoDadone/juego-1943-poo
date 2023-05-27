@@ -19,6 +19,7 @@ public class Juego1943 extends Juego {
     public static ArrayList<Municion> municiones = new ArrayList<>();
     public static ArrayList<Municion> municionesEnemigo = new ArrayList<>();
     public static ArrayList<Avion> enemigos = new ArrayList<>();
+    public static Vida vidaJugador;
 
     private final int FREQ_ENEMIGOS_NORMALES_MS = 2000;
 
@@ -44,12 +45,20 @@ public class Juego1943 extends Juego {
             public void gameStartup() {
                 objetosGraficos.add(new FondoJuego());
                 objetosGraficos.add(new AvionJugador(this.getWidth() / 2, this.getHeight() / 2));
+
+                vidaJugador = new Vida();
+                objetosGraficos.add(vidaJugador);
             }
 
             int counter = 0;
+            int c = 0;
             Random rand = new Random();
             @Override
             public void gameUpdate(double v) {
+                c++;
+                vidaJugador.setCantidadVida((vidaJugador.getCantidadVida() - v * 10));
+                if (vidaJugador.getCantidadVida() < 0) vidaJugador.setCantidadVida(100);
+
                 for (int i = 0; i < objetosGraficos.size(); i++) {
                     objetosGraficos.get(i).update(v);
                 }
@@ -93,10 +102,10 @@ public class Juego1943 extends Juego {
                             GrupoDeAviones.getFormacionFila(rand.nextInt(this.getWidth()), -100).forEach((e) -> enemigos.add(e));
                             break;
                         case 2:
-                            GrupoDeAviones.getFormacionTrianguloRojoIzquierda(rand.nextInt(this.getHeight())).forEach((e) -> enemigos.add(e));
+                            GrupoDeAviones.getFormacionTrianguloRojoIzquierda(rand.nextInt(this.getHeight() / 2)).forEach((e) -> enemigos.add(e));
                             break;
                         case 3:
-                            GrupoDeAviones.getFormacionTrianguloRojoDerecha(rand.nextInt(this.getHeight())).forEach((e) -> enemigos.add(e));
+                            GrupoDeAviones.getFormacionTrianguloRojoDerecha(rand.nextInt(this.getHeight() / 2)).forEach((e) -> enemigos.add(e));
                     }
                 }
 

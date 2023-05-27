@@ -127,7 +127,7 @@ public class AvionJugador extends Avion {
                 isDisparando = true;
                 contador = 0;
             } else {
-                contador += 10;
+                contador += 20;
                 isDisparando = false;
             }
         }
