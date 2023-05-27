@@ -2,10 +2,7 @@ package com.cecchettodadone.juego1943;
 
 import com.cecchettodadone.juego1943.configuracion.Configurador;
 import com.cecchettodadone.juego1943.configuracion.Menu;
-import com.cecchettodadone.juego1943.objetosGraficos.AvionEnemigo;
-import com.cecchettodadone.juego1943.objetosGraficos.AvionJugador;
-import com.cecchettodadone.juego1943.objetosGraficos.FondoJuego;
-import com.cecchettodadone.juego1943.objetosGraficos.Municion;
+import com.cecchettodadone.juego1943.objetosGraficos.*;
 import com.cecchettodadone.lanzador.Juego;
 import com.entropyinteractive.*;
 import com.sun.jdi.event.MethodEntryEvent;
@@ -18,6 +15,7 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Juego1943 extends Juego {
     private static JGame frame;
@@ -25,6 +23,8 @@ public class Juego1943 extends Juego {
     public static ArrayList<Municion> municiones = new ArrayList<>();
     public static ArrayList<Municion> municionesEnemigo = new ArrayList<>();
     public static ArrayList<AvionEnemigo> enemigos = new ArrayList<>();
+
+    private final int FREQ_ENEMIGOS_MS = 1000;
 
     public Juego1943() {
         setNombre("1943");
@@ -48,9 +48,9 @@ public class Juego1943 extends Juego {
             public void gameStartup() {
                 objetosGraficos.add(new FondoJuego());
                 objetosGraficos.add(new AvionJugador(this.getWidth() / 2, this.getHeight() / 2));
-                enemigos.add(new AvionEnemigo(this.getWidth() / 2, this.getHeight() / 2));
             }
 
+            int counter = 0;
             @Override
             public void gameUpdate(double v) {
                 for (int i = 0; i < objetosGraficos.size(); i++) {
@@ -76,6 +76,15 @@ public class Juego1943 extends Juego {
                     enemigos.get(i).update(v);
                     if (enemigos.get(i).getY() < -500) enemigos.remove(i);
                 }
+
+                if ((counter * v) * 1000 >= FREQ_ENEMIGOS_MS) {
+                    counter = 0;
+                    GrupoDeAviones.getFormacionTriangulo(new Random().nextInt(this.getWidth()), -100).forEach((avion) -> {
+                        enemigos.add(avion);
+                    });
+                }
+
+                counter++;
             }
 
             @Override

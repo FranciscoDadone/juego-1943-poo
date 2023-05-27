@@ -15,10 +15,11 @@ public class AvionEnemigo extends Avion {
         this.setImagen(avion);
         this.setPosicion(posX, posY);
         this.setDimensiones(new Dimension(75,48));
+        setDesplazamiento(350);
     }
 
     @Override
     public void update(double delta) {
-
+        setPosicionY(getY() + getDesplazamiento() * delta);
     }
 }
