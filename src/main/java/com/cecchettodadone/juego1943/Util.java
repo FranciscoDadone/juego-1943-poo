@@ -19,7 +19,7 @@ public class Util {
 
     public static File getFile (String path) {
         try {
-            return new File(Util.class.getClassLoader().getResourceAsStream(path).toString());
+            return new File("src/main/resources/" + path);
         } catch(Exception e) {
             System.out.println(e);
         }

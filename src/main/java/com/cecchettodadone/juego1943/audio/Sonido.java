@@ -19,9 +19,7 @@ public class Sonido {
             AudioInputStream audioInput = AudioSystem.getAudioInputStream(file);
             clip.open(audioInput);
             clip.start();
-
-
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
 
