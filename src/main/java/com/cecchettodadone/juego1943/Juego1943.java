@@ -24,7 +24,7 @@ public class Juego1943 extends Juego {
     public static ArrayList<Municion> municionesEnemigo = new ArrayList<>();
     public static ArrayList<AvionEnemigo> enemigos = new ArrayList<>();
 
-    private final int FREQ_ENEMIGOS_MS = 1000;
+    private final int FREQ_ENEMIGOS_NORMALES_MS = 2000;
 
     public Juego1943() {
         setNombre("1943");
@@ -51,6 +51,7 @@ public class Juego1943 extends Juego {
             }
 
             int counter = 0;
+            Random rand = new Random();
             @Override
             public void gameUpdate(double v) {
                 for (int i = 0; i < objetosGraficos.size(); i++) {
@@ -83,11 +84,17 @@ public class Juego1943 extends Juego {
                     if (enemigos.get(i).getY() < -500) enemigos.remove(i);
                 }
 
-                if ((counter * v) * 1000 >= FREQ_ENEMIGOS_MS) {
+                if ((counter * v) * 1000 >= FREQ_ENEMIGOS_NORMALES_MS) {
                     counter = 0;
-                    GrupoDeAviones.getFormacionTriangulo(new Random().nextInt(this.getWidth()), -100).forEach((avion) -> {
-                        enemigos.add(avion);
-                    });
+
+                    switch (rand.nextInt(2)) {
+                        case 0:
+                            GrupoDeAviones.getFormacionTriangulo(rand.nextInt(this.getWidth()), -100).forEach((e) -> enemigos.add(e));
+                            break;
+                        case 1:
+                            GrupoDeAviones.getFormacionFila(rand.nextInt(this.getWidth()), -100).forEach((e) -> enemigos.add(e));
+                            break;
+                    }
                 }
 
                 counter++;

@@ -15,7 +15,7 @@ public class AvionEnemigo extends Avion {
         this.setImagen(avion);
         this.setPosicion(posX, posY);
         this.setDimensiones(new Dimension(75,48));
-        setDesplazamiento(350);
+        setDesplazamiento(400);
     }
 
     @Override
