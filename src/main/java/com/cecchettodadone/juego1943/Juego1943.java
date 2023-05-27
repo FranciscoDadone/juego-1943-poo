@@ -1,19 +1,15 @@
 package com.cecchettodadone.juego1943;
 
-import com.cecchettodadone.juego1943.configuracion.Configurador;
 import com.cecchettodadone.juego1943.configuracion.Menu;
 import com.cecchettodadone.juego1943.objetosGraficos.*;
+import com.cecchettodadone.juego1943.objetosGraficos.enemigos.Ataque;
+import com.cecchettodadone.juego1943.objetosGraficos.enemigos.AvionEnemigoRojo;
+import com.cecchettodadone.juego1943.objetosGraficos.enemigos.AvionEnemigoVerde;
 import com.cecchettodadone.lanzador.Juego;
 import com.entropyinteractive.*;
-import com.sun.jdi.event.MethodEntryEvent;
-import org.json.JSONObject;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -22,7 +18,7 @@ public class Juego1943 extends Juego {
     public static ArrayList<ObjetoGrafico> objetosGraficos = new ArrayList<>();
     public static ArrayList<Municion> municiones = new ArrayList<>();
     public static ArrayList<Municion> municionesEnemigo = new ArrayList<>();
-    public static ArrayList<AvionEnemigo> enemigos = new ArrayList<>();
+    public static ArrayList<Avion> enemigos = new ArrayList<>();
 
     private final int FREQ_ENEMIGOS_NORMALES_MS = 2000;
 
@@ -87,13 +83,20 @@ public class Juego1943 extends Juego {
                 if ((counter * v) * 1000 >= FREQ_ENEMIGOS_NORMALES_MS) {
                     counter = 0;
 
-                    switch (rand.nextInt(2)) {
+//                    GrupoDeAviones.getFormacionTrianguloRojoDerecha(400).forEach((e) -> enemigos.add(e));
+
+                    switch (rand.nextInt(4)) {
                         case 0:
                             GrupoDeAviones.getFormacionTriangulo(rand.nextInt(this.getWidth()), -100).forEach((e) -> enemigos.add(e));
                             break;
                         case 1:
                             GrupoDeAviones.getFormacionFila(rand.nextInt(this.getWidth()), -100).forEach((e) -> enemigos.add(e));
                             break;
+                        case 2:
+                            GrupoDeAviones.getFormacionTrianguloRojoIzquierda(rand.nextInt(this.getHeight())).forEach((e) -> enemigos.add(e));
+                            break;
+                        case 3:
+                            GrupoDeAviones.getFormacionTrianguloRojoDerecha(rand.nextInt(this.getHeight())).forEach((e) -> enemigos.add(e));
                     }
                 }
 
