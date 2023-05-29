@@ -13,6 +13,7 @@ public class Configurador extends JFrame {
     static JComboBox<String> boxAvion = new JComboBox<>();
     static JComboBox<String> boxMusica = new JComboBox<>();
     static JComboBox<String> boxDireccion = new JComboBox<>();
+    static JCheckBox checkSonido;
     static JTextField pausar = new JTextField("esc");
     static JTextField disparar = new JTextField("barra espaciadora");
     static JTextField ataqueEspecial = new JTextField("z");
@@ -49,7 +50,7 @@ public class Configurador extends JFrame {
         paanelSonido.setLayout(new BoxLayout(paanelSonido, BoxLayout.X_AXIS));
         paanelSonido.add(new JLabel("Sonido:  "));
 
-        JCheckBox checkSonido = new JCheckBox("Activado");
+        checkSonido = new JCheckBox("Activado");
         checkSonido.setSelected(true);
         checkSonido.addActionListener(e -> {
             if (checkSonido.isSelected())
@@ -160,6 +161,7 @@ public class Configurador extends JFrame {
         json.put("musica",boxMusica.getSelectedItem());
         json.put("avion",boxAvion.getSelectedItem());
         json.put("direccion",boxDireccion.getSelectedItem());
+        json.put("sonido",checkSonido.isSelected());
         json.put("pausa", pausar.getText());
         json.put("disparo", disparar.getText());
         json.put("ataque_especial", ataqueEspecial.getText());
@@ -172,6 +174,10 @@ public class Configurador extends JFrame {
     public static String getMusica() {
         Object c = boxMusica.getSelectedItem();
         return c != null ? c.toString() : "Tema original";
+    }
+
+    public static Boolean getSonido() {
+        return checkSonido.isSelected();
     }
 
     public static String getDisparo() {
