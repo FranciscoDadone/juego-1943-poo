@@ -67,7 +67,7 @@ public class Juego1943 extends Juego {
                 for (int i = 0; i < municiones.size(); i++) {
                     municiones.get(i).update(v);
                     for (int j = 0; j < enemigos.size(); j++) {
-                        if (enemigos.get(j).getRectagle().contains(municiones.get(i).getRectagle())) {
+                        if (enemigos.get(j).getRectagle().intersects(municiones.get(i).getRectagle())) {
                             objetosGraficos.add(new Explosion((int) enemigos.get(j).getX(), (int) enemigos.get(j).getY()));
                             Juego1943.enemigos.remove(enemigos.get(j));
                             Juego1943.municiones.remove(municiones.get(i));
