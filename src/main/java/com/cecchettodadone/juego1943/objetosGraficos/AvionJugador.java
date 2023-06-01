@@ -63,7 +63,7 @@ public class AvionJugador extends Avion {
         Juego1943.municiones.add(new Bala((int)this.getX() + this.getDimensiones().width - 10, (int)this.getY() - 20));
     }
 
-    boolean isDisparando = false;
+    boolean isDisparando = false, barra = false;
     @Override
     public void update(double delta) {
         Keyboard teclado = Juego1943.getFrame().getKeyboard();
@@ -121,28 +121,14 @@ public class AvionJugador extends Avion {
         if (this.getX() <= 0) this.setPosicionX(0);
         if (this.getY() <= this.getDimensiones().getHeight()) this.setPosicionY(this.getDimensiones().getHeight());
 
-//        if (teclado.isKeyPressed(disparo)) {
-//            int c = (int)(contador * delta);
-//            if (c != 0) {
-//                disparar();
-//                isDisparando = true;
-//                contador = 0;
-//            } else {
-//                contador += 15;
-//                isDisparando = false;
-//            }
-//        }
 
         if (teclado.isKeyPressed(disparo)) {
-            if (!isDisparando) {
+            isDisparando = false;
+            if (!barra) {
                 disparar();
                 isDisparando = true;
+                barra = true;
             }
-        } else {
-            isDisparando = false;
-        }
-
-
-
+        } else barra = false;
     }
 }
