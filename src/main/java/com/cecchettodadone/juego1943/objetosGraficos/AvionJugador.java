@@ -11,6 +11,7 @@ import javax.management.DescriptorRead;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.StringReader;
 import java.security.Key;
 
 public class AvionJugador extends Avion {
@@ -120,16 +121,28 @@ public class AvionJugador extends Avion {
         if (this.getX() <= 0) this.setPosicionX(0);
         if (this.getY() <= this.getDimensiones().getHeight()) this.setPosicionY(this.getDimensiones().getHeight());
 
+//        if (teclado.isKeyPressed(disparo)) {
+//            int c = (int)(contador * delta);
+//            if (c != 0) {
+//                disparar();
+//                isDisparando = true;
+//                contador = 0;
+//            } else {
+//                contador += 15;
+//                isDisparando = false;
+//            }
+//        }
+
         if (teclado.isKeyPressed(disparo)) {
-            int c = (int)(contador * delta);
-            if (c != 0) {
+            if (!isDisparando) {
                 disparar();
                 isDisparando = true;
-                contador = 0;
-            } else {
-                contador += 20;
-                isDisparando = false;
             }
+        } else {
+            isDisparando = false;
         }
+
+
+
     }
 }
