@@ -11,7 +11,8 @@ public class Vida extends ObjetoGrafico {
     private double cantidadVida;
     private BufferedImage vida;
     private Graphics gVida;
-    private int width = (Juego1943.getFrame().getWidth() / 5) - 6;
+    private int widthFondo = Juego1943.getFrame().getWidth() / 5;
+    private int width = widthFondo - 6;
 
     public Vida () {
         this.cantidadVida = 100;
@@ -21,17 +22,15 @@ public class Vida extends ObjetoGrafico {
     @Override
     public void update(double delta) {
 
-        int widthTotal = Juego1943.getFrame().getWidth() / 5;
+        vida = new BufferedImage(widthFondo, 20, BufferedImage.TYPE_INT_ARGB);
 
-        vida = new BufferedImage(widthTotal, 20, BufferedImage.TYPE_INT_ARGB);
-
-        BufferedImage fondo = new BufferedImage(widthTotal, 20, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage fondo = new BufferedImage(widthFondo, 20, BufferedImage.TYPE_INT_ARGB);
         Graphics gFondo = fondo.getGraphics();
         gFondo.setColor(Color.DARK_GRAY);
-        gFondo.fillRect(0,0,300,30);
+        gFondo.fillRect(0,0,widthFondo,30);
 
         gVida = vida.getGraphics();
-        gVida.drawImage(fondo, 0, 0, widthTotal, 30, null);
+        gVida.drawImage(fondo, 0, 0, widthFondo, 30, null);
 
         int wRojo = width / 4;
         int wNaranja = width / 4;
@@ -66,7 +65,7 @@ public class Vida extends ObjetoGrafico {
         gAmarillo.setColor(Color.YELLOW);
         gAmarillo.fillRect(0, 0, width / 2, 14);
         gVida.drawImage(amarillo, width / 2, 3, wAmarillo, 14, null);
-        System.out.println(cantidadVida);
+
         this.setImagen(vida);
     }
 
