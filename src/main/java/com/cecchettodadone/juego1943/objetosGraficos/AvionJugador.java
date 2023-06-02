@@ -2,6 +2,7 @@ package com.cecchettodadone.juego1943.objetosGraficos;
 
 import com.cecchettodadone.juego1943.Juego1943;
 import com.cecchettodadone.juego1943.Util;
+import com.cecchettodadone.juego1943.audio.Sonido;
 import com.cecchettodadone.juego1943.configuracion.Configurador;
 import com.entropyinteractive.Keyboard;
 
@@ -60,6 +61,7 @@ public class AvionJugador extends Avion {
     public void disparar () {
         Juego1943.municiones.add(new Bala((int)this.getX() + 10, (int)this.getY() - 20));
         Juego1943.municiones.add(new Bala((int)this.getX() + this.getDimensiones().width - 10, (int)this.getY() - 20));
+        Sonido.iniciar("fx/disparo");
     }
 
     boolean isDisparando = false, barra = false;

@@ -9,12 +9,12 @@ import java.io.File;
 
 public class Sonido {
 
-    Clip clip;
+    static Clip clip;
 
-    public void iniciar(String nombre) {
+    public static void iniciar(String nombre) {
 
         try {
-            File file = Util.getFile("musica/" + nombre + ".wav");
+            File file = Util.getFile("sonido.juegos/1943/" + nombre + ".wav");
             clip = AudioSystem.getClip();
             AudioInputStream audioInput = AudioSystem.getAudioInputStream(file);
             clip.open(audioInput);
@@ -25,11 +25,11 @@ public class Sonido {
 
     }
 
-    public void parar() {
+    public static void parar() {
         clip.stop();
     }
 
-    public void loop() {
+    public static void loop() {
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 

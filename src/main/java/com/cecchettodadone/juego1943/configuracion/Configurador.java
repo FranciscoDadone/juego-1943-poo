@@ -158,7 +158,7 @@ public class Configurador extends JFrame {
         JSONObject json = new JSONObject();
 
         json.put("ventana",boxVentana.getSelectedItem());
-        json.put("musica",boxMusica.getSelectedItem());
+        json.put("sonido.juegos/1943/musica",boxMusica.getSelectedItem());
         json.put("avion",boxAvion.getSelectedItem());
         json.put("direccion",boxDireccion.getSelectedItem());
         json.put("sonido",checkSonido.isSelected());
