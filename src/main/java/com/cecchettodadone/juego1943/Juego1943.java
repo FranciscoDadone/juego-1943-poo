@@ -18,7 +18,7 @@ public class Juego1943 extends Juego {
     public static ArrayList<ObjetoGrafico> objetosGraficos = new ArrayList<>();
     public static ArrayList<Municion> municiones = new ArrayList<>();
     public static ArrayList<Municion> municionesEnemigo = new ArrayList<>();
-    public static ArrayList<Avion> enemigos = new ArrayList<>();
+    public static ArrayList<ObjetoGrafico> enemigos = new ArrayList<>();
     public static Vida vidaJugador;
 
     private final int FREQ_ENEMIGOS_NORMALES_MS = 2000;
@@ -39,7 +39,7 @@ public class Juego1943 extends Juego {
     @Override
     public void run(double fps) {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.frame = new JGame("1943", screenSize.width,screenSize.height) {
+        this.frame = new JGame("1943", screenSize.width, screenSize.height) {
 
             @Override
             public void gameStartup() {
@@ -56,7 +56,6 @@ public class Juego1943 extends Juego {
 
             int counter = 0;
             int c = 0;
-            Random rand = new Random();
             @Override
             public void gameUpdate(double v) {
                 c++;
@@ -70,13 +69,22 @@ public class Juego1943 extends Juego {
                 boolean b = false;
                 for (int i = 0; i < municiones.size(); i++) {
                     municiones.get(i).update(v);
+                    ArrayList<ObjetoGrafico> aviones = new ArrayList<>();
                     for (int j = 0; j < enemigos.size(); j++) {
-                        if (enemigos.get(j).getRectagle().intersects(municiones.get(i).getRectagle())) {
-                            objetosGraficos.add(new Explosion((int) enemigos.get(j).getX(), (int) enemigos.get(j).getY()));
-                            Juego1943.enemigos.remove(enemigos.get(j));
-                            Juego1943.municiones.remove(municiones.get(i));
-                            b = true;
-                            break;
+                        if (enemigos.get(j) instanceof GrupoDeAviones<?>) aviones = (ArrayList<ObjetoGrafico>) ((GrupoDeAviones<?>) enemigos.get(j)).getAviones();
+                        else aviones.add(enemigos.get(j));
+
+                        for (int k = 0; k < aviones.size(); k++) {
+                            if (aviones.get(k).getRectagle().intersects(municiones.get(i).getRectagle())) {
+                                objetosGraficos.add(new Explosion((int) aviones.get(k).getX(), (int) aviones.get(k).getY()));
+                                if (enemigos.get(j) instanceof GrupoDeAviones<?>) {
+                                    ((GrupoDeAviones<?>) enemigos.get(j)).getAviones().remove(aviones.get(k));
+                                    break;
+                                } else Juego1943.enemigos.remove(enemigos.get(j));
+                                Juego1943.municiones.remove(municiones.get(i));
+                                b = true;
+                                break;
+                            }
                         }
                     }
                     if (b) break;
@@ -90,27 +98,30 @@ public class Juego1943 extends Juego {
 
                 for (int i = 0; i < enemigos.size(); i++) {
                     enemigos.get(i).update(v);
+
+                    if (enemigos.get(i) instanceof GrupoDeAviones<?>) {
+                        ArrayList<?> aviones = ((GrupoDeAviones<?>) enemigos.get(i)).getAviones();
+                        if (aviones.size() == 0) {
+                            System.out.println("Eliminaste un grupo entero");
+                            enemigos.remove(i);
+                            continue;
+                        }
+
+                        for (Object a : aviones) {
+                            if (((Avion) a).getY() < -500) {
+                                enemigos.remove(i);
+                                break;
+                            }
+                        }
+
+                    }
+
                     if (enemigos.get(i).getY() < -500) enemigos.remove(i);
                 }
 
                 if ((counter * v) * 1000 >= FREQ_ENEMIGOS_NORMALES_MS) {
                     counter = 0;
-
-//                    GrupoDeAviones.getFormacionTrianguloRojoDerecha(400).forEach((e) -> enemigos.add(e));
-
-                    switch (rand.nextInt(4)) {
-                        case 0:
-                            GrupoDeAviones.getFormacionTriangulo(rand.nextInt(this.getWidth()), -100).forEach((e) -> enemigos.add(e));
-                            break;
-                        case 1:
-                            GrupoDeAviones.getFormacionFila(rand.nextInt(this.getWidth()), -100).forEach((e) -> enemigos.add(e));
-                            break;
-                        case 2:
-                            GrupoDeAviones.getFormacionTrianguloRojoIzquierda(rand.nextInt(this.getHeight() / 2)).forEach((e) -> enemigos.add(e));
-                            break;
-                        case 3:
-                            GrupoDeAviones.getFormacionTrianguloRojoDerecha(rand.nextInt(this.getHeight() / 2)).forEach((e) -> enemigos.add(e));
-                    }
+                    enemigos.add(new GrupoDeAviones<>());
                 }
 
                 counter++;

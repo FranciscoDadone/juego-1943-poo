@@ -31,8 +31,6 @@ public class SombraAvionJugador extends Avion{
     public void update(double delta) {
         setPosicion(avion.getX()+50,avion.getY()+50);
 
-        System.out.println(avion.getDirec());
-
         if (avion.getDirec() != null){
             switch (avion.getDirec()) {
                 case adelante:
