@@ -23,9 +23,12 @@ public class Menu extends JFrame {
         this.setSize(new Dimension(496, 680));
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(false);
-        sonido = new Sonido();
-        sonido.iniciar("musicaConfiguracion");
-        sonido.loop();
+//        sonido = new Sonido();
+//        sonido.iniciar("musica/musicaConfiguracion");
+//        sonido.loop();
+
+        Sonido.iniciar("musica/musicaConfiguracion");
+        Sonido.loop();
 
 
         Border marco = BorderFactory.createLineBorder(Color.BLACK,2);
