@@ -1,25 +1,22 @@
 package com.cecchettodadone.juego1943.objetosGraficos;
 
 import com.cecchettodadone.juego1943.Juego1943;
-import com.cecchettodadone.juego1943.ObjetoGrafico;
 import com.cecchettodadone.juego1943.Util;
 import com.cecchettodadone.juego1943.configuracion.Configurador;
 import com.entropyinteractive.Keyboard;
-import org.json.JSONObject;
 
-import javax.management.DescriptorRead;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.StringReader;
-import java.security.Key;
 
 public class AvionJugador extends Avion {
     private final int SEGUNDA_IMG_DOBLANDO_TMR = (int)Util.FRAME_RATE / 2;
     private int doblandoTmr = 0;
     private int contador = 0;
-    private BufferedImage avion, avionDoblandoDerecha1, avionDoblandoIzquierda1, avionDoblandoDerecha2, avionDoblandoIzquierda2, avionDisparandoIzquierda1, avionDisparandoIzquierda2, avionDisparando, avionDisparandoDerecha1, avionDisparandoDerecha2;
+    private SombraAvionJugador sombra;
+    private BufferedImage avion,avionDoblandoDerecha1, avionDoblandoIzquierda1, avionDoblandoDerecha2, avionDoblandoIzquierda2, avionDisparandoIzquierda1, avionDisparandoIzquierda2, avionDisparando, avionDisparandoDerecha1, avionDisparandoDerecha2;
     private int arriba, abajo, izquierda, derecha, disparo, ataqueEspecial;
+    private Direccion direc;
 
     public AvionJugador (int posX, int posY) {
         setDesplazamiento(300);
@@ -36,9 +33,12 @@ public class AvionJugador extends Avion {
         avionDisparandoDerecha2 = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion_disparando_derecha2.png");
 
 
+        sombra = new SombraAvionJugador(this);
+
         this.setImagen(avion);
         this.setPosicion(posX, posY);
         this.setDimensiones(new Dimension(75, 48));
+
 
         if (Configurador.getDireccion().equals("flechas")) {
             arriba = KeyEvent.VK_UP;
@@ -66,6 +66,9 @@ public class AvionJugador extends Avion {
     boolean isDisparando = false, barra = false;
     @Override
     public void update(double delta) {
+
+        sombra.update(delta);
+
         Keyboard teclado = Juego1943.getFrame().getKeyboard();
         double velocidad = velDesplazamiento * delta; // Velocidad lineal
 
@@ -79,9 +82,11 @@ public class AvionJugador extends Avion {
             desplazamientoX -= velocidad;
             this.setImagen((!isDisparando) ? avionDoblandoIzquierda1 : avionDisparandoIzquierda1);
             doblandoTmr++;
+            setDireccion(Direccion.izquierda1);
             if (velDesplazamiento < 1000) velDesplazamiento += 10;
             if (doblandoTmr >= SEGUNDA_IMG_DOBLANDO_TMR) {
                 this.setImagen((!isDisparando) ? avionDoblandoIzquierda2 : avionDisparandoIzquierda2);
+                setDireccion(Direccion.izquierda2);
             }
         }
 
@@ -89,8 +94,12 @@ public class AvionJugador extends Avion {
             desplazamientoX += velocidad;
             this.setImagen((!isDisparando) ? avionDoblandoDerecha1 : avionDisparandoDerecha1);
             doblandoTmr++;
+            setDireccion(Direccion.derecha1);
             if (velDesplazamiento < 1000) velDesplazamiento += 10;
-            if (doblandoTmr >= SEGUNDA_IMG_DOBLANDO_TMR) this.setImagen((!isDisparando) ? avionDoblandoDerecha2: avionDisparandoDerecha2);
+            if (doblandoTmr >= SEGUNDA_IMG_DOBLANDO_TMR) {
+                this.setImagen((!isDisparando) ? avionDoblandoDerecha2 : avionDisparandoDerecha2);
+                setDireccion(Direccion.derecha2);
+            }
         }
 
         if (desplazamientoX != 0 && desplazamientoY != 0) {
@@ -100,6 +109,9 @@ public class AvionJugador extends Avion {
             desplazamientoX *= factorNormalizacion;
             desplazamientoY *= factorNormalizacion;
         }
+
+        if (!teclado.isKeyPressed(derecha) && !teclado.isKeyPressed(izquierda))
+            setDireccion(Direccion.adelante);
 
         if (!teclado.isKeyPressed(derecha) && !teclado.isKeyPressed(izquierda)) {
             this.setImagen((!isDisparando) ? avion : avionDisparando);
@@ -130,5 +142,18 @@ public class AvionJugador extends Avion {
                 barra = true;
             }
         } else barra = false;
+
+    }
+
+    public Direccion getDirec() {
+        return direc;
+    }
+
+    private void setDireccion(Direccion direc) {
+        this.direc = direc;
+    }
+
+    public SombraAvionJugador getSombra() {
+        return sombra;
     }
 }

@@ -44,7 +44,11 @@ public class Juego1943 extends Juego {
             @Override
             public void gameStartup() {
                 objetosGraficos.add(new FondoJuego());
-                objetosGraficos.add(new AvionJugador(this.getWidth() / 2, this.getHeight() / 2));
+
+                AvionJugador avion = new AvionJugador(this.getWidth() / 2, this.getHeight() / 2);
+                objetosGraficos.add(avion);
+                objetosGraficos.add(avion.getSombra());
+
 
                 vidaJugador = new Vida();
                 objetosGraficos.add(vidaJugador);
