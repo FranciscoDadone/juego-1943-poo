@@ -38,7 +38,7 @@ public class SuperShell extends Bonus{
                 setImagen(img3);
                 break;
             case 3:
-                setImagen(img3);
+                setImagen(img4);
                 break;
         }
         counter += 7;
