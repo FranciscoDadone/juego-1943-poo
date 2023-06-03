@@ -17,7 +17,7 @@ public class SuperShell extends Bonus{
         img4 = Util.getImage("imagenes/juegos/juego1943/bonus/super_shell/super_shell4.png");
 
         this.setPosicion(posX, posY);
-        this.setDimensiones(new Dimension(8*2,8*2));
+        this.setDimensiones(new Dimension(8*3,8*3));
     }
 
     int counter = 0;
@@ -35,7 +35,7 @@ public class SuperShell extends Bonus{
                 setImagen(img2);
                 break;
             case 2:
-                setImagen(img2);
+                setImagen(img3);
                 break;
             case 3:
                 setImagen(img3);
