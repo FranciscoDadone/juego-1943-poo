@@ -20,7 +20,7 @@ public class AvionJugador extends Avion {
     private int arriba, abajo, izquierda, derecha, disparo, ataqueEspecial;
     private boolean ametrallador;
 
-    private boolean rafaga = false;
+    private boolean alcance,rafaga = false;
 
     private Direccion direc;
 
@@ -63,27 +63,31 @@ public class AvionJugador extends Avion {
         else disparo = KeyEvent.getExtendedKeyCodeForChar(Configurador.getDisparo().charAt(0));
 
     }
+
     public void disparar () {
         if (ametrallador) {
-            Juego1943.municiones.add(new Bala((int) this.getX() + 10, (int) this.getY() - 20, 45));
-            Juego1943.municiones.add(new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 135));
+            Juego1943.municiones.add(new Bala((int) this.getX() + 10, (int) this.getY() - 20, 45,alcance));
+            Juego1943.municiones.add(new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 135,alcance));
 
-            Juego1943.municiones.add(new Bala((int) this.getX() + 10, (int) this.getY() - 20, 90));
-            Juego1943.municiones.add(new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90));
+            Juego1943.municiones.add(new Bala((int) this.getX() + 10, (int) this.getY() - 20, 90,alcance));
+            Juego1943.municiones.add(new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90,alcance));
             Sonido.iniciar("fx/disparo");
         } else {
-            Juego1943.municiones.add(new Bala((int) this.getX() + 10, (int) this.getY() - 20, 90));
-            Juego1943.municiones.add(new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90));
+            Juego1943.municiones.add(new Bala((int) this.getX() + 10, (int) this.getY() - 20, 90,alcance));
+            Juego1943.municiones.add(new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90,alcance));
             Sonido.iniciar("fx/disparo");
         }
     }
-
     public boolean isAmetrallador() {
         return ametrallador;
     }
 
     public void setAmetrallador(boolean ametrallador) {
         this.ametrallador = ametrallador;
+    }
+
+    public void setAlcance(boolean alcance) {
+        this.alcance = alcance;
     }
 
     boolean isDisparando = false, barra = false;

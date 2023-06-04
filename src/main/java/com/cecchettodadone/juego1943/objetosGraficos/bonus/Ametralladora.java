@@ -41,8 +41,10 @@ public class Ametralladora extends Bonus implements Bonusable{
             @Override
             public void run() {
                 Juego1943.avion.setAmetrallador(false);
+                System.out.println("mis bolainas");
             }
         }, 10000);
+
 
     }
 

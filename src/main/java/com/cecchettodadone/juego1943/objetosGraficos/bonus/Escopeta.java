@@ -1,9 +1,12 @@
 package com.cecchettodadone.juego1943.objetosGraficos.bonus;
 
+import com.cecchettodadone.juego1943.Juego1943;
 import com.cecchettodadone.juego1943.Util;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Escopeta extends Bonus implements Bonusable{
 
@@ -47,9 +50,25 @@ public class Escopeta extends Bonus implements Bonusable{
             counter += 14;
     }
 
+    int cantidad = 0;
     @Override
     public void action() {
+        Timer timer = new Timer();
 
+        if (timer != null)
+            timer.cancel();
+
+        Juego1943.avion.setAmetrallador(true);
+        Juego1943.avion.setAlcance(true);
+        cantidad++;
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Juego1943.avion.setAlcance(false);
+                Juego1943.avion.setAmetrallador(false);
+            }
+        }, 10000);
     }
 }
 
