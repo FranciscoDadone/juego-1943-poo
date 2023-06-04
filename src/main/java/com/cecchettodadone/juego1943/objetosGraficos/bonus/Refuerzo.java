@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.sql.Ref;
 
-public class Refuerzo extends Bonus{
+public class Refuerzo extends Bonus implements Bonusable{
 
     private BufferedImage img1, img2, img3, img4, img5, img6;
 
@@ -56,6 +56,11 @@ public class Refuerzo extends Bonus{
             counter = 0;
         else
             counter += 12;
+    }
+
+    @Override
+    public void action() {
+
     }
 }
 

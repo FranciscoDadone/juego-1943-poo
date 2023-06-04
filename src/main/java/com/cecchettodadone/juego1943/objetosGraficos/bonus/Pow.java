@@ -5,7 +5,7 @@ import com.cecchettodadone.juego1943.Util;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Pow extends Bonus{
+public class Pow extends Bonus implements  Bonusable{
     private BufferedImage img1, img2;
 
     public Pow(int posX, int posY) {
@@ -29,6 +29,11 @@ public class Pow extends Bonus{
         else
             setImagen(img2);
         counter += 5;
+
+    }
+
+    @Override
+    public void action() {
 
     }
 }

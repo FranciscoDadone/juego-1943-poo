@@ -45,6 +45,10 @@ public abstract class Municion extends ObjetoGrafico {
         this.img = img;
     }
 
+    public void setDimension(Dimension dim) {
+        this.setDimensiones(dim);
+    }
+
     public Municion (int posX, int posY, BufferedImage img, Dimension dim) {
         this.setImagen(img);
         this.setPosicion(posX, posY);

@@ -4,7 +4,7 @@ import com.cecchettodadone.juego1943.Util;
 
 import java.awt.image.BufferedImage;
 
-public class Laser extends Bonus{
+public class Laser extends Bonus implements Bonusable{
 
     private BufferedImage img1, img2, img3, img4;
 
@@ -48,4 +48,8 @@ public class Laser extends Bonus{
             counter += 10;
     }
 
+    @Override
+    public void action() {
+
+    }
 }

@@ -2,10 +2,12 @@ package com.cecchettodadone.juego1943.objetosGraficos.bonus;
 
 import com.cecchettodadone.juego1943.Util;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class EstrellaNinja extends Bonus{
+
+public class EstrellaNinja extends Bonus implements Bonusable {
 
     BufferedImage img1, img2, img3, img4;
 
@@ -47,5 +49,10 @@ public class EstrellaNinja extends Bonus{
             counter = 0;
         else
             counter += 12;
+    }
+
+    @Override
+    public void action() {
+
     }
 }

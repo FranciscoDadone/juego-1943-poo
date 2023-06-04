@@ -5,7 +5,7 @@ import com.cecchettodadone.juego1943.Util;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Auto extends Bonus{
+public class Auto extends Bonus implements Bonusable{
 
     private BufferedImage img1, img2, img3, img4;
 
@@ -46,5 +46,10 @@ public class Auto extends Bonus{
             counter = 0;
         else
             counter += 7;
+    }
+
+    @Override
+    public void action() {
+
     }
 }

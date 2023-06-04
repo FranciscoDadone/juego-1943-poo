@@ -2,6 +2,8 @@ package com.cecchettodadone.juego1943;
 
 import com.cecchettodadone.juego1943.configuracion.Menu;
 import com.cecchettodadone.juego1943.objetosGraficos.*;
+import com.cecchettodadone.juego1943.objetosGraficos.bonus.Ametralladora;
+import com.cecchettodadone.juego1943.objetosGraficos.bonus.Bonus;
 import com.cecchettodadone.juego1943.objetosGraficos.enemigos.Ataque;
 import com.cecchettodadone.juego1943.objetosGraficos.enemigos.AvionEnemigoRojo;
 import com.cecchettodadone.juego1943.objetosGraficos.enemigos.AvionEnemigoVerde;
@@ -19,9 +21,11 @@ public class Juego1943 extends Juego {
     public static ArrayList<Municion> municiones = new ArrayList<>();
     public static ArrayList<Municion> municionesEnemigo = new ArrayList<>();
     public static ArrayList<ObjetoGrafico> enemigos = new ArrayList<>();
-    public static Vida vidaJugador;
 
+    public static ArrayList<Bonus> bonus = new ArrayList<>();
+    public static Vida vidaJugador;
     private final int FREQ_ENEMIGOS_NORMALES_MS = 2000;
+    public static AvionJugador avion;
 
     public Juego1943() {
         setNombre("1943");
@@ -47,7 +51,7 @@ public class Juego1943 extends Juego {
 
                 objetosGraficos.add(new PortaAviones(getWidth()/2,getHeight()/4));
 
-                AvionJugador avion = new AvionJugador(this.getWidth() / 2, this.getHeight() / 2);
+                avion = new AvionJugador(this.getWidth() / 2, this.getHeight() / 2);
                 objetosGraficos.add(avion);
                 objetosGraficos.add(avion.getSombra());
 
@@ -58,6 +62,8 @@ public class Juego1943 extends Juego {
 
             int counter = 0;
             int c = 0;
+            int contadorBonus = 0;
+
             @Override
             public void gameUpdate(double v) {
                 c++;
@@ -67,6 +73,9 @@ public class Juego1943 extends Juego {
                 for (int i = 0; i < objetosGraficos.size(); i++) {
                     objetosGraficos.get(i).update(v);
                 }
+
+                for (int i=0 ; i<bonus.size() ; i++)
+                    bonus.get(i).update(v);
 
                 boolean b = false;
                 for (int i = 0; i < municiones.size(); i++) {
@@ -104,7 +113,9 @@ public class Juego1943 extends Juego {
                     if (enemigos.get(i) instanceof GrupoDeAviones<?>) {
                         ArrayList<?> aviones = ((GrupoDeAviones<?>) enemigos.get(i)).getAviones();
                         if (aviones.size() == 0) {
-                            System.out.println("Eliminaste un grupo entero");
+
+                            contadorBonus++;
+
                             enemigos.remove(i);
                             continue;
                         }
@@ -120,6 +131,19 @@ public class Juego1943 extends Juego {
 
                     if (enemigos.get(i).getY() < -500) enemigos.remove(i);
                 }
+
+                for (int j = 0 ; j<bonus.size() ; j++) {
+                    if (avion.getRectagle().intersects(bonus.get(j).getRectagle())) {
+                        Bonus.addBonus(bonus.get(j));
+                        bonus.remove(bonus.get(j));
+                    }
+                }
+
+                if (contadorBonus == 4){
+                    contadorBonus = 0;
+                    bonus.add(Bonus.getBonus());
+                }
+
 
                 if ((counter * v) * 1000 >= FREQ_ENEMIGOS_NORMALES_MS) {
                     counter = 0;
@@ -141,6 +165,9 @@ public class Juego1943 extends Juego {
                     obj.draw(g);
                 });
                 enemigos.forEach((obj) -> {
+                    obj.draw(g);
+                });
+                bonus.forEach((obj) -> {
                     obj.draw(g);
                 });
             }

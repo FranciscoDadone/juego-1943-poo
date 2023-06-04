@@ -4,6 +4,8 @@ import com.cecchettodadone.juego1943.Juego1943;
 import com.cecchettodadone.juego1943.Util;
 import com.cecchettodadone.juego1943.audio.Sonido;
 import com.cecchettodadone.juego1943.configuracion.Configurador;
+import com.cecchettodadone.juego1943.objetosGraficos.bonus.Ametralladora;
+import com.cecchettodadone.juego1943.objetosGraficos.bonus.Bonus;
 import com.entropyinteractive.Keyboard;
 
 import java.awt.*;
@@ -16,8 +18,9 @@ public class AvionJugador extends Avion {
     private SombraAvionJugador sombra;
     private BufferedImage avion,avionDoblandoDerecha1, avionDoblandoIzquierda1, avionDoblandoDerecha2, avionDoblandoIzquierda2, avionDisparandoIzquierda1, avionDisparandoIzquierda2, avionDisparando, avionDisparandoDerecha1, avionDisparandoDerecha2;
     private int arriba, abajo, izquierda, derecha, disparo, ataqueEspecial;
-    private Direccion direc;
+    private boolean ametrallador = false;
 
+    private Direccion direc;
     public AvionJugador (int posX, int posY) {
         setDesplazamiento(300);
         avion = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion.png");
@@ -59,9 +62,26 @@ public class AvionJugador extends Avion {
     }
 
     public void disparar () {
-        Juego1943.municiones.add(new Bala((int)this.getX() + 10, (int)this.getY() - 20));
-        Juego1943.municiones.add(new Bala((int)this.getX() + this.getDimensiones().width - 10, (int)this.getY() - 20));
-        Sonido.iniciar("fx/disparo");
+        if (ametrallador) {
+            Juego1943.municiones.add(new Bala((int) this.getX() + 10, (int) this.getY() - 20, 45));
+            Juego1943.municiones.add(new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 135));
+
+            Juego1943.municiones.add(new Bala((int) this.getX() + 10, (int) this.getY() - 20, 90));
+            Juego1943.municiones.add(new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90));
+            Sonido.iniciar("fx/disparo");
+        } else {
+            Juego1943.municiones.add(new Bala((int) this.getX() + 10, (int) this.getY() - 20, 90));
+            Juego1943.municiones.add(new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90));
+            Sonido.iniciar("fx/disparo");
+        }
+    }
+
+    public boolean isAmetrallador() {
+        return ametrallador;
+    }
+
+    public void setAmetrallador(boolean ametrallador) {
+        this.ametrallador = ametrallador;
     }
 
     boolean isDisparando = false, barra = false;

@@ -5,7 +5,7 @@ import com.cecchettodadone.juego1943.Util;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Escopeta extends Bonus{
+public class Escopeta extends Bonus implements Bonusable{
 
     private BufferedImage img1, img2, img3, img4;
 
@@ -45,6 +45,11 @@ public class Escopeta extends Bonus{
             counter = 0;
         else
             counter += 14;
+    }
+
+    @Override
+    public void action() {
+
     }
 }
 

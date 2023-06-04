@@ -1,11 +1,15 @@
 package com.cecchettodadone.juego1943.objetosGraficos.bonus;
 
+import com.cecchettodadone.juego1943.Juego1943;
 import com.cecchettodadone.juego1943.Util;
+import com.cecchettodadone.juego1943.objetosGraficos.AvionJugador;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class Ametralladora extends Bonus{
+public class Ametralladora extends Bonus implements Bonusable{
 
     private BufferedImage img1, img2, img3, img4;
 
@@ -20,7 +24,30 @@ public class Ametralladora extends Bonus{
         this.setDimensiones(new Dimension(18*2,16*2));
     }
 
+    int cantidad = 1;
+    int counterAction = 0;
+    private long tiempoInicio;
+    @Override
+    public void action() {
+        Timer timer = new Timer();
+
+        if (timer != null)
+            timer.cancel();
+
+        Juego1943.avion.setAmetrallador(true);
+        cantidad++;
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Juego1943.avion.setAmetrallador(false);
+            }
+        }, 10000);
+
+    }
+
     int counter = 0;
+
     @Override
     public void update(double delta) {
 
