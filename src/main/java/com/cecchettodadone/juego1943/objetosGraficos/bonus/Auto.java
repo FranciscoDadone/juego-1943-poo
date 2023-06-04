@@ -1,9 +1,12 @@
 package com.cecchettodadone.juego1943.objetosGraficos.bonus;
 
+import com.cecchettodadone.juego1943.Juego1943;
 import com.cecchettodadone.juego1943.Util;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Auto extends Bonus implements Bonusable{
 
@@ -48,8 +51,22 @@ public class Auto extends Bonus implements Bonusable{
             counter += 7;
     }
 
+    int cantidad = 0;
     @Override
     public void action() {
+        Timer timer = new Timer();
 
+        if (timer != null)
+            timer.cancel();
+
+        Juego1943.avion.setRafaga(true);
+        cantidad++;
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Juego1943.avion.setRafaga(false);
+            }
+        }, 10000);
     }
 }

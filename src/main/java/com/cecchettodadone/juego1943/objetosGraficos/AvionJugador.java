@@ -18,9 +18,12 @@ public class AvionJugador extends Avion {
     private SombraAvionJugador sombra;
     private BufferedImage avion,avionDoblandoDerecha1, avionDoblandoIzquierda1, avionDoblandoDerecha2, avionDoblandoIzquierda2, avionDisparandoIzquierda1, avionDisparandoIzquierda2, avionDisparando, avionDisparandoDerecha1, avionDisparandoDerecha2;
     private int arriba, abajo, izquierda, derecha, disparo, ataqueEspecial;
-    private boolean ametrallador = false;
+    private boolean ametrallador;
+
+    private boolean rafaga = false;
 
     private Direccion direc;
+
     public AvionJugador (int posX, int posY) {
         setDesplazamiento(300);
         avion = Util.getImage("imagenes/juegos/juego1943/avion_jugador/avion.png");
@@ -60,7 +63,6 @@ public class AvionJugador extends Avion {
         else disparo = KeyEvent.getExtendedKeyCodeForChar(Configurador.getDisparo().charAt(0));
 
     }
-
     public void disparar () {
         if (ametrallador) {
             Juego1943.municiones.add(new Bala((int) this.getX() + 10, (int) this.getY() - 20, 45));
@@ -85,6 +87,12 @@ public class AvionJugador extends Avion {
     }
 
     boolean isDisparando = false, barra = false;
+
+    public void setRafaga(boolean rafaga) {
+        this.rafaga = rafaga;
+    }
+
+    int contador = 0;
     @Override
     public void update(double delta) {
 
@@ -154,15 +162,27 @@ public class AvionJugador extends Avion {
         if (this.getX() <= 0) this.setPosicionX(0);
         if (this.getY() <= this.getDimensiones().getHeight()) this.setPosicionY(this.getDimensiones().getHeight());
 
-
-        if (teclado.isKeyPressed(disparo)) {
-            isDisparando = false;
-            if (!barra) {
-                disparar();
-                isDisparando = true;
-                barra = true;
+        if (!rafaga) {
+            if (teclado.isKeyPressed(disparo)) {
+                isDisparando = false;
+                if (!barra) {
+                    disparar();
+                    isDisparando = true;
+                    barra = true;
+                }
+            } else barra = false;
+        } else {
+            if (teclado.isKeyPressed(disparo)) {
+                if ((int)(contador * delta) != 0) {
+                    disparar();
+                    isDisparando = true;
+                    contador = 0;
+                } else {
+                    contador += 15;
+                    isDisparando = false;
+                }
             }
-        } else barra = false;
+        }
 
     }
 
