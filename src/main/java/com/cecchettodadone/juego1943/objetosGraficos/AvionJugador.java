@@ -156,13 +156,11 @@ public class AvionJugador extends Avion {
     public void disparar () {
         Juego1943.municiones.add(!escopeta? new Bala((int) this.getX() + 10, (int) this.getY() - 20, 90,alcance) : new BalaEscopeta((int) this.getX() + 10, (int) this.getY() - 20, 90,alcance));
         Juego1943.municiones.add(!escopeta? new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90,alcance) : new BalaEscopeta((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90,alcance));
+        if (!escopeta)   Sonido.iniciar("fx/disparo"); else Sonido.iniciar("fx/escopeta");
 
         if (tiroAncho) {
-            Juego1943.municiones.add(!escopeta? new Bala((int) this.getX() + 10, (int) this.getY() - 20, 90,alcance) : new BalaEscopeta((int) this.getX() + 10, (int) this.getY() - 20, 90,alcance));
-            Juego1943.municiones.add(!escopeta? new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90,alcance) : new BalaEscopeta((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90,alcance));
-
-            Juego1943.municiones.add(!escopeta? new Bala((int) this.getX() + 10, (int) this.getY() - 20, 90,alcance) : new BalaEscopeta((int) this.getX() + 10, (int) this.getY() - 20, 45,alcance));
-            Juego1943.municiones.add(!escopeta? new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90,alcance) : new BalaEscopeta((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 135,alcance));
+            Juego1943.municiones.add(!escopeta? new Bala((int) this.getX() + 10, (int) this.getY() - 20, 45,alcance) : new BalaEscopeta((int) this.getX() + 10, (int) this.getY() - 20, 45,alcance));
+            Juego1943.municiones.add(!escopeta? new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 135,alcance) : new BalaEscopeta((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 135,alcance));
         }
     }
 

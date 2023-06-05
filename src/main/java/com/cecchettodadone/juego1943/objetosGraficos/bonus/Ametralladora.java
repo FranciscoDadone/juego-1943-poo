@@ -15,16 +15,15 @@ public class Ametralladora extends Bonus implements Bonusable{
 
     public Ametralladora(int posX, int posY) {
 
-        img1 = Util.getImage("imagenes/juegos/juego1943/bonus/escopeta/escopeta1.png");
-        img2 = Util.getImage("imagenes/juegos/juego1943/bonus/escopeta/escopeta2.png");
-        img3 = Util.getImage("imagenes/juegos/juego1943/bonus/escopeta/escopeta3.png");
-        img4 = Util.getImage("imagenes/juegos/juego1943/bonus/escopeta/escopeta4.png");
+        img1 = Util.getImage("imagenes/juegos/juego1943/bonus/ametralladora/ametralladora1.png");
+        img2 = Util.getImage("imagenes/juegos/juego1943/bonus/ametralladora/ametralladora2.png");
+        img3 = Util.getImage("imagenes/juegos/juego1943/bonus/ametralladora/ametralladora3.png");
+        img4 = Util.getImage("imagenes/juegos/juego1943/bonus/ametralladora/ametralladora4.png");
 
         this.setPosicion(posX, posY);
         this.setDimensiones(new Dimension(18*2,16*2));
     }
 
-    int cantidad = 1;
     int counterAction = 0;
     private long tiempoInicio;
     @Override
@@ -34,15 +33,12 @@ public class Ametralladora extends Bonus implements Bonusable{
         if (timer != null)
             timer.cancel();
 
-        Juego1943.avion.setEscopeta(true);
-        Juego1943.avion.setAlcance(true);
-        cantidad++;
+        Juego1943.avion.setTiroAncho(true);
 
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                Juego1943.avion.setEscopeta(false);
-                Juego1943.avion.setAlcance(false);
+                Juego1943.avion.setTiroAncho(false);
             }
         }, 10000);
 
