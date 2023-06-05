@@ -133,6 +133,15 @@ public class Juego1943 extends Juego {
                 }
 
                 for (int j = 0 ; j<bonus.size() ; j++) {
+
+                    for (int i=0 ; i<municiones.size() ; i++) {
+                        if (bonus.get(j).getRectagle().intersects(municiones.get(i).getRectagle())) {
+                            bonus.add(Bonus.getBonus((int)bonus.get(j).getX(),(int)bonus.get(j).getY()));
+                            bonus.remove(bonus.get(j));
+
+                        }
+                    }
+
                     if (avion.getRectagle().intersects(bonus.get(j).getRectagle())) {
                         Bonus.addBonus(bonus.get(j));
                         bonus.remove(bonus.get(j));
