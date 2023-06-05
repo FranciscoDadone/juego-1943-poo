@@ -12,6 +12,8 @@ public abstract class Municion extends ObjetoGrafico {
     protected int direccion;
     protected int danio;
     protected BufferedImage img;
+    protected double angulo;
+    protected boolean alcance;
 
     public double getVelocidad() {
         return velocidad;
@@ -49,9 +51,10 @@ public abstract class Municion extends ObjetoGrafico {
         this.setDimensiones(dim);
     }
 
-    public Municion (int posX, int posY, BufferedImage img, Dimension dim) {
+    public Municion (int posX, int posY, BufferedImage img, Dimension dim, double angulo) {
         this.setImagen(img);
         this.setPosicion(posX, posY);
         this.setDimensiones(dim);
+        this.angulo = angulo;
     }
 }

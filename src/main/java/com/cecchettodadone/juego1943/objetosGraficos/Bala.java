@@ -10,7 +10,7 @@ public class Bala extends Municion {
     private boolean alcance;
 
     public Bala(int posX, int posY, double angulo, boolean alcance) {
-        super(posX, posY, Util.getImage("imagenes/juegos/juego1943/municion/municion.png"), new Dimension(10, 35));
+        super(posX, posY, Util.getImage("imagenes/juegos/juego1943/municion/normal/municion.png"),new Dimension(10, 35),angulo);
         setDanio(10);
         setVelocidad(-700);
         this.alcance = alcance;

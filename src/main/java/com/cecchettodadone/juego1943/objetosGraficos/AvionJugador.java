@@ -18,10 +18,7 @@ public class AvionJugador extends Avion {
     private SombraAvionJugador sombra;
     private BufferedImage avion,avionDoblandoDerecha1, avionDoblandoIzquierda1, avionDoblandoDerecha2, avionDoblandoIzquierda2, avionDisparandoIzquierda1, avionDisparandoIzquierda2, avionDisparando, avionDisparandoDerecha1, avionDisparandoDerecha2;
     private int arriba, abajo, izquierda, derecha, disparo, ataqueEspecial;
-    private boolean ametrallador;
-
-    private boolean alcance,rafaga = false;
-
+    private boolean alcance, rafaga, escopeta, tiroAncho;
     private Direccion direc;
 
     public AvionJugador (int posX, int posY) {
@@ -64,39 +61,6 @@ public class AvionJugador extends Avion {
 
     }
 
-    public void disparar () {
-        if (ametrallador) {
-            Juego1943.municiones.add(new Bala((int) this.getX() + 10, (int) this.getY() - 20, 45,alcance));
-            Juego1943.municiones.add(new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 135,alcance));
-
-            Juego1943.municiones.add(new Bala((int) this.getX() + 10, (int) this.getY() - 20, 90,alcance));
-            Juego1943.municiones.add(new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90,alcance));
-            Sonido.iniciar("fx/disparo");
-        } else {
-            Juego1943.municiones.add(new Bala((int) this.getX() + 10, (int) this.getY() - 20, 90,alcance));
-            Juego1943.municiones.add(new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90,alcance));
-            Sonido.iniciar("fx/disparo");
-        }
-    }
-    public boolean isAmetrallador() {
-        return ametrallador;
-    }
-
-    public void setAmetrallador(boolean ametrallador) {
-        this.ametrallador = ametrallador;
-    }
-
-    public void setAlcance(boolean alcance) {
-        this.alcance = alcance;
-    }
-
-    boolean isDisparando = false, barra = false;
-
-    public void setRafaga(boolean rafaga) {
-        this.rafaga = rafaga;
-    }
-
-    int contador = 0;
     @Override
     public void update(double delta) {
 
@@ -187,8 +151,74 @@ public class AvionJugador extends Avion {
                 }
             }
         }
-
     }
+
+    public void disparar () {
+        Juego1943.municiones.add(!escopeta? new Bala((int) this.getX() + 10, (int) this.getY() - 20, 90,alcance) : new BalaEscopeta((int) this.getX() + 10, (int) this.getY() - 20, 90,alcance));
+        Juego1943.municiones.add(!escopeta? new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90,alcance) : new BalaEscopeta((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90,alcance));
+
+        if (tiroAncho) {
+            Juego1943.municiones.add(!escopeta? new Bala((int) this.getX() + 10, (int) this.getY() - 20, 90,alcance) : new BalaEscopeta((int) this.getX() + 10, (int) this.getY() - 20, 90,alcance));
+            Juego1943.municiones.add(!escopeta? new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90,alcance) : new BalaEscopeta((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90,alcance));
+
+            Juego1943.municiones.add(!escopeta? new Bala((int) this.getX() + 10, (int) this.getY() - 20, 90,alcance) : new BalaEscopeta((int) this.getX() + 10, (int) this.getY() - 20, 45,alcance));
+            Juego1943.municiones.add(!escopeta? new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90,alcance) : new BalaEscopeta((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 135,alcance));
+        }
+    }
+
+    public int getDisparo() {
+        return disparo;
+    }
+
+    public void setDisparo(int disparo) {
+        this.disparo = disparo;
+    }
+
+    public int getAtaqueEspecial() {
+        return ataqueEspecial;
+    }
+
+    public void setAtaqueEspecial(int ataqueEspecial) {
+        this.ataqueEspecial = ataqueEspecial;
+    }
+
+
+
+    public boolean isAlcance() {
+        return alcance;
+    }
+
+    public boolean isRafaga() {
+        return rafaga;
+    }
+    public boolean isEscopeta() {
+        return escopeta ;
+    }
+
+    public void setEscopeta(boolean escopeta) {
+        this.escopeta = escopeta;
+    }
+
+    public boolean isTiroAncho() {
+        return tiroAncho;
+    }
+
+    public void setTiroAncho(boolean tiroAncho) {
+        this.tiroAncho = tiroAncho;
+    }
+
+    public void setAlcance(boolean alcance) {
+        this.alcance = alcance;
+    }
+
+    boolean isDisparando = false, barra = false;
+
+    public void setRafaga(boolean rafaga) {
+        this.rafaga = rafaga;
+    }
+
+    int contador = 0;
+
 
     public Direccion getDirec() {
         return direc;

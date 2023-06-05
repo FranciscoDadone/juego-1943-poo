@@ -50,7 +50,6 @@ public class Escopeta extends Bonus implements Bonusable{
             counter += 14;
     }
 
-    int cantidad = 0;
     @Override
     public void action() {
         Timer timer = new Timer();
@@ -58,15 +57,16 @@ public class Escopeta extends Bonus implements Bonusable{
         if (timer != null)
             timer.cancel();
 
-        Juego1943.avion.setAmetrallador(true);
+        Juego1943.avion.setEscopeta(true);
         Juego1943.avion.setAlcance(true);
-        cantidad++;
+        Juego1943.avion.setTiroAncho(true);
 
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 Juego1943.avion.setAlcance(false);
-                Juego1943.avion.setAmetrallador(false);
+                Juego1943.avion.setEscopeta(false);
+                Juego1943.avion.setTiroAncho(false);
             }
         }, 10000);
     }

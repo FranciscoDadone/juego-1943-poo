@@ -34,14 +34,15 @@ public class Ametralladora extends Bonus implements Bonusable{
         if (timer != null)
             timer.cancel();
 
-        Juego1943.avion.setAmetrallador(true);
+        Juego1943.avion.setEscopeta(true);
+        Juego1943.avion.setAlcance(true);
         cantidad++;
 
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                Juego1943.avion.setAmetrallador(false);
-                System.out.println("mis bolainas");
+                Juego1943.avion.setEscopeta(false);
+                Juego1943.avion.setAlcance(false);
             }
         }, 10000);
 
@@ -49,7 +50,6 @@ public class Ametralladora extends Bonus implements Bonusable{
     }
 
     int counter = 0;
-
     @Override
     public void update(double delta) {
 
