@@ -11,7 +11,7 @@ import java.util.TimerTask;
 import java.util.Random;
 
 
-public class Bonus extends ObjetoGrafico{
+public abstract class Bonus extends ObjetoGrafico{
     static Bonus bonus = null;
 
     public static Bonus getBonus() {
@@ -48,6 +48,8 @@ public class Bonus extends ObjetoGrafico{
         return bonus;
     }
 
+    public abstract void action();
+
     public static Bonus getBonus(int posX, int posY) {
         Random rand = new Random();
 
@@ -82,30 +84,8 @@ public class Bonus extends ObjetoGrafico{
         return bonus;
     }
 
-    public static void addBonus(Bonus bonus) {
-        if (bonus instanceof Ametralladora)
-            ((Ametralladora) bonus).action();
-
-        if (bonus instanceof Auto)
-            ((Auto) bonus).action();
-
-        if (bonus instanceof Escopeta)
-            ((Escopeta) bonus).action();
-
-        if (bonus instanceof EstrellaNinja)
-            ((EstrellaNinja) bonus).action();
-
-        if (bonus instanceof Laser)
-            ((Laser) bonus).action();
-
-        if (bonus instanceof Pow)
-            ((Pow) bonus).action();
-
-        if (bonus instanceof Refuerzo)
-            ((Refuerzo) bonus).action();
-
-        if (bonus instanceof SuperShell)
-            ((SuperShell) bonus).action();
+    public static void action(Bonus bonus) {
+        bonus.action();
     }
 
     @Override

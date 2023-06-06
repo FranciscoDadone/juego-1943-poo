@@ -132,6 +132,11 @@ public class Juego1943 extends Juego {
                     if (enemigos.get(i).getY() < -500) enemigos.remove(i);
                 }
 
+                if (contadorBonus == 4){
+                    contadorBonus = 0;
+                    bonus.add(Bonus.getBonus());
+                }
+
                 for (int j = 0 ; j<bonus.size() ; j++) {
 
                     for (int i=0 ; i<municiones.size() ; i++) {
@@ -148,10 +153,6 @@ public class Juego1943 extends Juego {
                     }
                 }
 
-                if (contadorBonus == 4){
-                    contadorBonus = 0;
-                    bonus.add(Bonus.getBonus());
-                }
 
 
                 if ((counter * v) * 1000 >= FREQ_ENEMIGOS_NORMALES_MS) {
