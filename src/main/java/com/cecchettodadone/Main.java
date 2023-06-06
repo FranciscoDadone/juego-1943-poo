@@ -1,6 +1,7 @@
 package com.cecchettodadone;
 
 import com.cecchettodadone.juego1943.Juego1943;
+import com.cecchettodadone.juego1943.configuracion.Configurador;
 import com.cecchettodadone.lanzador.SistemaDeJuego;
 
 

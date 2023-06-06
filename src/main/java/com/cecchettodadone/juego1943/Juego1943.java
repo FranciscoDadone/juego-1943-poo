@@ -70,7 +70,7 @@ public class Juego1943 extends Juego {
                 vidaJugador.setCantidadVida((vidaJugador.getCantidadVida() - v * 10));
                 if (vidaJugador.getCantidadVida() < 0) vidaJugador.setCantidadVida(100);
 
-                for (int i = 0; i < objetosGraficos.size(); i++) {
+                for (int i = 0; i < objetosGraficos.size(); i++)
                     objetosGraficos.get(i).update(v);
                 }
 
@@ -147,13 +147,17 @@ public class Juego1943 extends Juego {
                         }
                     }
 
-                    if (avion.getRectagle().intersects(bonus.get(j).getRectagle())) {
-                        Bonus.addBonus(bonus.get(j));
+                    if (bonus.get(j).getY() > getHeight()) {
                         bonus.remove(bonus.get(j));
                     }
+
+                    if (avion.getRectagle().intersects(bonus.get(j).getRectagle())) {
+                        Bonus.action(bonus.get(j));
+                        bonus.remove(bonus.get(j));
+                    }
+
+
                 }
-
-
 
                 if ((counter * v) * 1000 >= FREQ_ENEMIGOS_NORMALES_MS) {
                     counter = 0;
@@ -178,6 +182,9 @@ public class Juego1943 extends Juego {
                     obj.draw(g);
                 });
                 bonus.forEach((obj) -> {
+                    obj.draw(g);
+                });
+                islas.forEach((obj) -> {
                     obj.draw(g);
                 });
             }
