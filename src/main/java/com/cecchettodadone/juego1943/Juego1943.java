@@ -7,6 +7,7 @@ import com.cecchettodadone.juego1943.objetosGraficos.bonus.Bonus;
 import com.cecchettodadone.juego1943.objetosGraficos.enemigos.Ataque;
 import com.cecchettodadone.juego1943.objetosGraficos.enemigos.AvionEnemigoRojo;
 import com.cecchettodadone.juego1943.objetosGraficos.enemigos.AvionEnemigoVerde;
+import com.cecchettodadone.juego1943.objetosGraficos.enemigos.Yamato;
 import com.cecchettodadone.lanzador.Juego;
 import com.entropyinteractive.*;
 
@@ -24,6 +25,7 @@ public class Juego1943 extends Juego {
 
     public static ArrayList<Bonus> bonus = new ArrayList<>();
     public static Vida vidaJugador;
+    public static Yamato yamato;
     private final int FREQ_ENEMIGOS_NORMALES_MS = 2000;
     public static AvionJugador avion;
 
@@ -49,11 +51,9 @@ public class Juego1943 extends Juego {
             public void gameStartup() {
                 objetosGraficos.add(new FondoJuego());
 
-                objetosGraficos.add(new PortaAviones(getWidth()/2,getHeight()/4));
+                yamato = new Yamato(getWidth()/2,getHeight()/4);
 
                 avion = new AvionJugador(this.getWidth() / 2, this.getHeight() / 2);
-                objetosGraficos.add(avion);
-                objetosGraficos.add(avion.getSombra());
 
 
                 vidaJugador = new Vida();
@@ -70,12 +70,16 @@ public class Juego1943 extends Juego {
                 vidaJugador.setCantidadVida((vidaJugador.getCantidadVida() - v * 10));
                 if (vidaJugador.getCantidadVida() < 0) vidaJugador.setCantidadVida(100);
 
-                for (int i = 0; i < objetosGraficos.size(); i++) {
+                for (int i = 0; i < objetosGraficos.size(); i++)
                     objetosGraficos.get(i).update(v);
-                }
 
                 for (int i=0 ; i<bonus.size() ; i++)
                     bonus.get(i).update(v);
+
+                yamato.update(v);
+
+                avion.update(v);
+                avion.getSombra().update(v);
 
                 boolean b = false;
                 for (int i = 0; i < municiones.size(); i++) {
@@ -171,6 +175,13 @@ public class Juego1943 extends Juego {
                 objetosGraficos.forEach((obj) -> {
                     obj.draw(g);
                 });
+
+                yamato.draw(g);
+
+                avion.draw(g);
+                avion.getSombra().draw(g);
+
+
                 municiones.forEach((obj) -> {
                     obj.draw(g);
                 });
