@@ -13,6 +13,7 @@ import com.entropyinteractive.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -22,12 +23,14 @@ public class Juego1943 extends Juego {
     public static ArrayList<Municion> municiones = new ArrayList<>();
     public static ArrayList<Municion> municionesEnemigo = new ArrayList<>();
     public static ArrayList<ObjetoGrafico> enemigos = new ArrayList<>();
+    public static ArrayList<Nivel> niveles = new ArrayList<>();
 
     public static ArrayList<Bonus> bonus = new ArrayList<>();
     public static Vida vidaJugador;
     public static Yamato yamato;
     private final int FREQ_ENEMIGOS_NORMALES_MS = 2000;
     public static AvionJugador avion;
+    public static Nivel nivelActual;
 
     public Juego1943() {
         setNombre("1943");
@@ -49,16 +52,21 @@ public class Juego1943 extends Juego {
 
             @Override
             public void gameStartup() {
+                File[] nivelesArr = Util.getFile("niveles").listFiles();
+                for (File nivel: nivelesArr) {
+                    niveles.add(new Nivel(nivel.getName()));
+                }
+
+                nivelActual = niveles.get(0);
+
                 objetosGraficos.add(new FondoJuego());
-
                 yamato = new Yamato(getWidth()/2,getHeight()/4);
-
                 avion = new AvionJugador(this.getWidth() / 2, this.getHeight() / 2);
-
-
                 vidaJugador = new Vida();
                 objetosGraficos.add(vidaJugador);
                 objetosGraficos.add(new TiempoJuego());
+
+
             }
 
             int counter = 0;
@@ -165,7 +173,7 @@ public class Juego1943 extends Juego {
 
                 if ((counter * v) * 1000 >= FREQ_ENEMIGOS_NORMALES_MS) {
                     counter = 0;
-                    enemigos.add(new GrupoDeAviones<>());
+                    enemigos.add(new GrupoDeAviones<AvionEnemigoRojo>());
                 }
 
                 counter++;

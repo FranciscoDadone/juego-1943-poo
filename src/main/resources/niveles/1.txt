@@ -1,0 +1,4 @@
+numero=1
+enemigos=[avionRojo,avionVerde]
+tiempoJuego=60
+jefeFinal=Yamato

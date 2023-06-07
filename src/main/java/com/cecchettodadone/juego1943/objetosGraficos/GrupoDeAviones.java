@@ -5,6 +5,7 @@ import com.cecchettodadone.juego1943.ObjetoGrafico;
 import com.cecchettodadone.juego1943.objetosGraficos.enemigos.Ataque;
 import com.cecchettodadone.juego1943.objetosGraficos.enemigos.AvionEnemigoRojo;
 import com.cecchettodadone.juego1943.objetosGraficos.enemigos.AvionEnemigoVerde;
+import com.cecchettodadone.juego1943.objetosGraficos.enemigos.TipoAvion;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,49 +17,60 @@ public class GrupoDeAviones<T> extends ObjetoGrafico {
     private Random rand = new Random();
 
     public GrupoDeAviones () {
-        aviones = getFormacionTriangulo(600, -300);
-
+        TipoAvion t = (rand.nextInt(2) > 0) ? TipoAvion.ROJO : TipoAvion.VERDE;
         switch (rand.nextInt(4)) {
             case 0:
-                aviones = getFormacionTriangulo(rand.nextInt(Juego1943.getFrame().getWidth()), -100);
+                aviones = getFormacionTriangulo(rand.nextInt(Juego1943.getFrame().getWidth()), -100, t);
                 break;
             case 1:
-                aviones = getFormacionFila(rand.nextInt(Juego1943.getFrame().getWidth()), -100);
+                aviones = getFormacionFila(rand.nextInt(Juego1943.getFrame().getWidth()), -100, t);
                 break;
             case 2:
-                aviones = getFormacionTrianguloIzquierda(rand.nextInt(Juego1943.getFrame().getHeight() / 2));
+                aviones = getFormacionTrianguloIzquierda(rand.nextInt(Juego1943.getFrame().getHeight() / 2), t);
                 break;
             case 3:
-                aviones = getFormacionTrianguloDerecha(rand.nextInt(Juego1943.getFrame().getHeight() / 2));
+                aviones = getFormacionTrianguloDerecha(rand.nextInt(Juego1943.getFrame().getHeight() / 2), t);
                 break;
         }
 
     }
 
 
-    private ArrayList<T> getFormacionTriangulo (int x, int y) {
+    private ArrayList<T> getFormacionTriangulo (int x, int y, TipoAvion t) {
         ArrayList<T> aviones = new ArrayList<>();
 
-        aviones.add((T) new AvionEnemigoVerde(x, y));
-        aviones.add((T) new AvionEnemigoVerde(x + 100, y + 100));
-        aviones.add((T) new AvionEnemigoVerde(x + 200, y + 200));
-        aviones.add((T) new AvionEnemigoVerde(x + 300, y + 100));
-        aviones.add((T) new AvionEnemigoVerde(x + 400, y));
+        if (t == TipoAvion.ROJO) {
+            aviones.add((T) new AvionEnemigoRojo(x, y, Ataque.DE_ARRIBA));
+            aviones.add((T) new AvionEnemigoRojo(x + 100, y + 100, Ataque.DE_ARRIBA));
+            aviones.add((T) new AvionEnemigoRojo(x + 200, y + 200, Ataque.DE_ARRIBA));
+            aviones.add((T) new AvionEnemigoRojo(x + 300, y + 100, Ataque.DE_ARRIBA));
+            aviones.add((T) new AvionEnemigoRojo(x + 400, y, Ataque.DE_ARRIBA));
+        } else if (t == TipoAvion.VERDE) {
+            aviones.add((T) new AvionEnemigoVerde(x, y));
+            aviones.add((T) new AvionEnemigoVerde(x + 100, y + 100));
+            aviones.add((T) new AvionEnemigoVerde(x + 200, y + 200));
+            aviones.add((T) new AvionEnemigoVerde(x + 300, y + 100));
+            aviones.add((T) new AvionEnemigoVerde(x + 400, y));
+        }
 
         return aviones;
     }
 
-    private ArrayList<T> getFormacionFila (int x, int y) {
+    private ArrayList<T> getFormacionFila (int x, int y, TipoAvion t) {
         ArrayList<T> aviones = new ArrayList<>();
 
         for (int i = 0; i < new Random().nextInt(8) + 2; i++) {
-            aviones.add((T) new AvionEnemigoVerde(x, (y - 400) + 80 * i));
+            if (t == TipoAvion.ROJO) {
+                aviones.add((T) new AvionEnemigoRojo(x, (y - 400) + 80 * i, Ataque.DE_ARRIBA));
+            } else if (t == TipoAvion.VERDE) {
+                aviones.add((T) new AvionEnemigoVerde(x, (y - 400) + 80 * i));
+            }
         }
 
         return aviones;
     }
 
-    private ArrayList<T> getFormacionTrianguloIzquierda (int y) {
+    private ArrayList<T> getFormacionTrianguloIzquierda (int y, TipoAvion t) {
         ArrayList<T> aviones = new ArrayList<>();
 
         aviones.add((T) new AvionEnemigoRojo(0, y, Ataque.DE_IZQUIERDA));
@@ -70,7 +82,7 @@ public class GrupoDeAviones<T> extends ObjetoGrafico {
         return aviones;
     }
 
-    private ArrayList<T> getFormacionTrianguloDerecha (int y) {
+    private ArrayList<T> getFormacionTrianguloDerecha (int y, TipoAvion t) {
         ArrayList<T> aviones = new ArrayList<>();
 
         int w = Juego1943.getFrame().getWidth() + 100;
