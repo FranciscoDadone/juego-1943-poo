@@ -58,6 +58,7 @@ public class Juego1943 extends Juego {
 
                 vidaJugador = new Vida();
                 objetosGraficos.add(vidaJugador);
+                objetosGraficos.add(new TiempoJuego());
             }
 
             int counter = 0;
