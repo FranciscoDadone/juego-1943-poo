@@ -100,6 +100,7 @@ public class Juego1943 extends Juego {
 
                         for (int k = 0; k < aviones.size(); k++) {
                             if (aviones.get(k).getRectagle().intersects(municiones.get(i).getRectagle())) {
+                                municiones.get(i).setDimension(new Dimension(0,0));
                                 objetosGraficos.add(new Explosion((int) aviones.get(k).getX(), (int) aviones.get(k).getY()));
                                 if (enemigos.get(j) instanceof GrupoDeAviones<?>) {
                                     ((GrupoDeAviones<?>) enemigos.get(j)).getAviones().remove(aviones.get(k));
