@@ -27,7 +27,7 @@ public class Juego1943 extends Juego {
 
     public static ArrayList<Bonus> bonus = new ArrayList<>();
     public static Vida vidaJugador;
-    public static Yamato yamato;
+    public static Yamato yamato = null;
     private final int FREQ_ENEMIGOS_NORMALES_MS = 2000;
     public static AvionJugador avion;
     public static Nivel nivelActual;
@@ -60,13 +60,12 @@ public class Juego1943 extends Juego {
                 nivelActual = niveles.get(0);
 
                 objetosGraficos.add(new FondoJuego());
-                yamato = new Yamato(getWidth()/2,getHeight()/4);
+
                 avion = new AvionJugador(this.getWidth() / 2, this.getHeight() / 2);
                 vidaJugador = new Vida();
                 objetosGraficos.add(vidaJugador);
+
                 objetosGraficos.add(new TiempoJuego());
-
-
             }
 
             int counter = 0;
@@ -85,10 +84,10 @@ public class Juego1943 extends Juego {
                 for (int i=0 ; i<bonus.size() ; i++)
                     bonus.get(i).update(v);
 
-                yamato.update(v);
-
                 avion.update(v);
-                avion.getSombra().update(v);
+
+                if (yamato != null)
+                    yamato.update(v);
 
                 boolean b = false;
                 for (int i = 0; i < municiones.size(); i++) {
@@ -111,9 +110,18 @@ public class Juego1943 extends Juego {
                                 break;
                             }
                         }
+
                     }
                     if (b) break;
                     if (municiones.get(i).getY() < -500) municiones.remove(i);
+                }
+
+                for (int i=0 ; i<municiones.size() ; i++) {
+                    if (yamato!=null && municiones.get(i).getRectagle().intersects(yamato.getRectagle())) {
+                        yamato.recibirDanio(municiones.get(i));
+//                        exposiones.add(new Explosion((int)municiones.get(i).getX(),(int)municiones.get(i).getY()));
+                        municiones.remove(i);
+                    }
                 }
 
                 for (int i = 0; i < municionesEnemigo.size(); i++) {
@@ -149,6 +157,7 @@ public class Juego1943 extends Juego {
                 if (contadorBonus == 4){
                     contadorBonus = 0;
                     bonus.add(Bonus.getBonus());
+                    //yamato = new Yamato();
                 }
 
                 for (int j = 0 ; j<bonus.size() ; j++) {
@@ -186,11 +195,10 @@ public class Juego1943 extends Juego {
                     obj.draw(g);
                 });
 
-                yamato.draw(g);
+                if (yamato != null)
+                    yamato.draw(g);
 
                 avion.draw(g);
-                avion.getSombra().draw(g);
-
 
                 municiones.forEach((obj) -> {
                     obj.draw(g);

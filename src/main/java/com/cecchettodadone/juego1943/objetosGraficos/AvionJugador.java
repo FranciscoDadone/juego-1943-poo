@@ -226,7 +226,9 @@ public class AvionJugador extends Avion {
         this.direc = direc;
     }
 
-    public SombraAvionJugador getSombra() {
-        return sombra;
+    @Override
+    public void draw(Graphics2D g) {
+        super.draw(g);
+        sombra.draw(g);
     }
 }
