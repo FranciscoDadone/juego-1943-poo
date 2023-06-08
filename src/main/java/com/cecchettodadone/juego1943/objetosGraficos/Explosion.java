@@ -43,7 +43,7 @@ public class Explosion extends ObjetoGrafico {
                 setImagen(img5);
                 break;
             case 5:
-                Juego1943.objetosGraficos.remove(this);
+                this.setDimensiones(new Dimension(0,0));
         }
 
         counter += 10;
