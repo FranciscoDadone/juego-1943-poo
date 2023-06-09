@@ -15,6 +15,8 @@ public class Yamato extends ObjetoGrafico {
     BufferedImage img = null;
     Explosion explosion = null;
     EstadoYamato estadoYamato;
+    CanionYamatoSimple canionSimple = null;
+    CanionYamatoPesado canionPesado = null;
     double centroX = 0;
     double centroY = 0;
     int vida = 1000;
@@ -30,18 +32,10 @@ public class Yamato extends ObjetoGrafico {
 
         centroX = this.getX() + img.getWidth();
         centroY = this.getY() + img.getHeight();
+
+        canionSimple = new CanionYamatoSimple(this);
+        canionPesado = new CanionYamatoPesado(this);
     }
-
-
-
-    //    double posY =0;
-//    private void animacionInicio(double delta) {
-//        posY = this.getY() + delta * 200.0;
-//        this.setPosicion(getX(),posY);
-//
-//        if (((int)(posY+img.getHeight()/2) == Juego1943.getFrame().getFrame().getHeight()/2))
-//            estadoYamato = EstadoYamato.ataque;
-//    }
 
     private void animacionInicio(double delta) {
         if (moverHaciaPunto(Juego1943.getFrame().getWidth()/2,Juego1943.getFrame().getHeight()/2,delta))
@@ -55,7 +49,6 @@ public class Yamato extends ObjetoGrafico {
         double distancia = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
         double angulo = Math.atan2(deltaY, deltaX);
-
         double distanciaMovimiento = 200 * delta; //200 es la velocidad
 
         if (distanciaMovimiento >= distancia) {
@@ -93,9 +86,13 @@ public class Yamato extends ObjetoGrafico {
 
     @Override
     public void update(double delta) {
-
+        canionSimple.update(delta);
+        canionPesado.update(delta);
         if (explosion != null)
             explosion.update(delta);
+
+        this.setPosicion(Juego1943.getFrame().getWidth()/2,Juego1943.getFrame().getHeight()/2 - img.getHeight()/2);
+
 
         switch (estadoYamato) {
             case animacionInicio:
@@ -106,6 +103,7 @@ public class Yamato extends ObjetoGrafico {
                 break;
 
         }
+
     }
 
     @Override
@@ -113,6 +111,9 @@ public class Yamato extends ObjetoGrafico {
         super.draw(g);
         if (explosion != null)
             explosion.draw(g);
+        canionSimple.draw(g);
+        canionPesado.draw(g);
+
     }
 
 }

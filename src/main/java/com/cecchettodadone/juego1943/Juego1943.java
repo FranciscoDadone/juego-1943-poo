@@ -66,6 +66,7 @@ public class Juego1943 extends Juego {
                 objetosGraficos.add(vidaJugador);
 
                 objetosGraficos.add(new TiempoJuego());
+                yamato = new Yamato();
             }
 
             int counter = 0;

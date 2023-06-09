@@ -17,6 +17,10 @@ public class Util {
         }
     }
 
+    public static float map(float value, float startl, float stopl, float start2, float stop2) {
+        return start2 + (stop2 - start2) * ((value - startl) / (stopl - startl));
+    }
+
     public static File getFile (String path) {
         try {
             return new File("src/main/resources/" + path);
