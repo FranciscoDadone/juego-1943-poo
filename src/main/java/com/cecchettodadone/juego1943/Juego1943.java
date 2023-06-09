@@ -2,11 +2,8 @@ package com.cecchettodadone.juego1943;
 
 import com.cecchettodadone.juego1943.configuracion.Menu;
 import com.cecchettodadone.juego1943.objetosGraficos.*;
-import com.cecchettodadone.juego1943.objetosGraficos.bonus.Ametralladora;
 import com.cecchettodadone.juego1943.objetosGraficos.bonus.Bonus;
-import com.cecchettodadone.juego1943.objetosGraficos.enemigos.Ataque;
 import com.cecchettodadone.juego1943.objetosGraficos.enemigos.AvionEnemigoRojo;
-import com.cecchettodadone.juego1943.objetosGraficos.enemigos.AvionEnemigoVerde;
 import com.cecchettodadone.juego1943.objetosGraficos.enemigos.Yamato;
 import com.cecchettodadone.lanzador.Juego;
 import com.entropyinteractive.*;
@@ -15,13 +12,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Juego1943 extends Juego {
     private static JGame frame;
     public static ArrayList<ObjetoGrafico> objetosGraficos = new ArrayList<>();
     public static ArrayList<Municion> municiones = new ArrayList<>();
     public static ArrayList<Municion> municionesEnemigo = new ArrayList<>();
+
     public static ArrayList<ObjetoGrafico> enemigos = new ArrayList<>();
     public static ArrayList<Nivel> niveles = new ArrayList<>();
 
@@ -29,6 +26,7 @@ public class Juego1943 extends Juego {
     public static Vida vidaJugador;
     public static Yamato yamato = null;
     private final int FREQ_ENEMIGOS_NORMALES_MS = 2000;
+    private final int FRECUENCIA_ISLAS = 10000;
     public static AvionJugador avion;
     public static Nivel nivelActual;
 
@@ -60,16 +58,18 @@ public class Juego1943 extends Juego {
                 nivelActual = niveles.get(0);
 
                 objetosGraficos.add(new FondoJuego());
+                //objetosGraficos.add(new IslaFondo());
 
                 avion = new AvionJugador(this.getWidth() / 2, this.getHeight() / 2);
                 vidaJugador = new Vida();
-                objetosGraficos.add(vidaJugador);
+                //objetosGraficos.add(vidaJugador);
 
                 objetosGraficos.add(new TiempoJuego());
-                yamato = new Yamato();
+                //yamato = new Yamato();
             }
 
-            int counter = 0;
+            int counterEnemigos = 0;
+            int counterIslas = 0;
             int c = 0;
             int contadorBonus = 0;
 
@@ -86,6 +86,8 @@ public class Juego1943 extends Juego {
                     bonus.get(i).update(v);
 
                 avion.update(v);
+
+                vidaJugador.update(v);
 
                 if (yamato != null)
                     yamato.update(v);
@@ -127,8 +129,20 @@ public class Juego1943 extends Juego {
 
                 for (int i = 0; i < municionesEnemigo.size(); i++) {
                     municionesEnemigo.get(i).update(v);
-                    if (municionesEnemigo.get(i).getY() < -500) municionesEnemigo.remove(i);
+                    // Verificar si la munición se salió del marco
+                    if (municionesEnemigo.get(i).getY() < -municionesEnemigo.get(i).getY()
+                            || municionesEnemigo.get(i).getY() > screenSize.height
+                            || municionesEnemigo.get(i).getX() < -municionesEnemigo.get(i).getX()
+                            || municionesEnemigo.get(i).getX() > screenSize.width) {
+                        municionesEnemigo.remove(i);
+                        i--; // Ajustar el índice después de la eliminación
+                    }
                 }
+
+
+
+
+
 
                 for (int i = 0; i < enemigos.size(); i++) {
                     enemigos.get(i).update(v);
@@ -182,12 +196,19 @@ public class Juego1943 extends Juego {
 
 
 
-                if ((counter * v) * 1000 >= FREQ_ENEMIGOS_NORMALES_MS) {
-                    counter = 0;
+                if ((counterEnemigos * v) * 1000 >= FREQ_ENEMIGOS_NORMALES_MS) {
+                    counterEnemigos = 0;
                     enemigos.add(new GrupoDeAviones<AvionEnemigoRojo>());
                 }
+                counterEnemigos++;
 
-                counter++;
+                if ((counterIslas * v) * 1000 >= FRECUENCIA_ISLAS) {
+                    counterIslas = 0;
+                    objetosGraficos.add(new IslaFondo());
+                }
+                counterIslas++;
+
+
             }
 
             @Override
@@ -195,6 +216,8 @@ public class Juego1943 extends Juego {
                 objetosGraficos.forEach((obj) -> {
                     obj.draw(g);
                 });
+
+                vidaJugador.draw(g);
 
                 if (yamato != null)
                     yamato.draw(g);
