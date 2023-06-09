@@ -10,7 +10,8 @@ public class BalaEscopeta extends Municion{
     private BufferedImage img1 = Util.getImage("imagenes/juegos/juego1943/municion/escopeta/escopeta1.png");
     private BufferedImage img2 = Util.getImage("imagenes/juegos/juego1943/municion/escopeta/escopeta2.png");
     public BalaEscopeta(int posX, int posY, double angulo, boolean alcance) {
-        super(posX, posY, Util.getImage("imagenes/juegos/juego1943/municion/escopeta/escopeta1.png"), new Dimension(14*2,6*2), angulo);
+        super(posX, posY, new Dimension(14*2,6*2), angulo);
+
         this.setImagen(img1);
         this.setPosicion(posX, posY);
         this.angulo = angulo;

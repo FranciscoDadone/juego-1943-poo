@@ -3,22 +3,37 @@ package com.cecchettodadone.juego1943.objetosGraficos;
 import com.cecchettodadone.juego1943.Util;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Bala extends Municion {
 
     private double angulo;
     private boolean alcance;
 
+    BufferedImage img;
+
     public Bala(int posX, int posY, double angulo, boolean alcance) {
-        super(posX, posY, Util.getImage("imagenes/juegos/juego1943/municion/normal/municion.png"),new Dimension(10, 35),angulo);
+        super(posX, posY,new Dimension(10, 35),angulo);
+
+        switch ((int) angulo) {
+            case 90:
+                img  = Util.getImage("imagenes/juegos/juego1943/municion/normal/municion.png");
+                break;
+            case 135:
+                img = Util.getImage("imagenes/juegos/juego1943/municion/normal/municion_derecha.png");
+                break;
+            case 45:
+                img = Util.getImage("imagenes/juegos/juego1943/municion/normal/municion_izquierda.png");
+                break;
+        }
+
+        System.out.println(angulo);
+
+        this.setImagen(img);
         setDanio(10);
         setVelocidad(-700);
         this.alcance = alcance;
         this.angulo = angulo;
-    }
-
-    public void action() {
-
     }
 
     double count = 0;
