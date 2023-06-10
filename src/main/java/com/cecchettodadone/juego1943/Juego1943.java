@@ -1,5 +1,6 @@
 package com.cecchettodadone.juego1943;
 
+import com.cecchettodadone.juego1943.audio.Sonido;
 import com.cecchettodadone.juego1943.configuracion.Menu;
 import com.cecchettodadone.juego1943.objetosGraficos.*;
 import com.cecchettodadone.juego1943.objetosGraficos.bonus.Bonus;
@@ -190,6 +191,7 @@ public class Juego1943 extends Juego {
 
                     if (avion.getRectagle().intersects(bonus.get(j).getRectagle())) {
                         Bonus.action(bonus.get(j));
+                        Sonido.iniciar("fx/bonus");
                         bonus.remove(bonus.get(j));
                     }
                 }
