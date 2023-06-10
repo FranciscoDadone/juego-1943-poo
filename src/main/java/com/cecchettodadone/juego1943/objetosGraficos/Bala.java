@@ -27,8 +27,6 @@ public class Bala extends Municion {
                 break;
         }
 
-        System.out.println(angulo);
-
         this.setImagen(img);
         setDanio(10);
         setVelocidad(-700);

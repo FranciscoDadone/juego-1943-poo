@@ -28,6 +28,7 @@ public class Juego1943 extends Juego {
     public static Yamato yamato = null;
     private final int FREQ_ENEMIGOS_NORMALES_MS = 2000;
     private final int FRECUENCIA_ISLAS = 10000;
+    private final int FRECUENCIA_BARQUITOS = 2000;
     public static AvionJugador avion;
     public static Nivel nivelActual;
 
@@ -71,6 +72,7 @@ public class Juego1943 extends Juego {
 
             int counterEnemigos = 0;
             int counterIslas = 0;
+            int counterBarquitos = 0;
             int c = 0;
             int contadorBonus = 0;
 
@@ -80,8 +82,12 @@ public class Juego1943 extends Juego {
                 vidaJugador.setCantidadVida((vidaJugador.getCantidadVida() - v * 10));
                 if (vidaJugador.getCantidadVida() < 0) vidaJugador.setCantidadVida(100);
 
-                for (int i = 0; i < objetosGraficos.size(); i++)
+                for (int i = 0; i < objetosGraficos.size(); i++) {
                     objetosGraficos.get(i).update(v);
+                    if (objetosGraficos.get(i).getY()  > this.getWidth())
+                        objetosGraficos.remove(i);
+                }
+
 
                 for (int i=0 ; i<bonus.size() ; i++)
                     bonus.get(i).update(v);
@@ -209,6 +215,12 @@ public class Juego1943 extends Juego {
                     objetosGraficos.add(new IslaFondo());
                 }
                 counterIslas++;
+
+                if ((counterBarquitos * v) * 1000 >= FRECUENCIA_BARQUITOS) {
+                    counterBarquitos = 0;
+                    objetosGraficos.add(new BarcoFondo());
+                }
+                counterBarquitos++;
 
 
             }
