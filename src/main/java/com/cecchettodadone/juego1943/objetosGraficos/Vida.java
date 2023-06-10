@@ -73,6 +73,10 @@ public class Vida extends ObjetoGrafico {
         return cantidadVida;
     }
 
+    public void bajarVida(int valor) {
+        setCantidadVida(getCantidadVida()-valor);
+    }
+
     public void setCantidadVida(double cantidadVida) {
         this.cantidadVida = cantidadVida;
     }

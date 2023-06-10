@@ -79,8 +79,7 @@ public class Juego1943 extends Juego {
             @Override
             public void gameUpdate(double v) {
                 c++;
-                vidaJugador.setCantidadVida((vidaJugador.getCantidadVida() - v * 10));
-                if (vidaJugador.getCantidadVida() < 0) vidaJugador.setCantidadVida(100);
+                vidaJugador.setCantidadVida(vidaJugador.getCantidadVida());
 
                 for (int i = 0; i < objetosGraficos.size(); i++) {
                     objetosGraficos.get(i).update(v);
@@ -146,11 +145,6 @@ public class Juego1943 extends Juego {
                     }
                 }
 
-
-
-
-
-
                 for (int i = 0; i < enemigos.size(); i++) {
                     enemigos.get(i).update(v);
 
@@ -166,9 +160,15 @@ public class Juego1943 extends Juego {
 
                         for (Object a : aviones) {
                             if (((Avion) a).getY() < -500) {
-                                enemigos.remove(i);
                                 break;
                             }
+                            if (avion.getRectagle().intersects(((Avion) a).getRectagle())) {
+                                aviones.remove(((Avion) a));
+                                objetosGraficos.add(new Explosion((int)((Avion) a).getX(),(int)((Avion) a).getY()));
+                                vidaJugador.bajarVida(10);
+                                break;
+                            }
+
                         }
 
                     }
@@ -184,8 +184,10 @@ public class Juego1943 extends Juego {
 
                 for (int j = 0 ; j<bonus.size() ; j++) {
 
-                    if (bonus.get(j).getY() > getHeight())
+                    if (bonus.get(j).getY() > getHeight()) {
                         bonus.remove(j);
+                        break;
+                    }
 
                     for (int i=0 ; i<municiones.size() ; i++) {
                         if (bonus.get(j).getRectagle().intersects(municiones.get(i).getRectagle())) {
