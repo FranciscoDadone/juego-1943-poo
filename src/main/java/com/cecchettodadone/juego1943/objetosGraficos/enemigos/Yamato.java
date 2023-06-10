@@ -17,8 +17,6 @@ public class Yamato extends ObjetoGrafico {
     EstadoYamato estadoYamato;
     CanionYamatoSimple canionSimple = null;
     CanionYamatoPesado canionPesado = null;
-    double centroX = 0;
-    double centroY = 0;
     int vida = 1000;
 
     public Yamato() {
@@ -30,8 +28,6 @@ public class Yamato extends ObjetoGrafico {
 
         estadoYamato = EstadoYamato.animacionInicio;
 
-        centroX = this.getX() + img.getWidth();
-        centroY = this.getY() + img.getHeight();
 
         canionSimple = new CanionYamatoSimple(this);
         canionPesado = new CanionYamatoPesado(this);
@@ -40,29 +36,6 @@ public class Yamato extends ObjetoGrafico {
     private void animacionInicio(double delta) {
         if (moverHaciaPunto(Juego1943.getFrame().getWidth()/2,Juego1943.getFrame().getHeight()/2,delta))
             estadoYamato = EstadoYamato.ataque;
-    }
-
-
-    private boolean moverHaciaPunto(double x, double y, double delta) {
-        double deltaX = x - centroX;
-        double deltaY = y - centroY;
-        double distancia = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-
-        double angulo = Math.atan2(deltaY, deltaX);
-        double distanciaMovimiento = 200 * delta; //200 es la velocidad
-
-        if (distanciaMovimiento >= distancia) {
-            this.setPosicion(x - img.getWidth() / 2, y - img.getHeight() / 2);
-            return true;
-        } else {
-            double movimientoX = distanciaMovimiento * Math.cos(angulo);
-            double movimientoY = distanciaMovimiento * Math.sin(angulo);
-
-            centroX += movimientoX;
-            centroY += movimientoY;
-            this.setPosicion(centroX - img.getWidth() / 2, centroY - img.getHeight() / 2);
-            return false;
-        }
     }
 
     double posAtaqueX = Juego1943.getFrame().getWidth()/4;

@@ -79,6 +79,33 @@ public abstract class ObjetoGrafico {
     }
 
 
+    double centroX = 0;
+    double centroY = 0;
+    public boolean moverHaciaPunto(double x, double y, double delta) {
+        double deltaX = x - centroX;
+        double deltaY = y - centroY;
+        double distancia = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+        double angulo = Math.atan2(deltaY, deltaX);
+
+        double distanciaMovimiento = 200 * delta; //200 es la velocidad
+
+        if (distanciaMovimiento >= distancia) {
+            this.setPosicion(x - imagen.getWidth() / 2, y - imagen.getHeight() / 2);
+            return true;
+        } else {
+            double movimientoX = distanciaMovimiento * Math.cos(angulo);
+            double movimientoY = distanciaMovimiento * Math.sin(angulo);
+
+            centroX += movimientoX;
+            centroY += movimientoY;
+            this.setPosicion(centroX - imagen.getWidth() / 2, centroY - imagen.getHeight() / 2);
+            return false;
+        }
+    }
+
+
+
 
     public void draw(Graphics2D g) {
         if (this.dimensiones != null) g.drawImage(imagen, (int) posicion.getX(), (int) posicion.getY(), this.dimensiones.width, this.dimensiones.height, null);
