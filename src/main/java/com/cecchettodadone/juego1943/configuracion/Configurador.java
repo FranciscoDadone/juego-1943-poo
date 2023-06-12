@@ -166,8 +166,6 @@ public class Configurador extends JFrame {
         json.put("disparo", disparar.getText());
         json.put("ataque_especial", ataqueEspecial.getText());
 
-         System.out.println(json);
-
         return json;
     }
 
