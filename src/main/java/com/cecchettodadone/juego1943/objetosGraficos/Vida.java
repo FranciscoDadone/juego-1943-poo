@@ -2,6 +2,7 @@ package com.cecchettodadone.juego1943.objetosGraficos;
 
 import com.cecchettodadone.juego1943.Juego1943;
 import com.cecchettodadone.juego1943.ObjetoGrafico;
+import com.cecchettodadone.juego1943.Util;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -69,7 +70,15 @@ public class Vida extends ObjetoGrafico {
 
         if (cantidadVida == 0) {
             Juego1943.objetosGraficos.add(new Texto("Game over!", 100, 100, 100, 1000, 300));
-            Juego1943.enPausa = true;
+
+            new Thread(() -> {
+                try {
+                    Thread.sleep(1000);
+                    Juego1943.enPausa = true;
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
         }
 
         this.setImagen(vida);
