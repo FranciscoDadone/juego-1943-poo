@@ -18,7 +18,7 @@ public abstract class Bonus extends ObjetoGrafico{
         Random rand = new Random();
 
 
-        switch (rand.nextInt(3)) {
+        switch (rand.nextInt(8)) {
             case 0:
                 bonus = new Ametralladora(rand.nextInt(Juego1943.getFrame().getHeight()), 0);
                 break;
@@ -45,8 +45,6 @@ public abstract class Bonus extends ObjetoGrafico{
                 break;
         }
 
-        bonus = new SuperShell(rand.nextInt(Juego1943.getFrame().getHeight()), 0);
-
         return bonus;
     }
 
@@ -56,7 +54,7 @@ public abstract class Bonus extends ObjetoGrafico{
         Random rand = new Random();
 
 
-        switch (rand.nextInt(3)) {
+        switch (rand.nextInt(8)) {
             case 0:
                 bonus = new Ametralladora(posX, posY);
                 break;

@@ -193,7 +193,7 @@ public class Juego1943 extends Juego {
                         if (bonus.get(j).getRectagle().intersects(municiones.get(i).getRectagle())) {
                             bonus.add(Bonus.getBonus((int)bonus.get(j).getX(),(int)bonus.get(j).getY()));
                             bonus.remove(bonus.get(j));
-
+                            break;
                         }
                     }
 

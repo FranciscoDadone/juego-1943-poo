@@ -5,25 +5,22 @@ import com.cecchettodadone.juego1943.audio.Sonido;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
-public class BalaSuperShell extends Municion{
-
+public class BalaLaser extends Municion{
 
     BufferedImage img;
 
-    public BalaSuperShell(int posX, int posY, double angulo) {
+    public BalaLaser(int posX, int posY,double angulo) {
         super(posX, posY, angulo);
 
-        img = Util.getImage("imagenes/juegos/juego1943/municion/bala_superShell/bala0.png");
+        img = Util.getImage("imagenes/juegos/juego1943/municion/laser/laser.png");
         this.setImagen(img);
-        this.setDimensiones(new Dimension(this.getImagen().getWidth()*2,this.getImagen().getHeight()*2));
+        this.setDimensiones(new Dimension(this.getImagen().getWidth()*3,this.getImagen().getHeight()*2));
 
-        Sonido.iniciar("fx/superShell");
+        Sonido.iniciar("fx/laser");
 
-        this.setDanio(20);
-        this.setVelocidad(-650);
-
+        this.setDanio(50);
+        this.setVelocidad(-900);
     }
 
     double velocidadX = 0;
