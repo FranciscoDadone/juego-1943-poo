@@ -3,6 +3,7 @@ package com.cecchettodadone.juego1943.objetosGraficos;
 import com.cecchettodadone.juego1943.Juego1943;
 import com.cecchettodadone.juego1943.ObjetoGrafico;
 import com.cecchettodadone.juego1943.Util;
+import com.cecchettodadone.juego1943.audio.Sonido;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -17,6 +18,7 @@ public class Explosion extends ObjetoGrafico {
         img3 = Util.getImage("imagenes/juegos/juego1943/avion_jugador/explotando/avion_jugador_explotando14.png");
         img4 = Util.getImage("imagenes/juegos/juego1943/avion_jugador/explotando/avion_jugador_explotando15.png");
         img5 = Util.getImage("imagenes/juegos/juego1943/avion_jugador/explotando/avion_jugador_explotando16.png");
+        Sonido.iniciar("fx/explosion");
 
         this.setPosicion(posX, posY);
         this.setDimensiones(new Dimension(50,50));
