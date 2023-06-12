@@ -1,6 +1,7 @@
 package com.cecchettodadone.juego1943;
 
 import com.cecchettodadone.juego1943.audio.Sonido;
+import com.cecchettodadone.juego1943.configuracion.Configurador;
 import com.cecchettodadone.juego1943.configuracion.Menu;
 import com.cecchettodadone.juego1943.objetosGraficos.*;
 import com.cecchettodadone.juego1943.objetosGraficos.bonus.Bonus;
@@ -35,6 +36,7 @@ public class Juego1943 extends Juego {
     private final int FRECUENCIA_BARQUITOS = 2000;
     public static AvionJugador avion;
     public static Nivel nivelActual;
+    public static boolean enPausa = false;
 
     public Juego1943() {
         setNombre("1943");
@@ -64,7 +66,6 @@ public class Juego1943 extends Juego {
                 nivelActual = niveles.get(0);
 
                 objetosGraficos.add(new FondoJuego());
-                //objetosGraficos.add(new IslaFondo());
 
                 avion = new AvionJugador(this.getWidth() / 2, this.getHeight() / 2);
                 vidaJugador = new Vida();
@@ -83,6 +84,11 @@ public class Juego1943 extends Juego {
 
             @Override
             public void gameUpdate(double v) {
+                Keyboard teclado = Juego1943.getFrame().getKeyboard();
+                if (teclado.isKeyPressed(java.awt.event.KeyEvent.getExtendedKeyCodeForChar(Configurador.getPausa()))) Juego1943.enPausa = !Juego1943.enPausa;
+
+                if (enPausa) return;
+
                 c++;
 
                 for (int i = 0; i < objetosGraficos.size(); i++) {

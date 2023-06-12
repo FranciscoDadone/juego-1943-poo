@@ -14,7 +14,7 @@ public class TiempoJuego extends ObjetoGrafico {
     private int frameHeight = Juego1943.getFrame().getHeight();
 
     public TiempoJuego () {
-        this.segundos = 1;
+        this.segundos = 60;
         this.setPosicion((frameWidth / 2) - 300, frameHeight - 80);
     }
 

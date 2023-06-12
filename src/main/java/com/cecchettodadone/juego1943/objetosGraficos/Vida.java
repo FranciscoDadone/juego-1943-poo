@@ -67,6 +67,11 @@ public class Vida extends ObjetoGrafico {
         gAmarillo.fillRect(0, 0, width / 2, 14);
         gVida.drawImage(amarillo, width / 2, 3, wAmarillo, 14, null);
 
+        if (cantidadVida == 0) {
+            Juego1943.objetosGraficos.add(new Texto("Game over!", 100, 100, 100, 1000, 300));
+            Juego1943.enPausa = true;
+        }
+
         this.setImagen(vida);
     }
 

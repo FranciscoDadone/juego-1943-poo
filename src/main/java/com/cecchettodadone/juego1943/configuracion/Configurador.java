@@ -183,9 +183,9 @@ public class Configurador extends JFrame {
         return c != null ? c : "barra espaciadora";
     }
 
-    public static String getPausa() {
-        String c = pausar.getText();
-        return c != null ? c : "esq";
+    public static char getPausa() {
+        char c = pausar.getText().toCharArray()[0];
+        return c;
     }
 
     public static String getAvion() {
@@ -205,7 +205,7 @@ public class Configurador extends JFrame {
 
     public static String getDireccion() {
         Object c = boxDireccion.getSelectedItem();
-        return c != null ? c.toString() : "flechas";
+        return c != null ? c.toString() : "Flechas";
     }
 
     public static void setConfisDefecto() {

@@ -56,8 +56,7 @@ public class AvionJugador extends Avion {
         this.setPosicion(posX, posY);
         this.setDimensiones(new Dimension(75, 48));
 
-
-        if (Configurador.getDireccion().equals("flechas")) {
+        if (Configurador.getDireccion().equals("Flechas")) {
             arriba = KeyEvent.VK_UP;
             abajo = KeyEvent.VK_DOWN;
             izquierda = KeyEvent.VK_LEFT;
