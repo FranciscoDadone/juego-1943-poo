@@ -25,8 +25,9 @@ public class Juego1943 extends Juego {
 
     public static ArrayList<Bonus> bonus = new ArrayList<>();
     public static Vida vidaJugador;
+    public static Puntos puntosJugador;
     public static Yamato yamato = null;
-    private final int FREQ_ENEMIGOS_NORMALES_MS = 2000;
+    private final int FREQ_ENEMIGOS_NORMALES_MS = 5000;
     private final int FRECUENCIA_ISLAS = 10000;
     private final int FRECUENCIA_BARQUITOS = 2000;
     public static AvionJugador avion;
@@ -64,7 +65,7 @@ public class Juego1943 extends Juego {
 
                 avion = new AvionJugador(this.getWidth() / 2, this.getHeight() / 2);
                 vidaJugador = new Vida();
-                //objetosGraficos.add(vidaJugador);
+                puntosJugador = new Puntos();
 
                 objetosGraficos.add(new TiempoJuego());
                 //yamato = new Yamato();
@@ -87,12 +88,13 @@ public class Juego1943 extends Juego {
                 }
 
 
-                for (int i=0 ; i<bonus.size() ; i++)
+                for (int i = 0; i < bonus.size(); i++)
                     bonus.get(i).update(v);
 
                 avion.update(v);
 
                 vidaJugador.update(v);
+                puntosJugador.update(v);
 
                 if (yamato != null)
                     yamato.update(v);
@@ -109,6 +111,7 @@ public class Juego1943 extends Juego {
                             if (aviones.get(k).getRectagle().intersects(municiones.get(i).getRectagle())) {
                                 municiones.get(i).setDimension(new Dimension(0,0));
                                 objetosGraficos.add(new Explosion((int) aviones.get(k).getX(), (int) aviones.get(k).getY()));
+                                puntosJugador.agregarPuntos(1);
                                 if (enemigos.get(j) instanceof GrupoDeAviones<?>) {
                                     ((GrupoDeAviones<?>) enemigos.get(j)).getAviones().remove(aviones.get(k));
                                     break;
@@ -124,10 +127,9 @@ public class Juego1943 extends Juego {
                     if (municiones.get(i).getY() < -500) municiones.remove(i);
                 }
 
-                for (int i=0 ; i<municiones.size() ; i++) {
+                for (int i = 0; i < municiones.size(); i++) {
                     if (yamato!=null && municiones.get(i).getRectagle().intersects(yamato.getRectagle())) {
                         yamato.recibirDanio(municiones.get(i));
-//                        exposiones.add(new Explosion((int)municiones.get(i).getX(),(int)municiones.get(i).getY()));
                         municiones.remove(i);
                     }
                 }
@@ -151,6 +153,7 @@ public class Juego1943 extends Juego {
                         if (aviones.size() == 0) {
 
                             contadorBonus++;
+                            puntosJugador.agregarPuntos(100);
 
                             enemigos.remove(i);
                             continue;
@@ -161,16 +164,13 @@ public class Juego1943 extends Juego {
                                 break;
                             }
                             if (avion.getRectagle().intersects(((Avion) a).getRectagle())) {
-                                aviones.remove(((Avion) a));
+                                aviones.remove(a);
                                 objetosGraficos.add(new Explosion((int)((Avion) a).getX(),(int)((Avion) a).getY()));
-                                vidaJugador.bajarVida(10);
+                                vidaJugador.bajarVida(2);
                                 break;
                             }
-
                         }
-
                     }
-
 
                     if (enemigos.get(i).getY() < -500) enemigos.remove(i);
                 }
@@ -182,14 +182,14 @@ public class Juego1943 extends Juego {
                     //yamato = new Yamato();
                 }
 
-                for (int j = 0 ; j<bonus.size() ; j++) {
+                for (int j = 0; j < bonus.size(); j++) {
 
                     if (bonus.get(j).getY() > getHeight()) {
                         bonus.remove(j);
                         break;
                     }
 
-                    for (int i=0 ; i<municiones.size() ; i++) {
+                    for (int i = 0; i < municiones.size(); i++) {
                         if (bonus.get(j).getRectagle().intersects(municiones.get(i).getRectagle())) {
                             bonus.add(Bonus.getBonus((int)bonus.get(j).getX(),(int)bonus.get(j).getY()));
                             bonus.remove(bonus.get(j));
@@ -224,7 +224,7 @@ public class Juego1943 extends Juego {
                 }
                 counterBarquitos++;
 
-
+                if ()
             }
 
             @Override
@@ -234,6 +234,7 @@ public class Juego1943 extends Juego {
                 });
 
                 vidaJugador.draw(g);
+                puntosJugador.draw(g);
 
                 if (yamato != null)
                     yamato.draw(g);

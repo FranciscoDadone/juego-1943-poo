@@ -17,7 +17,6 @@ public class Vida extends ObjetoGrafico {
     public Vida () {
         this.cantidadVida = 100;
         this.setPosicion(10, Juego1943.getFrame().getHeight() - 60);
-
     }
     @Override
     public void update(double delta) {
