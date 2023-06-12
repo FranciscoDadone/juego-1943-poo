@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 public class Nivel {
     private Map<String, String> nivel;
+    private boolean aparecioBoss = false;
 
     public Nivel (String fileName) {
         Scanner scanner = null;
@@ -35,4 +36,19 @@ public class Nivel {
         return nivel;
     }
 
+    public Map<String, String> getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(Map<String, String> nivel) {
+        this.nivel = nivel;
+    }
+
+    public boolean aparecioBoss() {
+        return aparecioBoss;
+    }
+
+    public void setAparecioBoss(boolean aparecioBoss) {
+        this.aparecioBoss = aparecioBoss;
+    }
 }

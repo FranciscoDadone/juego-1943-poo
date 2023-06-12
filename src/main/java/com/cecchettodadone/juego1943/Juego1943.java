@@ -26,6 +26,7 @@ public class Juego1943 extends Juego {
     public static ArrayList<Bonus> bonus = new ArrayList<>();
     public static Vida vidaJugador;
     public static Puntos puntosJugador;
+    public static TiempoJuego tiempoJuego;
     public static Yamato yamato = null;
     private final int FREQ_ENEMIGOS_NORMALES_MS = 5000;
     private final int FRECUENCIA_ISLAS = 10000;
@@ -67,7 +68,8 @@ public class Juego1943 extends Juego {
                 vidaJugador = new Vida();
                 puntosJugador = new Puntos();
 
-                objetosGraficos.add(new TiempoJuego());
+                tiempoJuego = new TiempoJuego();
+                objetosGraficos.add(tiempoJuego);
                 //yamato = new Yamato();
             }
 
@@ -224,7 +226,10 @@ public class Juego1943 extends Juego {
                 }
                 counterBarquitos++;
 
-                if ()
+                if (tiempoJuego.getSegundos() == 0 && !nivelActual.aparecioBoss()) {
+                    nivelActual.setAparecioBoss(true);
+                    yamato = new Yamato();
+                }
             }
 
             @Override
