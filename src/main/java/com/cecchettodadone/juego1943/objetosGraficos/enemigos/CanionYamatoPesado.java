@@ -27,6 +27,7 @@ public class CanionYamatoPesado extends ObjetoGrafico {
     }
 
     private double calcularAngulo() {
+        if (avion == null) return 0;
         double deltaX = (avion.getX() + avion.getImagen().getWidth()*0.7) - this.getX();
         double deltaY = (avion.getY() + avion.getImagen().getHeight()*0.6) - this.getY();
 
