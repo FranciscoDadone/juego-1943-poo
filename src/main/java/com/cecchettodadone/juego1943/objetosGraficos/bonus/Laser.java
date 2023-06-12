@@ -5,6 +5,8 @@ import com.cecchettodadone.juego1943.Util;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Laser extends Bonus implements Bonusable{
 
@@ -17,7 +19,11 @@ public class Laser extends Bonus implements Bonusable{
         img3 = Util.getImage("imagenes/juegos/juego1943/bonus/laser/laser3.png");
         img4 = Util.getImage("imagenes/juegos/juego1943/bonus/laser/laser4.png");
 
+        this.setImagen(img1);
+        this.setDimensiones(new Dimension(this.getImagen().getWidth(),this.getImagen().getHeight()));
         this.setPosicion(posX, posY);
+
+
     }
 
     int counter = 0;
@@ -50,8 +56,28 @@ public class Laser extends Bonus implements Bonusable{
             counter += 10;
     }
 
+    int tiempo = 0;
     @Override
     public void action() {
+        Timer timer = new Timer();
+
+        if (timer != null)
+            timer.cancel();
+
+        Juego1943.avion.setLasercito(true);
+
+        if (Juego1943.avion.isLasercito())
+            tiempo = 20000;
+        else
+            tiempo = 10000;
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Juego1943.avion.setLasercito(false);
+            }
+        }, tiempo);
+
 
     }
 }
