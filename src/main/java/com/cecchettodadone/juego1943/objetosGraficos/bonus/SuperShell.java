@@ -5,6 +5,8 @@ import com.cecchettodadone.juego1943.Util;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SuperShell extends Bonus implements Bonusable{
 
@@ -48,8 +50,28 @@ public class SuperShell extends Bonus implements Bonusable{
             counter = 0;
     }
 
+    int tiempo = 0;
     @Override
     public void action() {
+        Timer timer = new Timer();
+
+        if (timer != null)
+            timer.cancel();
+
         Juego1943.avion.setSuperShell(true);
+
+        if (Juego1943.avion.isSuperShell())
+            tiempo = 20000;
+        else
+            tiempo = 10000;
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Juego1943.avion.setSuperShell(false);
+            }
+        }, tiempo);
+
+
     }
 }

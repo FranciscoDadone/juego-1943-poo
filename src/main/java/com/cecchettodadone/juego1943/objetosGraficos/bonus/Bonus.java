@@ -45,6 +45,8 @@ public abstract class Bonus extends ObjetoGrafico{
                 break;
         }
 
+        bonus = new SuperShell(rand.nextInt(Juego1943.getFrame().getHeight()), 0);
+
         return bonus;
     }
 

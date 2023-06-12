@@ -51,6 +51,7 @@ public class Auto extends Bonus implements Bonusable{
             counter += 7;
     }
 
+    int tiempo = 0;
     @Override
     public void action() {
         Timer timer = new Timer();
@@ -60,11 +61,16 @@ public class Auto extends Bonus implements Bonusable{
 
         Juego1943.avion.setRafaga(true);
 
+        if (Juego1943.avion.isRafaga())
+            tiempo = 20000;
+        else
+            tiempo = 10000;
+
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 Juego1943.avion.setRafaga(false);
             }
-        }, 10000);
+        }, tiempo);
     }
 }

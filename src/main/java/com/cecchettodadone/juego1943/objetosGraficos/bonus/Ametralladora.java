@@ -24,28 +24,8 @@ public class Ametralladora extends Bonus implements Bonusable{
         this.setDimensiones(new Dimension(18*2,16*2));
     }
 
-    int counterAction = 0;
-    private long tiempoInicio;
-    @Override
-    public void action() {
-        Timer timer = new Timer();
-
-        if (timer != null)
-            timer.cancel();
-
-        Juego1943.avion.setTiroAncho(true);
-
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Juego1943.avion.setTiroAncho(false);
-            }
-        }, 10000);
-
-
-    }
-
     int counter = 0;
+
     @Override
     public void update(double delta) {
 
@@ -72,6 +52,31 @@ public class Ametralladora extends Bonus implements Bonusable{
             counter = 0;
         else
             counter += 7;
+    }
+
+    int tiempo = 0;
+    @Override
+    public void action() {
+        Timer timer = new Timer();
+
+        if (timer != null)
+            timer.cancel();
+
+        Juego1943.avion.setTiroAncho(true);
+
+        if (Juego1943.avion.isTiroAncho())
+            tiempo = 20000;
+        else
+            tiempo = 10000;
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Juego1943.avion.setTiroAncho(false);
+            }
+        }, tiempo);
+
+
     }
 
 }
