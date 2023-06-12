@@ -87,7 +87,7 @@ public abstract class ObjetoGrafico {
         double distanciaMovimiento = 200 * delta; //200 es la velocidad
 
         if (distanciaMovimiento >= distancia) {
-            this.setPosicion(x - imagen.getWidth() / 2, y - imagen.getHeight() / 2);
+            this.setPosicion(x, y);
             return true;
         } else {
             double movimientoX = distanciaMovimiento * Math.cos(angulo);

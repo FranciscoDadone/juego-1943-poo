@@ -52,12 +52,12 @@ public class CanionYamatoPesado extends ObjetoGrafico {
 
         this.setImagen(img[((int)Util.map((float)calcularAngulo(),0,360,0,15))]);
 
-        if ((int)(count*delta) == 1) {
+        if ((int)(count*delta) == 2) {
             disparar();
             count = 0;
         }
 
-        count += 2;
+        count++;
 
     }
 }

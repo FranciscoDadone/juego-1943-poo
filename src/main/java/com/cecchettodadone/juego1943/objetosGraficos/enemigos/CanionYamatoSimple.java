@@ -24,7 +24,6 @@ public class CanionYamatoSimple extends ObjetoGrafico {
 
         this.yamato = yamato;
         this.setDimensiones(new Dimension(21,24));
-        //this.setPosicion(yamato.getX(),yamato.getY());
     }
 
     private double calcularAngulo() {
@@ -60,7 +59,7 @@ public class CanionYamatoSimple extends ObjetoGrafico {
           count = 0;
         }
 
-        count += 2;
+        count++;
 
     }
 }
