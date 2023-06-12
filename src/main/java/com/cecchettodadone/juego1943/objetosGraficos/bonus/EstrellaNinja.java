@@ -1,5 +1,6 @@
 package com.cecchettodadone.juego1943.objetosGraficos.bonus;
 
+import com.cecchettodadone.juego1943.Juego1943;
 import com.cecchettodadone.juego1943.Util;
 
 import javax.swing.*;
@@ -53,6 +54,6 @@ public class EstrellaNinja extends Bonus implements Bonusable {
 
     @Override
     public void action() {
-
+        Juego1943.vidaJugador.setCantidadVida(100);
     }
 }

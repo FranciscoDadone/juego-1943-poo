@@ -23,12 +23,14 @@ public class BalaEscopeta extends Municion{
 
 
     int count,countAnimacion = 0;
+    double velocidadX = 0;
+    double velocidadY = 0;
     @Override
     public void update(double delta) {
 
         this.setImagen(img1);
-        double velocidadX = velocidad * Math.cos(Math.toRadians(angulo));
-        double velocidadY = velocidad * Math.sin(Math.toRadians(angulo));
+        velocidadX = velocidad * Math.cos(Math.toRadians(angulo));
+        velocidadY = velocidad * Math.sin(Math.toRadians(angulo));
         setPosicion(this.getX() + velocidadX * delta, this.getY() + velocidadY * delta);
 
         if (alcance) {

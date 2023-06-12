@@ -1,5 +1,6 @@
 package com.cecchettodadone.juego1943.objetosGraficos.bonus;
 
+import com.cecchettodadone.juego1943.Juego1943;
 import com.cecchettodadone.juego1943.Util;
 
 import java.awt.*;
@@ -49,6 +50,6 @@ public class SuperShell extends Bonus implements Bonusable{
 
     @Override
     public void action() {
-
+        Juego1943.avion.setSuperShell(true);
     }
 }

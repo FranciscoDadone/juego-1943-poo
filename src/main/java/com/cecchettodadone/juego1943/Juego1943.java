@@ -79,7 +79,6 @@ public class Juego1943 extends Juego {
             @Override
             public void gameUpdate(double v) {
                 c++;
-                vidaJugador.setCantidadVida(vidaJugador.getCantidadVida());
 
                 for (int i = 0; i < objetosGraficos.size(); i++) {
                     objetosGraficos.get(i).update(v);
@@ -141,7 +140,6 @@ public class Juego1943 extends Juego {
                             || municionesEnemigo.get(i).getX() < -municionesEnemigo.get(i).getX()
                             || municionesEnemigo.get(i).getX() > screenSize.width) {
                         municionesEnemigo.remove(i);
-                        i--; // Ajustar el índice después de la eliminación
                     }
                 }
 
@@ -173,8 +171,10 @@ public class Juego1943 extends Juego {
 
                     }
 
+
                     if (enemigos.get(i).getY() < -500) enemigos.remove(i);
                 }
+
 
                 if (contadorBonus == 4){
                     contadorBonus = 0;

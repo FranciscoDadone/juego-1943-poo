@@ -18,7 +18,12 @@ public class AvionJugador extends Avion {
     private SombraAvionJugador sombra;
     private BufferedImage avion,avionDoblandoDerecha1, avionDoblandoIzquierda1, avionDoblandoDerecha2, avionDoblandoIzquierda2, avionDisparandoIzquierda1, avionDisparandoIzquierda2, avionDisparando, avionDisparandoDerecha1, avionDisparandoDerecha2;
     private int arriba, abajo, izquierda, derecha, disparo, ataqueEspecial;
-    private boolean alcance, rafaga, escopeta, tiroAncho;
+    private boolean alcance;
+    private boolean rafaga;
+    private boolean escopeta;
+    private boolean tiroAncho;
+
+    private boolean superShell;
     private Direccion direc;
 
     public AvionJugador (int posX, int posY) {
@@ -154,14 +159,28 @@ public class AvionJugador extends Avion {
     }
 
     public void disparar () {
-        Juego1943.municiones.add(!escopeta? new Bala((int) this.getX() + 10, (int) this.getY() - 20, 90,alcance) : new BalaEscopeta((int) this.getX() + 10, (int) this.getY() - 20, 90,alcance));
-        Juego1943.municiones.add(!escopeta? new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90,alcance) : new BalaEscopeta((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90,alcance));
-        if (!escopeta)   Sonido.iniciar("fx/disparo"); else Sonido.iniciar("fx/escopeta");
 
-        if (tiroAncho) {
-            Juego1943.municiones.add(!escopeta? new Bala((int) this.getX() + 10, (int) this.getY() - 20, 45,alcance) : new BalaEscopeta((int) this.getX() + 10, (int) this.getY() - 20, 45,alcance));
-            Juego1943.municiones.add(!escopeta? new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 135,alcance) : new BalaEscopeta((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 135,alcance));
+
+
+        if (superShell){
+
+            Juego1943.municiones.add(new BalaSuperShell((int) this.getX() + 10, (int) this.getY() - 20, 90));
+            Juego1943.municiones.add(new BalaSuperShell((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90));
+            Sonido.iniciar("fx/superShell");
+
+        } else {
+            Juego1943.municiones.add(!escopeta ? new Bala((int) this.getX() + 10, (int) this.getY() - 20, 90, alcance) : new BalaEscopeta((int) this.getX() + 10, (int) this.getY() - 20, 90, alcance));
+            Juego1943.municiones.add(!escopeta ? new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90, alcance) : new BalaEscopeta((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90, alcance));
+            if (!escopeta) Sonido.iniciar("fx/disparo");
+            else Sonido.iniciar("fx/escopeta");
+
+            if (tiroAncho) {
+                Juego1943.municiones.add(!escopeta? new Bala((int) this.getX() + 10, (int) this.getY() - 20, 45,alcance) : new BalaEscopeta((int) this.getX() + 10, (int) this.getY() - 20, 45,alcance));
+                Juego1943.municiones.add(!escopeta? new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 135,alcance) : new BalaEscopeta((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 135,alcance));
+            }
         }
+
+
     }
 
     public int getDisparo() {
@@ -224,6 +243,14 @@ public class AvionJugador extends Avion {
 
     private void setDireccion(Direccion direc) {
         this.direc = direc;
+    }
+
+    public boolean isSuperShell() {
+        return superShell;
+    }
+
+    public void setSuperShell(boolean superShell) {
+        this.superShell = superShell;
     }
 
     @Override

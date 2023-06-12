@@ -1,7 +1,9 @@
 package com.cecchettodadone.juego1943.objetosGraficos.bonus;
 
+import com.cecchettodadone.juego1943.Juego1943;
 import com.cecchettodadone.juego1943.Util;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Laser extends Bonus implements Bonusable{
@@ -16,7 +18,6 @@ public class Laser extends Bonus implements Bonusable{
         img4 = Util.getImage("imagenes/juegos/juego1943/bonus/laser/laser4.png");
 
         this.setPosicion(posX, posY);
-        this.setDimensiones(16*2, 16*2);
     }
 
     int counter = 0;
@@ -25,6 +26,7 @@ public class Laser extends Bonus implements Bonusable{
 
         double posicion = getY() + delta * 100;
         this.setPosicion(getX(), posicion);
+        this.setDimensiones(new Dimension(this.getImagen().getWidth()*3,this.getImagen().getHeight()*3));
 
 
         switch ((int)(counter * delta )) {

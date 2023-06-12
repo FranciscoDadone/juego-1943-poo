@@ -22,6 +22,9 @@ public class Vida extends ObjetoGrafico {
     @Override
     public void update(double delta) {
 
+        if (this.cantidadVida > 100)
+            this.setCantidadVida(100);
+
         vida = new BufferedImage(widthFondo, 20, BufferedImage.TYPE_INT_ARGB);
 
         BufferedImage fondo = new BufferedImage(widthFondo, 20, BufferedImage.TYPE_INT_ARGB);
@@ -75,6 +78,9 @@ public class Vida extends ObjetoGrafico {
 
     public void bajarVida(int valor) {
         setCantidadVida(getCantidadVida()-valor);
+    }
+    public void subirVida(int valor) {
+        setCantidadVida(getCantidadVida()+valor);
     }
 
     public void setCantidadVida(double cantidadVida) {

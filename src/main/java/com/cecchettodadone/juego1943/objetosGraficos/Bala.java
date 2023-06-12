@@ -7,9 +7,6 @@ import java.awt.image.BufferedImage;
 
 public class Bala extends Municion {
 
-    private double angulo;
-    private boolean alcance;
-
     BufferedImage img;
 
     public Bala(int posX, int posY, double angulo, boolean alcance) {
@@ -30,16 +27,19 @@ public class Bala extends Municion {
         this.setImagen(img);
         setDanio(10);
         setVelocidad(-700);
-        this.alcance = alcance;
+        this.alcance = false;
         this.angulo = angulo;
     }
 
     double count = 0;
+    double velocidadX = 0;
+    double velocidadY = 0;
     @Override
     public void update(double delta) {
-        double velocidadX = velocidad * Math.cos(Math.toRadians(angulo));
-        double velocidadY = velocidad * Math.sin(Math.toRadians(angulo));
+        velocidadX = velocidad * Math.cos(Math.toRadians(angulo));
+        velocidadY = velocidad * Math.sin(Math.toRadians(angulo));
         setPosicion(this.getX() + velocidadX * delta, this.getY() + velocidadY * delta);
+
         if (alcance) {
             if ((int) (count * delta) == 1) {
                 this.setDimension(new Dimension(0, 0));
