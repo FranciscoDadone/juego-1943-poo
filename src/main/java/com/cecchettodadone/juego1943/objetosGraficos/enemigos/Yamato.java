@@ -43,9 +43,9 @@ public class Yamato extends JefeFinal {
     private void atacar(double delta) {
         Random rand = new Random();
 
-        if (moverHaciaPunto(posAtaqueX,posAtaqueY,delta)) {
-            posAtaqueX = img.getWidth() + rand.nextDouble(Juego1943.getFrame().getWidth()-img.getWidth());
-            posAtaqueY = img.getHeight() + rand.nextDouble(Juego1943.getFrame().getHeight()-img.getHeight()*1.2);
+        if (moverHaciaPunto(posAtaqueX, posAtaqueY,delta)) {
+            posAtaqueX = img.getWidth() + rand.nextDouble(Juego1943.getFrame().getWidth() - img.getWidth() * 2);
+            posAtaqueY = rand.nextDouble(Juego1943.getFrame().getHeight() - img.getHeight());
         }
 
     }
@@ -67,8 +67,6 @@ public class Yamato extends JefeFinal {
         canionPesado.update(delta);
         if (explosion != null)
             explosion.update(delta);
-
-        this.setPosicion(Juego1943.getFrame().getWidth()/2,Juego1943.getFrame().getHeight()/2 - img.getHeight()/2);
 
 
         switch (estadoYamato) {
