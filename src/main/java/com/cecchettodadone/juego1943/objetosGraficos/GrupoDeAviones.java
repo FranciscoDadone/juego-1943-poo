@@ -17,7 +17,6 @@ public class GrupoDeAviones<T> extends ObjetoGrafico {
     private Random rand = new Random();
 
     public GrupoDeAviones () {
-//        String [] enemigos = Juego1943.nivelActual.getPropiedades().get("enemigos");
         TipoAvion t = (rand.nextInt(2) > 0) ? TipoAvion.ROJO : TipoAvion.VERDE;
         switch (rand.nextInt(4)) {
             case 0:
@@ -73,7 +72,6 @@ public class GrupoDeAviones<T> extends ObjetoGrafico {
 
     private ArrayList<T> getFormacionTrianguloIzquierda (int y, TipoAvion t) {
         ArrayList<T> aviones = new ArrayList<>();
-        if (t != TipoAvion.ROJO) return aviones;
 
         aviones.add((T) new AvionEnemigoRojo(0, y, Ataque.DE_IZQUIERDA));
         aviones.add((T) new AvionEnemigoRojo(50, y + 50, Ataque.DE_IZQUIERDA));
@@ -86,7 +84,6 @@ public class GrupoDeAviones<T> extends ObjetoGrafico {
 
     private ArrayList<T> getFormacionTrianguloDerecha (int y, TipoAvion t) {
         ArrayList<T> aviones = new ArrayList<>();
-        if (t != TipoAvion.ROJO) return aviones;
 
         int w = Juego1943.getFrame().getWidth() + 100;
 
