@@ -25,7 +25,7 @@ public class Bala extends Municion {
         }
 
         this.setImagen(img);
-        setDanio(10);
+        setDanio(1);
         setVelocidad(-700);
         this.alcance = false;
         this.angulo = angulo;

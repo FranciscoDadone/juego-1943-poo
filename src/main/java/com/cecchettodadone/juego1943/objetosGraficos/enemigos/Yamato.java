@@ -10,14 +10,14 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-public class Yamato extends ObjetoGrafico {
+public class Yamato extends JefeFinal {
 
-    BufferedImage img = null;
-    Explosion explosion = null;
-    EstadoYamato estadoYamato;
-    CanionYamatoSimple canionSimple = null;
-    CanionYamatoPesado canionPesado = null;
-    int vida = 1000;
+    protected BufferedImage img;
+    private Explosion explosion = null;
+    private EstadoYamato estadoYamato;
+    private CanionYamatoSimple canionSimple;
+    private CanionYamatoPesado canionPesado;
+    int vida = 100;
 
     public Yamato() {
         img = Util.getImage("imagenes/juegos/juego1943/Yamato/yamato1.png");
@@ -27,7 +27,6 @@ public class Yamato extends ObjetoGrafico {
         this.setDimensiones(new Dimension(111,470));
 
         estadoYamato = EstadoYamato.animacionInicio;
-
 
         canionSimple = new CanionYamatoSimple(this);
         canionPesado = new CanionYamatoPesado(this);
@@ -54,6 +53,11 @@ public class Yamato extends ObjetoGrafico {
     public void recibirDanio(Municion municion) {
         vida -= municion.getDanio();
         explosion = new Explosion((int)municion.getX(),(int)municion.getY());
+    }
+
+    @Override
+    public int getVida() {
+        return vida;
     }
 
 
@@ -86,7 +90,5 @@ public class Yamato extends ObjetoGrafico {
             explosion.draw(g);
         canionSimple.draw(g);
         canionPesado.draw(g);
-
     }
-
 }

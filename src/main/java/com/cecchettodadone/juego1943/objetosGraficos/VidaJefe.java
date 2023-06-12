@@ -6,19 +6,21 @@ import com.cecchettodadone.juego1943.ObjetoGrafico;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Vida extends ObjetoGrafico {
+public class VidaJefe extends ObjetoGrafico {
     private double cantidadVida;
     private BufferedImage vida;
     private Graphics gVida;
     private int widthFondo = Juego1943.getFrame().getWidth() / 5;
     private int width = widthFondo - 6;
 
-    public Vida () {
-        this.cantidadVida = 100;
-        this.setPosicion(10, Juego1943.getFrame().getHeight() - 60);
+    public VidaJefe() {
+        this.cantidadVida = 0;
+        this.setPosicion(Juego1943.getFrame().getWidth() - 280, 40);
     }
     @Override
     public void update(double delta) {
+
+        this.cantidadVida = (Juego1943.jefeFinal != null) ? Juego1943.jefeFinal.getVida() : 0;
 
         if (this.cantidadVida > 100)
             this.setCantidadVida(100);
@@ -33,41 +35,16 @@ public class Vida extends ObjetoGrafico {
         gVida = vida.getGraphics();
         gVida.drawImage(fondo, 0, 0, widthFondo, 30, null);
 
-        int wRojo = width / 4;
-        int wNaranja = width / 4;
-        int wAmarillo = width / 2;
-
-        if (cantidadVida > 50) {
-            wAmarillo *= (cantidadVida - 50) / 50;
-        } else {
-            wAmarillo = 0;
-            if (cantidadVida > 25) {
-                wNaranja *= (cantidadVida - 25) / 25;
-            } else {
-                wNaranja = 0;
-                wRojo *= cantidadVida / 25;
-            }
-        }
+        int wVida = (int) (width * (cantidadVida / 100));
 
         BufferedImage rojo = new BufferedImage(width / 4, 14, BufferedImage.TYPE_INT_ARGB);
         Graphics gRojo = rojo.getGraphics();
         gRojo.setColor(Color.RED);
-        gRojo.fillRect(0, 0, width / 4, 14);
-        gVida.drawImage(rojo, 3, 3, wRojo, 14, null);
+        gRojo.fillRect(0, 0, width, 14);
+        gVida.drawImage(rojo, 3, 3, wVida, 14, null);
 
-        BufferedImage naranja = new BufferedImage(width / 4, 14, BufferedImage.TYPE_INT_ARGB);
-        Graphics gNaranja = naranja.getGraphics();
-        gNaranja.setColor(Color.ORANGE);
-        gNaranja.fillRect(0, 0, width / 4, 14);
-        gVida.drawImage(naranja, 3 + (width / 4), 3, wNaranja, 14, null);
-
-        BufferedImage amarillo = new BufferedImage(width / 2, 14, BufferedImage.TYPE_INT_ARGB);
-        Graphics gAmarillo = amarillo.getGraphics();
-        gAmarillo.setColor(Color.YELLOW);
-        gAmarillo.fillRect(0, 0, width / 2, 14);
-        gVida.drawImage(amarillo, width / 2, 3, wAmarillo, 14, null);
-
-        this.setImagen(vida);
+        if (cantidadVida > 0) this.setImagen(vida);
+        else this.setImagen(null);
     }
 
     public double getCantidadVida() {

@@ -5,6 +5,7 @@ import com.cecchettodadone.juego1943.configuracion.Menu;
 import com.cecchettodadone.juego1943.objetosGraficos.*;
 import com.cecchettodadone.juego1943.objetosGraficos.bonus.Bonus;
 import com.cecchettodadone.juego1943.objetosGraficos.enemigos.AvionEnemigoRojo;
+import com.cecchettodadone.juego1943.objetosGraficos.enemigos.JefeFinal;
 import com.cecchettodadone.juego1943.objetosGraficos.enemigos.Yamato;
 import com.cecchettodadone.lanzador.Juego;
 import com.entropyinteractive.*;
@@ -25,9 +26,10 @@ public class Juego1943 extends Juego {
 
     public static ArrayList<Bonus> bonus = new ArrayList<>();
     public static Vida vidaJugador;
+    public static VidaJefe vidaJefe;
     public static Puntos puntosJugador;
     public static TiempoJuego tiempoJuego;
-    public static Yamato yamato = null;
+    public static JefeFinal jefeFinal = null;
     private final int FREQ_ENEMIGOS_NORMALES_MS = 5000;
     private final int FRECUENCIA_ISLAS = 10000;
     private final int FRECUENCIA_BARQUITOS = 2000;
@@ -66,11 +68,11 @@ public class Juego1943 extends Juego {
 
                 avion = new AvionJugador(this.getWidth() / 2, this.getHeight() / 2);
                 vidaJugador = new Vida();
+                vidaJefe = new VidaJefe();
                 puntosJugador = new Puntos();
 
                 tiempoJuego = new TiempoJuego();
                 objetosGraficos.add(tiempoJuego);
-                //yamato = new Yamato();
             }
 
             int counterEnemigos = 0;
@@ -96,10 +98,11 @@ public class Juego1943 extends Juego {
                 avion.update(v);
 
                 vidaJugador.update(v);
+                vidaJefe.update(v);
                 puntosJugador.update(v);
 
-                if (yamato != null)
-                    yamato.update(v);
+                if (jefeFinal != null)
+                    jefeFinal.update(v);
 
                 boolean b = false;
                 for (int i = 0; i < municiones.size(); i++) {
@@ -130,8 +133,8 @@ public class Juego1943 extends Juego {
                 }
 
                 for (int i = 0; i < municiones.size(); i++) {
-                    if (yamato!=null && municiones.get(i).getRectagle().intersects(yamato.getRectagle())) {
-                        yamato.recibirDanio(municiones.get(i));
+                    if (jefeFinal != null && municiones.get(i).getRectagle().intersects(jefeFinal.getRectagle())) {
+                        jefeFinal.recibirDanio(municiones.get(i));
                         municiones.remove(i);
                     }
                 }
@@ -190,7 +193,6 @@ public class Juego1943 extends Juego {
                 if (contadorBonus == 4){
                     contadorBonus = 0;
                     bonus.add(Bonus.getBonus());
-                    //yamato = new Yamato();
                 }
 
                 for (int j = 0; j < bonus.size(); j++) {
@@ -215,8 +217,6 @@ public class Juego1943 extends Juego {
                     }
                 }
 
-
-
                 if ((counterEnemigos * v) * 1000 >= FREQ_ENEMIGOS_NORMALES_MS) {
                     counterEnemigos = 0;
                     enemigos.add(new GrupoDeAviones<AvionEnemigoRojo>());
@@ -237,7 +237,7 @@ public class Juego1943 extends Juego {
 
                 if (tiempoJuego.getSegundos() == 0 && !nivelActual.aparecioBoss()) {
                     nivelActual.setAparecioBoss(true);
-                    yamato = new Yamato();
+                    jefeFinal = new Yamato();
                 }
             }
 
@@ -248,10 +248,11 @@ public class Juego1943 extends Juego {
                 });
 
                 vidaJugador.draw(g);
+                vidaJefe.draw(g);
                 puntosJugador.draw(g);
 
-                if (yamato != null)
-                    yamato.draw(g);
+                if (jefeFinal != null)
+                    jefeFinal.draw(g);
 
                 avion.draw(g);
 

@@ -7,8 +7,8 @@ import com.cecchettodadone.lanzador.SistemaDeJuego;
 
 public class Main {
     public static void main(String[] args) {
-        new SistemaDeJuego();
-//        new Juego1943().run(1/60.0);
+//        new SistemaDeJuego();
+        new Juego1943().run(1/60.0);
     }
 }
 
