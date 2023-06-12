@@ -138,6 +138,15 @@ public class Juego1943 extends Juego {
 
                 for (int i = 0; i < municionesEnemigo.size(); i++) {
                     municionesEnemigo.get(i).update(v);
+
+
+                    if (avion.getRectagle().intersects(municionesEnemigo.get(i).getRectagle())) {
+                        vidaJugador.bajarVida(1);
+                        objetosGraficos.add(new Explosion((int) avion.getX(), (int) avion.getY()));
+                        municionesEnemigo.remove(municionesEnemigo.get(i));
+                        return;
+                    }
+
                     // Verificar si la munición se salió del marco
                     if (municionesEnemigo.get(i).getY() < -municionesEnemigo.get(i).getY()
                             || municionesEnemigo.get(i).getY() > screenSize.height

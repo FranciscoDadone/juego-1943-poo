@@ -12,7 +12,7 @@ public class BalaYamato extends Municion{
     BufferedImage img1, img2, img3, img4;
 
     public BalaYamato(int posX, int posY, double angulo) {
-        super(posX, posY, angulo);
+        super(posX, posY, new Dimension(30, 30), angulo);
 
         img1 = Util.getImage("imagenes/juegos/juego1943/municion/bala_yamato/bala1.png");
         img2 = Util.getImage("imagenes/juegos/juego1943/municion/bala_yamato/bala2.png");
