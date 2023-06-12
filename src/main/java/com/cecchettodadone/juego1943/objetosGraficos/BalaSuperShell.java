@@ -1,6 +1,7 @@
 package com.cecchettodadone.juego1943.objetosGraficos;
 
 import com.cecchettodadone.juego1943.Util;
+import com.cecchettodadone.juego1943.audio.Sonido;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -20,6 +21,8 @@ public class BalaSuperShell extends Municion{
 
         this.setDanio(20);
         this.setVelocidad(-650);
+
+        Sonido.iniciar("fx/superShell");
 
     }
 

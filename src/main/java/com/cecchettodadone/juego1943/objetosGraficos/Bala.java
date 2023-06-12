@@ -1,6 +1,7 @@
 package com.cecchettodadone.juego1943.objetosGraficos;
 
 import com.cecchettodadone.juego1943.Util;
+import com.cecchettodadone.juego1943.audio.Sonido;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -23,6 +24,8 @@ public class Bala extends Municion {
                 img = Util.getImage("imagenes/juegos/juego1943/municion/normal/municion_izquierda.png");
                 break;
         }
+
+        Sonido.iniciar("fx/disparo");
 
         this.setImagen(img);
         setDanio(1);
