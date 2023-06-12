@@ -17,22 +17,13 @@ public class AvionJugador extends Avion {
     private int doblandoTmr = 0;
     private SombraAvionJugador sombra;
     private BufferedImage avion,avionDoblandoDerecha1, avionDoblandoIzquierda1, avionDoblandoDerecha2, avionDoblandoIzquierda2, avionDisparandoIzquierda1, avionDisparandoIzquierda2, avionDisparando, avionDisparandoDerecha1, avionDisparandoDerecha2;
-    private int arriba;
-    private int abajo;
-    private int izquierda;
-    private int derecha;
-    private int disparo;
-    private int ataqueEspecial;
-
-    private int laser;
+    private int arriba, abajo, izquierda, derecha, disparo, ataqueEspecial;
     private boolean alcance;
     private boolean rafaga;
     private boolean escopeta;
     private boolean tiroAncho;
+
     private boolean superShell;
-
-
-    private boolean lasercito;
     private Direccion direc;
 
     public AvionJugador (int posX, int posY) {
@@ -175,21 +166,17 @@ public class AvionJugador extends Avion {
 
             Juego1943.municiones.add(new BalaSuperShell((int) this.getX() + 10, (int) this.getY() - 20, 90));
             Juego1943.municiones.add(new BalaSuperShell((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90));
+            Sonido.iniciar("fx/superShell");
 
         } else {
-            if (lasercito) {
-                Juego1943.municiones.add(new BalaLaser((int) this.getX() + 10, (int) this.getY() - 20, 90));
-                Juego1943.municiones.add(new BalaLaser((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90));
+            Juego1943.municiones.add(!escopeta ? new Bala((int) this.getX() + 10, (int) this.getY() - 20, 90, alcance) : new BalaEscopeta((int) this.getX() + 10, (int) this.getY() - 20, 90, alcance));
+            Juego1943.municiones.add(!escopeta ? new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90, alcance) : new BalaEscopeta((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90, alcance));
+            if (!escopeta) Sonido.iniciar("fx/disparo");
+            else Sonido.iniciar("fx/escopeta");
 
-
-            } else {
-                Juego1943.municiones.add(!escopeta ? new Bala((int) this.getX() + 10, (int) this.getY() - 20, 90, alcance) : new BalaEscopeta((int) this.getX() + 10, (int) this.getY() - 20, 90, alcance));
-                Juego1943.municiones.add(!escopeta ? new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90, alcance) : new BalaEscopeta((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 90, alcance));
-
-                if (tiroAncho) {
-                    Juego1943.municiones.add(!escopeta ? new Bala((int) this.getX() + 10, (int) this.getY() - 20, 45, alcance) : new BalaEscopeta((int) this.getX() + 10, (int) this.getY() - 20, 45, alcance));
-                    Juego1943.municiones.add(!escopeta ? new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 135, alcance) : new BalaEscopeta((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 135, alcance));
-                }
+            if (tiroAncho) {
+                Juego1943.municiones.add(!escopeta? new Bala((int) this.getX() + 10, (int) this.getY() - 20, 45,alcance) : new BalaEscopeta((int) this.getX() + 10, (int) this.getY() - 20, 45,alcance));
+                Juego1943.municiones.add(!escopeta? new Bala((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 135,alcance) : new BalaEscopeta((int) this.getX() + this.getDimensiones().width - 10, (int) this.getY() - 20, 135,alcance));
             }
         }
 
@@ -212,21 +199,7 @@ public class AvionJugador extends Avion {
         this.ataqueEspecial = ataqueEspecial;
     }
 
-    public int getLaser() {
-        return laser;
-    }
 
-    public void setLaser(int laser) {
-        this.laser = laser;
-    }
-
-    public boolean isLasercito() {
-        return lasercito;
-    }
-
-    public void setLasercito(boolean lasercito) {
-        this.lasercito = lasercito;
-    }
 
     public boolean isAlcance() {
         return alcance;

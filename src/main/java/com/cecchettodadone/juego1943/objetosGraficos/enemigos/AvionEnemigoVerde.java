@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class AvionEnemigoVerde extends Avion {
 
-    private BufferedImage avion, img0, img1, img2, img3;
+    private BufferedImage avion, img0, img1, img2, img3, img4, img5, img6, img7;
     EstadoAvionVerde estado = EstadoAvionVerde.ingreso;
 
 
@@ -22,6 +22,10 @@ public class AvionEnemigoVerde extends Avion {
         img1 = Util.getImage("imagenes/juegos/juego1943/avion_enemigo1/animacion_avion_verde/animacion1.png");
         img2 = Util.getImage("imagenes/juegos/juego1943/avion_enemigo1/animacion_avion_verde/animacion2.png");
         img3 = Util.getImage("imagenes/juegos/juego1943/avion_enemigo1/animacion_avion_verde/animacion3.png");
+        img4 = Util.getImage("imagenes/juegos/juego1943/avion_enemigo1/animacion_avion_verde/animacion4.png");
+        img5 = Util.getImage("imagenes/juegos/juego1943/avion_enemigo1/animacion_avion_verde/animacion5.png");
+        img6 = Util.getImage("imagenes/juegos/juego1943/avion_enemigo1/animacion_avion_verde/animacion6.png");
+        img7 = Util.getImage("imagenes/juegos/juego1943/avion_enemigo1/animacion_avion_verde/animacion7.png");
 
         this.setImagen(avion);
         this.setPosicion(posX, posY);
@@ -55,7 +59,19 @@ public class AvionEnemigoVerde extends Avion {
                     this.setImagen(img3);
                     break;
                 case 4:
-                    estado = EstadoAvionVerde.ataque;
+                    this.setImagen(img4);
+                    break;
+                case 5:
+                    this.setImagen(img5);
+                    break;
+                case 6:
+                    this.setImagen(img6);
+                    break;
+                case 7:
+                    this.setImagen(img7);
+                    break;
+                case 8:
+                    this.setImagen(avion);
                     break;
             }
             count += 5;

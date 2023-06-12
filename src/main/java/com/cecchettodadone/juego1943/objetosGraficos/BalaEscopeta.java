@@ -1,7 +1,6 @@
 package com.cecchettodadone.juego1943.objetosGraficos;
 
 import com.cecchettodadone.juego1943.Util;
-import com.cecchettodadone.juego1943.audio.Sonido;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -17,8 +16,6 @@ public class BalaEscopeta extends Municion{
         this.setPosicion(posX, posY);
         this.angulo = angulo;
         this.alcance = alcance;
-
-        Sonido.iniciar("fx/escopeta");
 
         setDanio(13);
         setVelocidad(-650);
